@@ -423,10 +423,10 @@ footer a{color:var(--t2)}
     </div>
     <div class="hero-side">
       <div class="metaline">
-        <span id="lastUpdate" class="pill neutral">In attesa del primo file</span>
+        <span id="lastUpdate" class="pill neutral solo-red">In attesa del primo file</span>
         <span id="testBadge" class="pill danger hidden">Prova</span>
-        <button id="refreshBtn" class="sm">Aggiorna ora</button>
-        <button id="pauseBtn" class="sm">Metti in pausa</button>
+        <button id="refreshBtn" class="sm solo-red">Aggiorna ora</button>
+        <button id="pauseBtn" class="sm solo-red">Metti in pausa</button>
       </div>
       <div class="social" data-sezione="live" aria-label="Condividi la pagina">
         <span class="social-lab">Condividi</span>
@@ -1204,6 +1204,8 @@ function renderHero() {
   if (PROVA) { lu.textContent = 'Prova · ore ' + $('provaOra').textContent + ' a Brasília'; lu.className = 'pill'; }
   else if (S.manuale) { lu.textContent = 'Totali inseriti a mano'; lu.className = 'pill danger'; }
   else if (S.aggiornato) { lu.textContent = 'File del TSE delle ' + oraBR(S.aggiornato) + ' a Brasília (' + oraIT(S.aggiornato) + ' in Italia)'; lu.className = 'pill'; }
+  /* i lettori vedono l'ora del file solo quando c'è un file; «in attesa» resta alla redazione */
+  if (!PROVA && !S.manuale && !S.aggiornato) lu.className = 'pill neutral solo-red';
   if (ELE === '6257' && !PROVA) { $('testBadge').textContent = 'Feed del primo turno: prova del proxy'; $('testBadge').classList.remove('hidden'); }
   if (PROVA) { $('testBadge').textContent = 'Prova: notte simulata'; $('testBadge').classList.remove('hidden'); }
 }

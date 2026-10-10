@@ -73,6 +73,7 @@ Crea il repository `angrisanidj/risultati-brasile` e carica tutto (la cartella `
 **Il sondaggio di partenza** sta in `stime.json` (oggi Datafolha del 6–7 ottobre: Lula 48% dei validi). Conta solo prima dei voti veri: con l'1–2% delle sezioni il modello lo ha già quasi dimenticato. Per cambiarlo, modifica il file e fai il commit; le pagine aperte lo rileggono ogni due minuti.
 
 **Modalità redazione:** la stessa chiave della dashboard di Israele, `?redazione=CHIAVE` una volta (il browser la ricorda, `?redazione=esci` la dimentica). Compaiono:
+- i pulsanti «Aggiorna ora» e «Metti in pausa» del feed, e l'avviso «In attesa del primo file» (i lettori vedono solo l'ora dell'ultimo file, quando c'è);
 - il sondaggio da modificare in locale e il pulsante «Copia per stime.json»;
 - i totali manuali (voti di Lula, di Flávio, % sezioni) se il feed si blocca: hanno la precedenza finché non li rimuovi, e la proiezione resta sospesa;
 - «Importa file TSE»: i JSON scaricati a mano da resultados.tse.jus.br, anche tutti e 29 insieme, con il loro nome originale (`sp-c0001-e006258-u.json`); il feed va in pausa;
