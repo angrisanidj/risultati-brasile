@@ -1299,7 +1299,7 @@ function renderManca() {
   const diff = C.L - C.F, lead = diff >= 0 ? 'L' : 'F', dietro = lead === 'L' ? 'F' : 'L';
   const serve = 0.5 + Math.abs(diff) / (2 * Math.max(P.resta, 1));
   const top = reg.slice().sort((a, b) => b.resta - a.resta)[0];
-  if (P.resta < 1000) { $('mancaTop').innerHTML = 'Lo spoglio è concluso: non restano voti da contare.'; $('mancaPill').textContent = 'concluso'; return; }
+  if (C.c >= 0.9999 && P.resta < 1000) { $('mancaTop').innerHTML = 'Lo spoglio è concluso: non restano voti da contare.'; $('mancaPill').textContent = 'concluso'; return; }
   $('mancaTop').innerHTML = 'Mancano circa ' + votiTxt(P.resta) + ', la quota più grande nel <b>' + REGIONI[top.r] + '</b> (' + mln(top.resta) + '). ' +
     (serve >= 1 ? nomeC(dietro) + ' non può più recuperare i <b>' + nf(Math.abs(diff)) + '</b> voti di distacco.'
       : 'Per recuperare i <b>' + nf(Math.abs(diff)) + '</b> voti di distacco, ' + nomeC(dietro) + ' deve prendere il <b>' + pct(serve) + '</b> dei voti ancora da contare.');
