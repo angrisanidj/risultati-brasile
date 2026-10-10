@@ -1,0 +1,6 @@
+{
+  "name": "brasile-2026-feed-proxy",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}
