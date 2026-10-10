@@ -924,7 +924,8 @@ const S = {
   sond: { lula: 0.48, fonte: 'Datafolha, 6–7 ottobre' },
   sondLocale: null,
   modoB: 'conto', modoT1: 'primo', livT1: 'uf',
-  ord: { col: 'V', dir: -1 }
+  ord: { col: 'V', dir: -1 },
+  tsCorretti: new Set()   /* file con il totale delle sezioni incompleto */
 };
 (function carica() {
   const st = store('-pref');
@@ -941,10 +942,17 @@ const sondaggio = () => (REDAZIONE && S.sondLocale) ? S.sondLocale : S.sond;
 
 /* Il file compatto del proxy (o un file del TSE importato) → valori per unità */
 function candDi(f, n) { const c = (f.cand || []).find(x => String(x.n) === n); return c ? (c.vap || 0) : 0; }
-function leggiFile(f) {
-  const ts = f.s && f.s.ts, st = f.s && f.s.st;
-  let c = ts ? (st || 0) / ts : (f.s && f.s.pst != null ? f.s.pst / 100 : 0);
-  return { c: clamp(c || 0, 0, 1), st: st != null ? st : null, ts: ts || null, L: candDi(f, LULA.num), F: candDi(f, FLAV.num) };
+/* tsMin: le sezioni del primo turno. Al ballottaggio le sezioni sono le stesse; il 10 ottobre
+   però il TSE aveva caricato nei file del 6258 solo una parte della configurazione (Brasile
+   277.895 sezioni su 499.248, San Paolo 33.403 su 103.656). Se il totale del file è sotto il 90%
+   di quello del primo turno, il denominatore resta quello del primo turno: altrimenti uno stato
+   sembrerebbe scrutinato molto più di quanto è. */
+function leggiFile(f, tsMin) {
+  let ts = f.s && f.s.ts, st = f.s && f.s.st;
+  let corretto = false;
+  if (tsMin && (!ts || ts < 0.9 * tsMin)) { if (st != null || !ts) { ts = tsMin; corretto = !!(f.s && f.s.ts); } }
+  let c = ts && st != null ? st / ts : (f.s && f.s.pst != null ? f.s.pst / 100 : 0);
+  return { c: clamp(c || 0, 0, 1), st: st != null ? Math.min(st, ts || st) : null, ts: ts || null, corretto, L: candDi(f, LULA.num), F: candDi(f, FLAV.num) };
 }
 /* stessa logica del proxy, per i file importati a mano */
 function compattaTSE(d) {
@@ -975,16 +983,19 @@ function vuotoU() { return { c: new Array(NU).fill(0), st: new Array(NU).fill(0)
 function applicaFile(J, fonte) {
   const U = S.U ? { c: S.U.c.slice(), st: S.U.st.slice(), ts: S.U.ts.slice(), L: S.U.L.slice(), F: S.U.F.slice() } : vuotoU();
   let presi = 0;
+  S.tsCorretti = new Set();
   UFS.forEach((u, i) => {
     const f = J[u.toLowerCase()];
     if (!f || f.errore) return;
-    const x = leggiFile(f);
+    const x = leggiFile(f, SEZ1[i]);
+    if (x.corretto) S.tsCorretti.add(u);
     U.c[i] = x.c; U.st[i] = x.st != null ? x.st : Math.round(x.c * (x.ts || SEZ1[i])); U.ts[i] = x.ts || SEZ1[i];
     U.L[i] = x.L; U.F[i] = x.F; presi++;
   });
   const br = J.br && !J.br.errore ? J.br : null;
   if (br) {
-    const x = leggiFile(br);
+    const x = leggiFile(br, BASE.naz.sez);
+    if (x.corretto) S.tsCorretti.add('BR');
     /* Eletto solo se il TSE lo dice nel file del ballottaggio: e = "s" e situazione senza «turno».
        Al primo turno e = "s" con st = "2º turno" vuol dire «va al ballottaggio»; e «Não eleito»
        contiene «eleito», quindi non si cerca la parola. */
@@ -1717,6 +1728,7 @@ async function poll(manuale) {
       }
       const mancanti = UFS.filter(u => !j.uf[u.toLowerCase()] || j.uf[u.toLowerCase()].errore).length;
       setFeed('Feed live · TSE ' + (S.aggiornato ? oraBR(S.aggiornato) + ' a Brasília' : '') + (mancanti ? ' · ' + mancanti + ' file mancanti' : ''), 'ok');
+      if (S.tsCorretti.size) console.warn('TSE: totale delle sezioni incompleto in', [...S.tsCorretti].join(', '), '— uso le sezioni del primo turno');
       avviso('');
     }
     FEED.errori = 0;
