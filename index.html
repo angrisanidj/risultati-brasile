@@ -1066,6 +1066,12 @@ function contato() {
   return { L, F, c: sezioniNaz() };
 }
 const projVisibile = () => !S.manuale && S.proj && (S.proj.contato.L + S.proj.contato.F) >= PROJ_MIN_VOTI;
+/* «88,2 mln di voti validi», «117 mila voti validi», «540 voti validi» */
+function votiTxt(v) {
+  if (v >= 1e6) return '<b>' + mln(v) + '</b> di voti validi';
+  if (v >= 1e4) return '<b>' + mln(v) + '</b> voti validi';
+  return '<b>' + nf(Math.round(v)) + '</b> voti validi';
+}
 const nomeC = k => k === 'L' ? 'Lula' : 'Flávio';
 const colC = k => k === 'L' ? LULA.c : FLAV.c;
 
@@ -1134,6 +1140,12 @@ function renderVerdetto() {
     box.innerHTML = '<div class="vw">Chi vince</div><h2>Primi voti contati: ' + nomeC(leadC) + ' ' + pct(Math.max(cl, 1 - cl)) + '</h2><div class="vd">' + det + ' La proiezione parte da ' + nf(PROJ_MIN_VOTI) + ' voti contati. ' + sondTxt + '</div><span class="vcav">Pochi voti, e quelli che arrivano prima non rappresentano il paese</span>';
     return;
   }
+  if (C.c >= 0.9999 && P.resta < 1000) {
+    /* tutte le sezioni scrutinate: non c'è più niente da proiettare */
+    box.className = 'verdetto ' + leadC;
+    box.innerHTML = '<div class="vw">Chi vince · spoglio concluso</div><h2>Spoglio concluso: ' + esc(nomeC(leadC)) + ' al ' + pct(Math.max(cl, 1 - cl)) + '</h2><div class="vd">Con il 100% delle sezioni ' + nomeC(leadC) + ' è avanti di <b>' + nf(Math.abs(cl - 0.5) * 200, 1) + ' punti</b> (' + nf(diff) + ' voti).</div><span class="vcav">Risultato dello spoglio, in attesa della proclamazione del TSE</span>';
+    return;
+  }
   const k = P.media >= 0.5 ? 'L' : 'F', pw = k === 'L' ? P.pL : 1 - P.pL;
   const m = k === 'L' ? P.media : 1 - P.media, lo = k === 'L' ? P.q025 : 1 - P.q975, hi = k === 'L' ? P.q975 : 1 - P.q025;
   let tit;
@@ -1141,7 +1153,7 @@ function renderVerdetto() {
   else if (pw >= 0.9) tit = nomeC(k) + ' è favorito: la proiezione lo dà al ' + pct(m);
   else if (pw >= 0.65) tit = nomeC(k) + ' è avanti nella proiezione: ' + pct(m) + ', ma la forchetta comprende il 50%';
   else tit = 'Testa a testa: la proiezione dà ' + nomeC(k) + ' al ' + pct(m);
-  det += ' La forchetta al 95% va dal <b>' + pct(lo) + '</b> al <b>' + pct(hi) + '</b> per ' + nomeC(k) + '; probabilità di vittoria <b>' + pct(pw, pw > 0.99 ? 1 : 0) + '</b>. Restano da contare circa <b>' + mln(P.resta) + '</b> di voti validi.';
+  det += ' La forchetta al 95% va dal <b>' + pct(lo) + '</b> al <b>' + pct(hi) + '</b> per ' + nomeC(k) + '; probabilità di vittoria <b>' + pct(pw, pw > 0.99 ? 1 : 0) + '</b>. Restano da contare circa ' + votiTxt(P.resta) + '.';
   let cav = 'Stima statistica sui voti contati finora, non un risultato ufficiale';
   if (leadC !== k && C.c < 0.98) cav = 'Voti contati e proiezione indicano vincitori diversi: i voti che mancano vengono da stati più favorevoli a ' + nomeC(k);
   box.className = 'verdetto ' + k;
@@ -1287,7 +1299,8 @@ function renderManca() {
   const diff = C.L - C.F, lead = diff >= 0 ? 'L' : 'F', dietro = lead === 'L' ? 'F' : 'L';
   const serve = 0.5 + Math.abs(diff) / (2 * Math.max(P.resta, 1));
   const top = reg.slice().sort((a, b) => b.resta - a.resta)[0];
-  $('mancaTop').innerHTML = 'Mancano circa <b>' + mln(P.resta) + '</b> di voti validi, la quota più grande nel <b>' + REGIONI[top.r] + '</b> (' + mln(top.resta) + '). ' +
+  if (P.resta < 1000) { $('mancaTop').innerHTML = 'Lo spoglio è concluso: non restano voti da contare.'; $('mancaPill').textContent = 'concluso'; return; }
+  $('mancaTop').innerHTML = 'Mancano circa ' + votiTxt(P.resta) + ', la quota più grande nel <b>' + REGIONI[top.r] + '</b> (' + mln(top.resta) + '). ' +
     (serve >= 1 ? nomeC(dietro) + ' non può più recuperare i <b>' + nf(Math.abs(diff)) + '</b> voti di distacco.'
       : 'Per recuperare i <b>' + nf(Math.abs(diff)) + '</b> voti di distacco, ' + nomeC(dietro) + ' deve prendere il <b>' + pct(serve) + '</b> dei voti ancora da contare.');
 }
