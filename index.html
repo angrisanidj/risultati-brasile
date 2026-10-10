@@ -4,282 +4,315 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#04120d">
+<meta name="theme-color" content="#0b0f11">
 <title>Brasile 2026 — Il ballottaggio in diretta</title>
 <meta name="description" content="Ballottaggio presidenziale brasiliano del 25 ottobre 2026, Lula contro Flávio Bolsonaro: lo spoglio stato per stato dai file del TSE, la proiezione del risultato finale con la sua forchetta, le mappe e il primo turno.">
+<link rel="canonical" href="https://angrisanidj.github.io/risultati-brasile/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:url" content="https://angrisanidj.github.io/risultati-brasile/">
+<meta property="og:title" content="Brasile 2026 — Il ballottaggio in diretta">
+<meta property="og:description" content="Lula contro Flávio Bolsonaro, 25 ottobre: lo spoglio stato per stato dai file del Tribunale superiore elettorale, la proiezione del risultato finale e le mappe del primo turno.">
+<meta property="og:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Brasile 2026, il ballottaggio in diretta: la mappa degli stati al primo turno, Lula contro Flávio Bolsonaro">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@putino">
+<meta name="twitter:title" content="Brasile 2026 — Il ballottaggio in diretta">
+<meta name="twitter:description" content="Lula contro Flávio Bolsonaro: lo spoglio stato per stato, la proiezione con la forchetta e le mappe.">
+<meta name="twitter:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16'%3E%3Crect width='22' height='16' fill='%23009c3b'/%3E%3Cpath d='M11 2l9 6-9 6-9-6z' fill='%23ffdf00'/%3E%3Ccircle cx='11' cy='8' r='3.4' fill='%23002776'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --verde:#009c3b;--verde-lit:#3fcf7d;--giallo:#ffdf00;--acc:#f2d24b;--blu:#002776;
+  --verde:#009c3b;--giallo:#ffdf00;--blu:#002776;
   --lula:#e5484d;--flavio:#3d7bf5;
-  --bg:#04120d;--panel:rgba(255,255,255,.035);
-  --line:rgba(255,255,255,.10);--line-2:rgba(255,255,255,.16);
-  --t1:#f1f5f2;--t2:#9fb2a8;--t3:#6f8479;
+  --bg:#0b0f11;--s1:#11171a;--s2:#161d21;--s3:#1f282d;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --t1:#eef1f2;--t2:#9ba6ab;--t3:#6c777d;--white:#f4f6f6;
   --green:#4bd28b;--red:#ff6680;--amber:#f2c14e;
-  /* tabular-nums non va mai applicato a Lora: spazia le parole in modo anomalo */
   --serif:Lora,Georgia,"Times New Roman",serif;
   --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --r:16px;--shadow:0 20px 46px rgba(0,0,0,.34);
-  --pad:clamp(14px,3.2vw,22px);
+  --r:6px;--r-s:4px;
+  --pad:clamp(14px,3vw,24px);
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;
-  scrollbar-width:thin;scrollbar-color:var(--verde-lit) rgba(255,255,255,.05)}
-::-webkit-scrollbar{width:9px;height:9px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,.05)}
-::-webkit-scrollbar-thumb{background:var(--verde-lit);border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;scrollbar-width:thin;scrollbar-color:#2c363b transparent}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#2c363b;border-radius:4px}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;color:var(--t1);font:15px/1.5 var(--sans);background-color:var(--bg);
-  background:
-    radial-gradient(1100px 520px at 88% -8%,rgba(0,156,59,.26),transparent 62%),
-    radial-gradient(760px 420px at 4% 16%,rgba(255,223,0,.05),transparent 60%),
-    linear-gradient(180deg,#04120d,#061a14 52%,#04120d);
-  background-attachment:fixed}
-h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em;margin:0}
+body{margin:0;min-height:100vh;color:var(--t1);background:var(--bg);font:14.5px/1.5 var(--sans)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
 .mono{font-variant-numeric:tabular-nums}
 .muted{color:var(--t2)}
 .hidden{display:none!important}
 .cl{color:var(--lula)}.cf{color:var(--flavio)}
+:focus-visible{outline:2px solid #8fb3ff;outline-offset:2px}
 
-/* ---------- testata: le strisce della bandiera ---------- */
-.flagbar{height:8px;background:linear-gradient(90deg,var(--verde) 0 46%,var(--giallo) 46% 72%,var(--blu) 72%)}
-.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(4,18,13,.86);border-bottom:1px solid var(--line)}
-.topbar-in{max-width:1420px;margin:auto;padding:10px var(--pad);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:9px;font:700 15px/1 var(--serif);white-space:nowrap}
-.flagicon{width:22px;height:16px;flex:0 0 22px;border-radius:2px;border:1px solid rgba(255,255,255,.25);
+/* ---------- testata ---------- */
+.flagbar{height:5px;background:var(--verde)}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(11,15,17,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1400px;margin:auto;padding:9px var(--pad);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:600 15px/1 var(--serif);white-space:nowrap}
+.flagicon{width:22px;height:16px;flex:0 0 22px;border-radius:2px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16'%3E%3Crect width='22' height='16' fill='%23009c3b'/%3E%3Cpath d='M11 2l9 6-9 6-9-6z' fill='%23ffdf00'/%3E%3Ccircle cx='11' cy='8' r='3.4' fill='%23002776'/%3E%3C/svg%3E") center/cover}
-.brand em{font-style:normal;color:var(--t3);font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
-.tabs{display:flex;gap:4px;background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:999px;padding:3px}
-.tabs button{border:0;background:transparent;color:var(--t2);border-radius:999px;padding:7px 15px;font:700 12.5px/1 var(--sans);letter-spacing:.02em;cursor:pointer;white-space:nowrap}
-.tabs button[aria-selected="true"]{background:var(--giallo);color:#07140f}
-.livechip{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;max-width:100%}
+.brand em{font:500 12.5px/1 var(--sans);font-style:normal;color:var(--t3)}
+.tabs{display:flex;gap:2px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:2px}
+.tabs button{border:0;background:transparent;color:var(--t2);border-radius:var(--r-s);padding:6px 12px;font:600 13px/1 var(--sans);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--s3);color:var(--t1)}
+.livechip{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--t2);font-size:12.5px;font-weight:500;max-width:100%;min-width:0}
 .livechip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px;background:#7d8c9c;box-shadow:0 0 0 4px rgba(125,140,156,.13)}
-.dot.ok{background:var(--green);box-shadow:0 0 0 4px rgba(75,210,139,.14)}
-.dot.error{background:var(--red);box-shadow:0 0 0 4px rgba(255,102,128,.14)}
-.dot.loading{background:var(--acc);box-shadow:0 0 0 4px rgba(242,210,75,.18);animation:pulse 1.5s infinite}
-.dot.paused{background:var(--amber);box-shadow:0 0 0 4px rgba(242,193,78,.14)}
-@keyframes pulse{50%{opacity:.45}}
-.shell{max-width:1420px;margin:auto;padding:20px var(--pad) 60px}
+.dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px;background:#7d8c9c}
+.dot.ok{background:var(--green)}
+.dot.error{background:var(--red)}
+.dot.loading{background:#8fb3ff;animation:pulse 1.4s infinite}
+.dot.paused{background:var(--amber)}
+@keyframes pulse{50%{opacity:.35}}
+.shell{max-width:1400px;margin:auto;padding:0 var(--pad) 56px}
 
-/* ---------- pulsanti ---------- */
-button,.uploadbtn{font-family:var(--sans);border:1px solid var(--line-2);background:rgba(255,255,255,.05);color:var(--t1);border-radius:10px;padding:9px 13px;font-weight:600;font-size:13px;cursor:pointer;transition:background .15s,border-color .15s}
-button:hover,.uploadbtn:hover{background:rgba(255,255,255,.10)}
-button.primary{background:var(--giallo);border-color:var(--giallo);color:#07140f;font-weight:700}
-button.primary:hover{background:#fff27a}
-button.sm,.uploadbtn.sm{padding:6px 10px;font-size:12px}
-button[disabled]{opacity:.45;cursor:default}
+/* ---------- comandi ---------- */
+button,.uploadbtn{font-family:var(--sans);border:1px solid var(--line-2);background:transparent;color:var(--t1);border-radius:var(--r-s);padding:7px 12px;font-weight:600;font-size:13px;line-height:1.2;cursor:pointer;transition:background .12s,border-color .12s}
+button:hover,.uploadbtn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24)}
+button.primary{background:var(--white);border-color:var(--white);color:#0b0f11}
+button.primary:hover{background:#fff}
+button.sm,.uploadbtn.sm{padding:5px 10px;font-size:12.5px}
+button[disabled]{opacity:.4;cursor:default}
 .uploadbtn{display:inline-block}
-select{background:rgba(0,0,0,.32);color:var(--t1);border:1px solid var(--line-2);border-radius:9px;padding:6px 9px;font-size:12px;font-weight:600;font-family:var(--sans)}
+select{background:var(--s2);color:var(--t1);border:1px solid var(--line-2);border-radius:var(--r-s);padding:5px 8px;font:500 12.5px var(--sans)}
 
-/* ---------- hero ---------- */
-.hero{border:1px solid var(--line);border-radius:22px;padding:clamp(20px,3.6vw,32px);background:linear-gradient(140deg,rgba(8,44,30,.94),rgba(5,22,16,.94));box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:16px}
-.hero:after{content:"";position:absolute;right:-40px;bottom:-70px;width:270px;height:270px;opacity:.09;pointer-events:none;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 6l46 44-46 44L4 50z' fill='none' stroke='%23fff' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='22' fill='none' stroke='%23fff' stroke-width='4'/%3E%3C/svg%3E") center/contain no-repeat}
-.eyebrow{color:var(--acc);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
-.hero h1{font-size:clamp(32px,6.6vw,58px);line-height:1;letter-spacing:-.04em;margin:10px 0 12px}
-.hero p{color:#b9cbc1;max-width:78ch;margin:0;font-size:clamp(14px,1.6vw,16.5px)}
-.hero .metaline{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1;align-items:center}
+/* ---------- intestazione della pagina ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 40px;align-items:end;padding:26px 0 20px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.eyebrow{color:var(--t2);font-size:13px;font-weight:500}
+.hero h1{font-size:clamp(30px,4.4vw,44px);line-height:1.04;letter-spacing:-.025em;margin:6px 0 10px}
+.hero p{color:var(--t2);max-width:70ch;margin:0;font-size:14.5px;line-height:1.55}
+.hero-side{display:grid;gap:12px;justify-items:end}
+.hero .metaline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
 
-/* ---------- kpi ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.kpi{border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));min-width:0}
-.kpi span{display:block;color:var(--t3);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.kpi strong{display:block;font:700 clamp(22px,3.4vw,28px)/1.05 var(--serif);margin:9px 0 5px}
-.kpi small{color:var(--t3);font-size:11.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* ---------- etichette ---------- */
+.pill{color:var(--t2);font-size:12.5px;font-weight:500;white-space:nowrap}
+.pill.neutral{color:var(--t3)}
+.pill.danger{color:var(--red);border:1px solid rgba(255,102,128,.4);border-radius:3px;padding:2px 7px;font-size:11.5px;font-weight:600}
+.pill.ok{color:var(--green)}
 
-/* ---------- card ---------- */
-.card{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));overflow:hidden;min-width:0}
-.cardhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:18px 18px 0;flex-wrap:wrap}
-.cardhead h2{font-size:clamp(18px,2.4vw,22px)}
-.kicker{color:var(--acc);font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:5px}
-.pill{border:1px solid rgba(242,210,75,.34);background:rgba(242,210,75,.10);color:#f3e3a0;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:800;letter-spacing:.05em;white-space:nowrap}
-.pill.neutral{border-color:var(--line-2);background:rgba(255,255,255,.05);color:var(--t2)}
-.pill.danger{border-color:rgba(255,102,128,.34);background:rgba(255,102,128,.10);color:#ff96a8}
-.pill.ok{border-color:rgba(75,210,139,.34);background:rgba(75,210,139,.10);color:#9fe0bd}
-.subcopy{color:var(--t2);padding:0 18px;margin:9px 0 14px;font-size:13.5px}
-.methodnote{color:var(--t3);padding:4px 18px 16px;font-size:11.5px;line-height:1.55;margin:0}
-.main-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:14px;margin-bottom:14px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.alert{border:1px solid rgba(255,102,128,.42);background:rgba(255,102,128,.10);color:#ffd6de;border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:13.5px}
-.provabar{border:1px dashed rgba(242,193,78,.5);background:rgba(242,193,78,.07);color:#f3dda0;border-radius:14px;padding:12px 16px;margin:0 0 14px;font-size:13px;display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap}
+/* ---------- condivisione ---------- */
+.social{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.social-lab{color:var(--t3);font-size:12.5px;font-weight:500}
+.social-btns{display:flex;gap:7px}
+.sbtn{width:34px;height:34px;flex:0 0 34px;padding:0;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--t1);display:inline-flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:background .12s,border-color .12s,color .12s}
+.sbtn:focus-visible{background:var(--white);border-color:var(--white);color:#0b0f11}
+.sbtn:active{background:rgba(255,255,255,.12)}
+@media(hover:hover){.sbtn:hover{background:var(--white);border-color:var(--white);color:#0b0f11}}
+.sbtn .bi-link-45deg{font-size:18px}
+.social-esito{color:var(--green);font-size:12px;font-weight:600}
+
+/* ---------- prova ---------- */
+.provabar{border:1px dashed rgba(242,193,78,.45);border-radius:var(--r);padding:10px 14px;margin:0 0 16px;font-size:13px;color:#e9d39a;display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap}
 .provabar input[type=range]{flex:1 1 220px;accent-color:var(--amber)}
 .provabar b{font-variant-numeric:tabular-nums}
+.provabar label{display:flex;gap:6px;align-items:center}
+
+/* ---------- indicatori ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:16px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r)}
+.kpi{padding:14px 18px;min-width:0}
+.kpi+.kpi{border-left:1px solid var(--line)}
+.kpi span{display:block;color:var(--t2);font-size:12.5px;font-weight:500}
+.kpi strong{display:block;font:600 26px/1.1 var(--sans);letter-spacing:-.015em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.kpi small{color:var(--t3);font-size:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
 /* ---------- verdetto ---------- */
-.verdetto{border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border-left:5px solid var(--t3)}
-.verdetto.L{border-left-color:var(--lula);background:linear-gradient(180deg,rgba(229,72,77,.10),rgba(255,255,255,.02))}
-.verdetto.F{border-left-color:var(--flavio);background:linear-gradient(180deg,rgba(61,123,245,.11),rgba(255,255,255,.02))}
-.verdetto .vw{color:var(--t3);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.verdetto h2{font-size:clamp(20px,3vw,27px);margin:8px 0 7px;line-height:1.18}
-.verdetto .vd{color:var(--t2);font-size:13.5px;line-height:1.55}
-.verdetto .vd b{color:var(--t1);font-variant-numeric:tabular-nums}
-.verdetto .vcav{display:inline-block;margin-top:9px;border:1px solid rgba(242,193,78,.32);background:rgba(242,193,78,.09);color:#f2cf72;border-radius:999px;padding:4px 11px;font-size:11px;font-weight:700}
+.verdetto{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px 20px;margin-bottom:16px;box-shadow:inset 3px 0 0 var(--t3)}
+.verdetto.L{box-shadow:inset 3px 0 0 var(--lula)}
+.verdetto.F{box-shadow:inset 3px 0 0 var(--flavio)}
+.verdetto .vw{color:var(--t2);font-size:12.5px;font-weight:500}
+.verdetto h2{font-size:clamp(20px,2.6vw,27px);line-height:1.22;margin:6px 0 8px;max-width:62ch}
+.verdetto .vd{color:var(--t2);font-size:14px;line-height:1.55;max-width:92ch}
+.verdetto .vd b{color:var(--t1);font-weight:600}
+.verdetto .vcav{display:inline-block;margin-top:10px;color:var(--amber);font-size:12.5px;font-weight:500}
+.verdetto .vcav:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-right:7px;vertical-align:1px}
+.alert{border:1px solid rgba(255,102,128,.4);background:rgba(255,102,128,.08);color:#ffd6de;border-radius:var(--r);padding:11px 14px;margin:0 0 16px;font-size:13.5px}
+
+/* ---------- pannelli ---------- */
+.card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-width:0}
+.cardhead{display:flex;justify-content:space-between;gap:6px 12px;align-items:baseline;padding:16px 18px 0;flex-wrap:wrap}
+.cardhead h2{font-size:19px;line-height:1.25}
+.cmeta{color:var(--t3);font-size:12.5px;font-weight:500}
+.subcopy{color:var(--t2);padding:0 18px;margin:6px 0 12px;font-size:13.5px;max-width:92ch}
+.methodnote{color:var(--t3);padding:6px 18px 16px;font-size:12px;line-height:1.55;margin:0;max-width:110ch}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:16px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
+.blocco{margin-bottom:16px}
 
 /* ---------- testa a testa ---------- */
-.duello{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 18px 4px}
-.cand{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:rgba(255,255,255,.03);border-top:4px solid var(--c);min-width:0}
+.duello{display:grid;grid-template-columns:1fr 1fr;padding:14px 18px 2px;gap:0}
+.cand{padding:2px 0;min-width:0}
 .cand.dx{text-align:right}
-.cand .cn{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cand .cp{font:700 clamp(34px,5.6vw,50px)/1 var(--serif);margin:8px 0 4px;color:var(--c)}
-.cand .cv{font-size:12px;color:var(--t3);font-variant-numeric:tabular-nums}
-.cand.lead{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 14%,transparent),rgba(255,255,255,.02))}
-.split{position:relative;height:24px;margin:12px 18px 2px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.06);display:flex}
-.split b{display:block;height:100%;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.split .mid{position:absolute;left:50%;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.75}
-.splitl{display:flex;justify-content:space-between;padding:0 18px;font-size:11px;color:var(--t3);font-weight:700}
-.proj{margin:14px 18px 0;border:1px solid var(--line);border-radius:14px;padding:12px 14px 10px;background:rgba(0,0,0,.18)}
-.proj h4{margin:0 0 2px;font:800 10px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
-.proj .pt{font-size:13.5px;color:var(--t2);margin-bottom:6px}
-.proj .pt b{color:var(--t1);font-variant-numeric:tabular-nums}
+.cand .cn{font-size:13px;font-weight:600;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cand .cn i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:0}
+.cand.dx .cn i{margin:0 0 0 7px}
+.cand .cp{font:600 clamp(34px,5vw,46px)/1 var(--sans);letter-spacing:-.03em;margin:8px 0 4px;color:var(--c);font-variant-numeric:tabular-nums}
+.cand .cv{font-size:12.5px;color:var(--t3);font-variant-numeric:tabular-nums}
+.split{position:relative;height:16px;margin:12px 18px 2px;border-radius:2px;overflow:visible;background:rgba(255,255,255,.05);display:flex}
+.split b{display:block;height:100%;transition:width .5s ease}
+.split b:first-child{border-radius:2px 0 0 2px}.split b:nth-child(2){border-radius:0 2px 2px 0}
+.split .mid{position:absolute;left:50%;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--white)}
+.splitl{display:flex;justify-content:space-between;padding:4px 18px 0;font-size:12px;color:var(--t3)}
+.proj{margin:16px 18px 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.proj h4{margin:0 0 3px;font:600 13px/1.3 var(--sans);color:var(--t1)}
+.proj .pt{font-size:13.5px;color:var(--t2);margin-bottom:4px}
+.proj .pt b{color:var(--t1);font-weight:600;font-variant-numeric:tabular-nums}
 #projSvg{display:block;width:100%;height:auto}
-.prob{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;margin:12px 18px 4px;font-size:12.5px;font-weight:700}
-.prob .tk{height:12px;border-radius:6px;overflow:hidden;display:flex;background:rgba(255,255,255,.06)}
+.prob{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;margin:12px 18px 4px;font-size:13px;font-weight:600}
+.prob .tk{height:8px;border-radius:2px;overflow:hidden;display:flex;background:rgba(255,255,255,.06)}
 .prob .tk b{display:block;height:100%;transition:width .5s}
 .prob span{font-variant-numeric:tabular-nums;white-space:nowrap}
-.legenda{display:flex;gap:12px;flex-wrap:wrap;padding:4px 18px 0;font-size:11.5px;color:var(--t2)}
-.legenda i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.legenda{display:flex;gap:6px 14px;flex-wrap:wrap;padding:4px 18px 0;font-size:12px;color:var(--t2)}
+.legenda i{display:inline-block;width:14px;height:8px;border-radius:1px;margin-right:6px;vertical-align:middle}
 #forkSvg,#curvaSvg{display:block;width:100%;height:auto;padding:4px 8px 0}
-.chartempty{padding:30px 18px;color:var(--t3);font-size:13px;text-align:center}
 
-/* ---------- cosa manca ---------- */
-.manca{padding:6px 18px 4px;display:grid;gap:9px}
-.manca .mr{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:12.5px}
-.manca .mr .nm{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.manca .mr .nm small{display:block;font-weight:500;color:var(--t3);font-size:11px}
-.manca .mr .tk{height:14px;border-radius:5px;background:rgba(255,255,255,.05);overflow:hidden;display:flex}
+/* ---------- cosa manca e spostamenti ---------- */
+.manca{padding:6px 18px 4px;display:grid;gap:0}
+.manca .mr{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) 96px;gap:12px;align-items:center;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line)}
+.manca .mr:last-child{border-bottom:0}
+.manca .mr .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.manca .mr .nm small{display:block;font-weight:400;color:var(--t3);font-size:11.5px}
+.manca .mr .tk{height:10px;border-radius:2px;background:rgba(255,255,255,.05);overflow:hidden;display:flex;position:relative}
 .manca .mr .tk b{display:block;height:100%}
-.manca .mr .vv{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
-.manca .mr .vv small{display:block;font-weight:500;color:var(--t3);font-size:11px}
-.mancatop{margin:4px 18px 8px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);font-size:13.5px;color:var(--t2);line-height:1.55}
-.mancatop b{color:var(--t1);font-variant-numeric:tabular-nums}
+.manca .mr .vv{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.manca .mr .vv small{display:block;font-weight:400;color:var(--t3);font-size:11.5px}
+.mancatop{margin:6px 18px 8px;padding:2px 0 2px 12px;border-left:2px solid var(--line-2);font-size:13.5px;color:var(--t2);line-height:1.55}
+.mancatop b{color:var(--t1);font-weight:600;font-variant-numeric:tabular-nums}
 
 /* ---------- tabella ---------- */
 .tablewrap{overflow:auto;padding:10px 0 4px;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;min-width:900px}
-th{font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.09em;text-align:right;padding:9px 9px;border-bottom:1px solid var(--line);font-weight:800;white-space:nowrap;vertical-align:bottom;cursor:pointer;user-select:none}
-th small{display:block;font-weight:600;letter-spacing:.02em;text-transform:none;opacity:.8;font-size:10px}
+th{font-size:12px;color:var(--t3);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line-2);font-weight:500;white-space:nowrap;vertical-align:bottom;cursor:pointer;user-select:none}
+th small{display:block;font-weight:400;font-size:11px;color:var(--t3);opacity:.85}
 th:first-child{text-align:left;padding-left:18px}
-th.ord{color:var(--acc)}
-td{padding:9px 9px;border-bottom:1px solid rgba(255,255,255,.05);text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px;white-space:nowrap}
+th.ord{color:var(--t1)}
+th.ord:after{content:" ↓";color:var(--t3)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px;white-space:nowrap}
 td:first-child{text-align:left;padding-left:18px;white-space:normal}
 tbody tr{cursor:pointer}
-tbody tr:hover td{background:rgba(255,255,255,.026)}
-td .sub{color:var(--t3);font-weight:400;font-size:11px;display:block}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+td b{font-weight:600}
+td .sub{color:var(--t3);font-weight:400;font-size:11.5px;display:block}
 td.mute,td .mute{color:var(--t3)}
-tr.tot td{font-weight:800;border-top:1px solid var(--line-2)}
-.mini{display:inline-block;width:64px;height:6px;border-radius:3px;background:rgba(255,255,255,.08);vertical-align:middle;margin-left:6px;overflow:hidden}
-.mini b{display:block;height:100%;background:var(--acc)}
-.rng{color:var(--t3);font-size:11px;margin-left:4px}
+tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
+.mini{display:inline-block;width:56px;height:5px;border-radius:1px;background:rgba(255,255,255,.08);vertical-align:middle;margin-left:8px;overflow:hidden}
+.mini b{display:block;height:100%;background:#aab4b8}
+.rng{color:var(--t3);font-size:11.5px;margin-left:5px}
 
 /* ---------- mappa ---------- */
-.seg{display:flex;gap:3px;background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}
-.seg button{border:0;background:transparent;color:var(--t2);border-radius:999px;padding:5px 11px;font:700 11px/1 var(--sans);cursor:pointer;white-space:nowrap}
-.seg button[aria-pressed="true"]{background:var(--giallo);color:#07140f}
-.maparea{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:start;padding:10px 18px 0}
+.seg{display:flex;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--t2);border-radius:var(--r-s);padding:5px 10px;font:600 12px/1 var(--sans);cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--s3);color:var(--t1)}
+.segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.maparea{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:start;padding:12px 18px 0}
 .mapside{min-width:0;width:100%}
 .mapside.l{justify-self:end;max-width:320px}
 .mapside.r{justify-self:start;max-width:350px;display:grid;gap:12px;align-content:start}
 .mapcol{display:grid;justify-items:center;min-width:0}
-.mapstage{position:relative;width:max-content;max-width:100%;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.24);overflow:hidden;touch-action:pan-y}
+.mapstage{position:relative;width:max-content;max-width:100%;margin:0 auto;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);overflow:hidden;touch-action:pan-y}
 .mapstage.zoomed{touch-action:none}
 .mapstage svg{display:block;height:clamp(440px,74vh,780px);width:auto;max-width:100%;cursor:grab}
 .mapstage svg.drag{cursor:grabbing}
-.mapstage .ufl path{stroke:#04120d;stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .3s,opacity .3s;stroke-linejoin:round}
-.mapstage .ufl path:hover{stroke:#fff;stroke-width:1.6}
-.mapstage .ufl path.sel{stroke:#fff;stroke-width:2.2}
-.mapstage .munl path{stroke:rgba(4,18,13,.55);stroke-width:.35;vector-effect:non-scaling-stroke;cursor:pointer;stroke-linejoin:round}
-.mapstage .munl path:hover{stroke:#fff;stroke-width:1.1}
-.mapstage .munl path.sel{stroke:#fff;stroke-width:2}
-.mapstage .bordi path{fill:none;stroke:rgba(4,18,13,.95);stroke-width:1.1;vector-effect:non-scaling-stroke;pointer-events:none}
+.mapstage .ufl path{stroke:#0b0f11;stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .3s,opacity .3s;stroke-linejoin:round}
+.mapstage .munl path{stroke:rgba(11,15,17,.6);stroke-width:.35;vector-effect:non-scaling-stroke;cursor:pointer;stroke-linejoin:round}
+.mapstage .bordi path{fill:none;stroke:rgba(11,15,17,.95);stroke-width:1.1;vector-effect:non-scaling-stroke;pointer-events:none}
+/* i contorni evidenziati stanno su uno strato sopra tutto: i vicini non li coprono */
+.mapstage .hil path{fill:none;stroke:#fff;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+.mapstage .hil path.ov-sel{stroke-width:2.2}
+.mapstage .hil path.ov-hover{stroke-width:1.5;opacity:.85}
 .mapstage svg.hassel .ufl path:not(.sel){opacity:.55}
-.mapstage .sigle text{font:700 11px var(--sans);fill:rgba(255,255,255,.82);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:2.4px}
-.mapzoom{position:absolute;top:10px;right:10px;z-index:2;display:grid;gap:6px}
-.mapzoom button{width:38px;height:38px;padding:0;font:600 17px/1 var(--sans);border-radius:11px;background:rgba(5,20,15,.94);backdrop-filter:blur(8px)}
-.maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:11.5px;background:rgba(5,20,15,.82);padding:5px 11px;border-radius:999px;backdrop-filter:blur(6px);pointer-events:none;max-width:calc(100% - 70px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mapleg{border:1px solid var(--line);border-radius:13px;padding:13px 15px;background:rgba(255,255,255,.03)}
-.mapleg h4{margin:0 0 10px;font:800 10px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
-.mapleg .ramp{height:10px;border-radius:5px;margin:4px 0 5px}
-.mapleg .rampl{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);gap:6px}
-.mapleg p{margin:11px 0 0;font-size:11.5px;line-height:1.5;color:var(--t3)}
-.mapleg .lg{display:grid;gap:7px}
-.mapleg .lg div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;font-size:12.5px}
-.mapleg .lg i{width:10px;height:10px;border-radius:3px}
-.mapleg .lg b{font-variant-numeric:tabular-nums;font-weight:800}
-.dett{border:1px solid var(--line-2);border-radius:13px;padding:13px 15px;background:rgba(255,255,255,.05)}
+.mapstage .sigle text{font:600 11px var(--sans);fill:rgba(255,255,255,.85);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:2.2px}
+.mapzoom{position:absolute;top:10px;right:10px;z-index:2;display:grid;gap:4px}
+.mapzoom button{width:34px;height:34px;padding:0;font:500 17px/1 var(--sans);border-radius:var(--r-s);background:rgba(17,23,26,.94)}
+.maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(17,23,26,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mapleg{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--s2)}
+.mapleg h4,.maplist h4{margin:0 0 9px;font:600 13px/1.25 var(--sans);color:var(--t1)}
+.mapleg .ramp{height:8px;border-radius:2px;margin:4px 0 5px}
+.mapleg .rampl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--t3);gap:6px}
+.mapleg .rampl span{white-space:nowrap}
+.mapleg p{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--t3)}
+.mapleg .lg{display:grid;gap:6px}
+.mapleg .lg div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px}
+.mapleg .lg i{width:10px;height:10px;border-radius:2px}
+.mapleg .lg b{font-weight:600;font-variant-numeric:tabular-nums}
+.dett{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--s2)}
 .dett .dh{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
 .dett h3{font-size:18px}
-.dett .dm{color:var(--t3);font-size:11.5px;font-variant-numeric:tabular-nums;margin-top:4px;line-height:1.5}
+.dett .dm{color:var(--t3);font-size:12px;font-variant-numeric:tabular-nums;margin-top:4px;line-height:1.5}
 .dett .dl{display:grid;gap:6px;margin-top:11px}
-.dett .dr{display:grid;grid-template-columns:minmax(0,1fr) 90px 52px;gap:9px;align-items:center;font-size:12.5px}
-.dett .dr .nm{display:flex;align-items:center;gap:6px;font-weight:700;min-width:0}
+.dett .dr{display:grid;grid-template-columns:minmax(0,1fr) 90px 52px;gap:9px;align-items:center;font-size:13px}
+.dett .dr .nm{display:flex;align-items:center;gap:7px;font-weight:600;min-width:0}
 .dett .dr .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dett .dr .nm i{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
-.dett .dr .tk{height:7px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
+.dett .dr .tk{height:6px;border-radius:1px;background:rgba(255,255,255,.06);overflow:hidden}
 .dett .dr .tk b{display:block;height:100%}
-.dett .dr .vv{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
-.dett .cmp{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--t2);line-height:1.6}
-.dett .cmp b{color:var(--t1);font-variant-numeric:tabular-nums}
-.maplist h4{margin:0 0 8px;font:800 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
-.maplist .rows{display:grid;gap:2px;max-height:min(70vh,700px);overflow:auto;padding-right:3px}
-.ufrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;align-items:center;padding:6px 9px;border-radius:9px;font-size:12.5px;cursor:pointer;border:1px solid transparent}
-.ufrow:hover,.ufrow.sel{background:rgba(255,255,255,.055);border-color:var(--line)}
-.ufrow.mute{opacity:.6}
-.ufrow .ln{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.dett .dr .vv{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.dett .cmp{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--t2);line-height:1.6}
+.dett .cmp b{color:var(--t1);font-weight:600;font-variant-numeric:tabular-nums}
+.maplist .rows{display:grid;max-height:min(70vh,700px);overflow:auto;padding-right:3px}
+.ufrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:6px 8px;border-radius:var(--r-s);font-size:13px;cursor:pointer;border-bottom:1px solid var(--line)}
+.ufrow:hover,.ufrow.sel{background:rgba(255,255,255,.04)}
+.ufrow.sel{box-shadow:inset 2px 0 0 var(--white)}
+.ufrow.mute{color:var(--t3)}
+.ufrow .ln{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .ufrow .ln i{width:8px;height:8px;border-radius:2px;flex:0 0 8px}
-.ufrow .lp{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ufrow .lc{color:var(--t3);font-size:11px;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
-.cerca{width:100%;margin:0 0 8px;background:rgba(0,0,0,.32);border:1px solid var(--line-2);color:var(--t1);border-radius:9px;padding:8px 10px;font:13px var(--sans)}
-.mapnote{padding:12px 18px 16px;color:var(--t3);font-size:11.5px;line-height:1.55;margin:0}
+.ufrow .lp{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ufrow .lc{color:var(--t3);font-size:11.5px;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+.cerca{width:100%;margin:0 0 8px;background:var(--bg);border:1px solid var(--line-2);color:var(--t1);border-radius:var(--r-s);padding:7px 10px;font:13px var(--sans)}
+.mapnote{padding:12px 18px 16px;color:var(--t3);font-size:12px;line-height:1.55;margin:0;max-width:120ch}
 
-/* ---------- barre candidati (1º turno) ---------- */
-.bars{padding:6px 18px 16px;display:grid;gap:9px}
-.bar-row{display:grid;grid-template-columns:minmax(130px,210px) minmax(0,1fr) 62px 100px;gap:10px;align-items:center}
-.bar-row .nm{display:flex;align-items:center;gap:7px;font-weight:700;font-size:13px;min-width:0}
+/* ---------- barre dei candidati (primo turno) ---------- */
+.bars{padding:8px 18px 14px;display:grid;gap:8px}
+.bar-row{display:grid;grid-template-columns:minmax(130px,210px) minmax(0,1fr) 62px 96px;gap:12px;align-items:center}
+.bar-row .nm{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px;min-width:0}
 .bar-row .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-row .nm small{color:var(--t3);font-weight:600;font-size:11px}
-.bar-row .nm i{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
-.track{height:18px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden;position:relative}
-.track b{display:block;height:100%;border-radius:6px}
-.bar-row .vv{text-align:right;font:700 15px/1 var(--serif)}
-.bar-row .dd{text-align:right;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--t3);white-space:nowrap}
+.bar-row .nm small{color:var(--t3);font-weight:500;font-size:11.5px}
+.bar-row .nm i{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
+.track{height:14px;border-radius:2px;background:rgba(255,255,255,.05);position:relative}
+.track b{display:block;height:100%;border-radius:2px}
+.bar-row .vv{text-align:right;font:600 14px/1 var(--sans);font-variant-numeric:tabular-nums}
+.bar-row .dd{text-align:right;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--t3);white-space:nowrap}
 .testo{padding:4px 18px 14px;color:var(--t2);font-size:13.5px;line-height:1.6;max-width:90ch}
-.testo b{color:var(--t1)}
-.metodo{padding:4px 18px 18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.metodo div{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:rgba(255,255,255,.025);font-size:12.5px;color:var(--t2);line-height:1.55}
-.metodo h4{margin:0 0 6px;font:700 14px/1.3 var(--serif);color:var(--t1)}
+.testo b{color:var(--t1);font-weight:600}
+.metodo{padding:8px 18px 14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.metodo div{font-size:13px;color:var(--t2);line-height:1.6}
+.metodo h4{margin:0 0 6px;font:600 14px/1.3 var(--sans);color:var(--t1)}
 
 /* ---------- redazione ---------- */
 body:not(.redazione) .solo-red{display:none!important}
-.red-grid{padding:12px 18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.red-grid{padding:12px 18px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .fld{margin:0 0 11px}
-.fld label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin:0 0 5px;font-weight:800}
-.fld input{width:100%;background:rgba(0,0,0,.32);border:1px solid var(--line-2);color:var(--t1);border-radius:9px;padding:9px 11px;font-size:14px;font-family:var(--sans)}
-.fld input:focus{outline:2px solid rgba(242,210,75,.55);outline-offset:0}
+.fld label{display:block;font-size:12.5px;color:var(--t2);margin:0 0 5px;font-weight:500}
+.fld input{width:100%;background:var(--bg);border:1px solid var(--line-2);color:var(--t1);border-radius:var(--r-s);padding:8px 10px;font:14px var(--sans)}
 .red-actions{display:flex;gap:8px;padding:4px 18px 16px;flex-wrap:wrap;align-items:center}
 .red-actions span{font-size:12px;color:var(--t3)}
-footer{display:flex;justify-content:space-between;gap:14px;color:var(--t3);font-size:11px;padding:26px 4px 0;flex-wrap:wrap}
+footer{display:flex;justify-content:space-between;gap:14px;color:var(--t3);font-size:12px;padding:22px 0 0;margin-top:8px;border-top:1px solid var(--line);flex-wrap:wrap}
 footer a{color:var(--t2)}
 
-/* ---------- card per X ---------- */
-.gencard{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.03);margin:0 0 18px}
-.gencard canvas{display:block;width:100%;height:auto;background:#06150f}
+/* ---------- card per i social ---------- */
+.gencard{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--s1);margin:0 0 18px}
+.gencard canvas{display:block;width:100%;height:auto;background:#0b0f11}
+.gencard.ig canvas{max-width:560px;margin:0 auto}
 .gencard .bar2{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-top:1px solid var(--line);flex-wrap:wrap}
-.gencard .bar2 b{font-size:13px}
-.gencard .post{border-top:1px solid var(--line);padding:11px 13px;background:rgba(0,0,0,.16)}
-.gencard .post textarea{width:100%;height:76px;resize:vertical;background:rgba(0,0,0,.3);border:1px solid var(--line-2);color:var(--t1);border-radius:9px;padding:9px 10px;font:14px/1.5 var(--sans)}
+.gencard .bar2 b{font-size:13.5px;font-weight:600}
+.gencard .post{border-top:1px solid var(--line);padding:11px 13px;background:var(--s2)}
+.gencard .post textarea{width:100%;height:76px;resize:vertical;background:var(--bg);border:1px solid var(--line-2);color:var(--t1);border-radius:var(--r-s);padding:8px 10px;font:14px/1.5 var(--sans)}
 .gencard .post .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px}
-.gencard .post .cnt{font-size:11.5px;color:var(--t3);font-variant-numeric:tabular-nums}
-.gencard .post .cnt.over{color:var(--red);font-weight:800}
+.gencard .post .cnt{font-size:12px;color:var(--t3);font-variant-numeric:tabular-nums}
+.gencard .post .cnt.over{color:var(--red);font-weight:700}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
 .card-grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
-.side{display:grid;gap:14px;position:sticky;top:74px}
+.side{display:grid;gap:14px;position:sticky;top:70px}
 .side .card{padding-bottom:14px}
 .side .inner{padding:0 16px}
 
-/* ---------- responsive ---------- */
+/* ---------- schermi stretti ---------- */
 @media(max-width:1080px){
   .main-grid,.card-grid,.grid2{grid-template-columns:1fr}
   .side{position:static}
@@ -287,31 +320,79 @@ footer a{color:var(--t2)}
   .mapside{max-width:none;justify-self:stretch}
   .mapside.l{order:3}
   .mapside.r{order:2}
-  .maplist .rows{max-height:340px}
-  .metodo{grid-template-columns:1fr}
+  .maplist .rows{max-height:360px}
+  .metodo{grid-template-columns:1fr;gap:14px}
+  .hero{grid-template-columns:1fr}
+  .hero-side{justify-items:start}
+  .hero .metaline,.social{justify-content:flex-start}
+  .red-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:760px){
   .kpis{grid-template-columns:1fr 1fr}
+  .kpi:nth-child(3){border-left:0}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
   .topbar-in{gap:9px}
   .brand em{display:none}
-  .livechip{order:3;margin-left:0;width:100%;font-size:11.5px}
-  table{min-width:780px}
+  .livechip{order:3;margin-left:0;width:100%;font-size:12px}
+  table{min-width:700px}
   th,td{padding-left:7px;padding-right:7px}
   th:first-child,td:first-child{padding-left:14px}
-  .bar-row{grid-template-columns:110px minmax(0,1fr) 50px 76px;gap:7px}
+  .bar-row{grid-template-columns:104px minmax(0,1fr) 50px 76px;gap:8px}
   .bar-row .nm{font-size:12px}
   .maparea{padding-left:14px;padding-right:14px}
-  .mapstage{width:100%}
-  .mapstage svg{width:100%;height:auto;max-height:70vh}
-  .manca .mr{grid-template-columns:minmax(0,104px) minmax(0,1fr) 78px}
+  .manca .mr{grid-template-columns:minmax(0,108px) minmax(0,1fr) 80px;gap:10px}
   .red-grid{grid-template-columns:1fr 1fr}
-  .hero:after{display:none}
-  .duello{gap:8px}
-  .cand{padding:11px 12px}
+}
+@media(max-width:560px){
+  /* tabelle compatte: le colonne secondarie si nascondono */
+  table{min-width:0}
+  .c-sec{display:none}
+  th,td{padding-left:6px;padding-right:6px;font-size:13px}
+  .mini,.rng,td .sub,th small{display:none}
+  th{white-space:normal}
+  td:first-child{min-width:92px}
+  .tablewrap{padding-top:6px}
+  /* mappa larga quanto lo schermo, altezza dal rapporto dei lati */
+  .maparea{padding-left:10px;padding-right:10px}
+  .mapstage{width:100%}
+  .mapstage svg{width:100%;height:auto;max-height:72vh}
+  .mapside.r .dett{order:-1}
+  .seg button{padding:8px 11px;font-size:12.5px}
+  .segs{justify-content:flex-start}
+  .cardhead{padding:14px 14px 0}
+  .subcopy{padding:0 14px}
+  .methodnote,.mapnote{padding:6px 14px 14px}
+  .bars,.manca,.duello,.metodo,.testo,.legenda{padding-left:14px;padding-right:14px}
+  .split{margin-left:14px;margin-right:14px}
+  .splitl{padding-left:14px;padding-right:14px}
+  .proj,.mancatop{margin-left:14px;margin-right:14px}
+  .prob{margin-left:14px;margin-right:14px}
+  .verdetto{padding:16px 14px 18px}
+  .hero{padding:18px 0 16px}
+  .hero p{font-size:13.5px}
+  .cand .cp{font-size:36px}
+  .bar-row{grid-template-columns:118px minmax(0,1fr) 54px;gap:8px}
+  .bar-row .dd,.bar-row .nm small{display:none}
+  .cand .cn{font-size:12px}
+  /* niente zoom automatico di iOS sui campi */
+  .cerca,.fld input,select{font-size:16px}
+  .social{display:grid;gap:8px;justify-items:stretch;width:100%;grid-template-columns:minmax(0,1fr)}
+  .social-btns{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:100%;max-width:330px}
+  .sbtn{width:auto;height:auto;aspect-ratio:1;flex:none;font-size:15px}
+  .hero-side{width:100%;justify-items:stretch}
+  .provabar{font-size:12.5px;padding:10px 12px}
+  .provabar input[type=range]{flex:1 1 100%;order:2}
+  #forkSvg,#curvaSvg{padding:4px 2px 0}
 }
 @media(max-width:420px){
+  .kpi{padding:12px 14px}
+  .kpi strong{font-size:21px}
+  .kpi small{font-size:11.5px}
+  .tabs button{padding:6px 10px;font-size:12.5px}
+}
+@media(max-width:340px){
   .kpis{grid-template-columns:1fr}
-  .tabs button{padding:7px 11px;font-size:12px}
+  .kpi+.kpi{border-left:0;border-top:1px solid var(--line)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -324,7 +405,7 @@ footer a{color:var(--t2)}
   <div class="tabs" role="tablist">
     <button role="tab" id="tabbtn-live" aria-selected="true" aria-controls="tab-live">Ballottaggio</button>
     <button role="tab" id="tabbtn-t1" aria-selected="false" aria-controls="tab-t1">Primo turno</button>
-    <button role="tab" id="tabbtn-card" aria-selected="false" aria-controls="tab-card" class="solo-red">Card per X</button>
+    <button role="tab" id="tabbtn-card" aria-selected="false" aria-controls="tab-card" class="solo-red">Card</button>
   </div>
   <div class="livechip"><span id="feedDot" class="dot"></span><span id="feedStatus">Avvio…</span></div>
 </div></div>
@@ -335,14 +416,31 @@ footer a{color:var(--t2)}
 <section id="tab-live" role="tabpanel" aria-labelledby="tabbtn-live">
 
   <header class="hero">
-    <div class="eyebrow" id="heroEyebrow">Ballottaggio presidenziale · domenica 25 ottobre 2026</div>
-    <h1 id="heroTitle">Lula contro Flávio Bolsonaro</h1>
-    <p id="heroText">Lo spoglio in diretta dai file del Tribunale superiore elettorale, stato per stato, e una proiezione del risultato finale che si aggiorna a ogni file: la forchetta si stringe man mano che si contano i voti. Le urne chiudono alle 17 di Brasília, le 21 in Italia; i primi dati arrivano pochi minuti dopo.</p>
-    <div class="metaline">
-      <span id="lastUpdate" class="pill neutral">In attesa del primo file</span>
-      <span id="testBadge" class="pill danger hidden">PROVA</span>
-      <button id="refreshBtn" class="sm">Aggiorna ora</button>
-      <button id="pauseBtn" class="sm">Metti in pausa</button>
+    <div class="hero-main">
+      <div class="eyebrow" id="heroEyebrow">Ballottaggio presidenziale, domenica 25 ottobre 2026</div>
+      <h1 id="heroTitle">Lula contro Flávio Bolsonaro</h1>
+      <p id="heroText">Lo spoglio in diretta dai file del Tribunale superiore elettorale, stato per stato, con la proiezione del risultato finale e la sua forchetta, che si stringe man mano che si contano i voti. Le urne chiudono alle 17 di Brasília, le 21 in Italia.</p>
+    </div>
+    <div class="hero-side">
+      <div class="metaline">
+        <span id="lastUpdate" class="pill neutral">In attesa del primo file</span>
+        <span id="testBadge" class="pill danger hidden">Prova</span>
+        <button id="refreshBtn" class="sm">Aggiorna ora</button>
+        <button id="pauseBtn" class="sm">Metti in pausa</button>
+      </div>
+      <div class="social" aria-label="Condividi la pagina">
+        <span class="social-lab">Condividi</span>
+        <div class="social-btns">
+          <a class="sbtn" data-rete="x" href="#" target="_blank" rel="noopener" aria-label="Condividi su X" title="X"><i class="bi bi-twitter-x"></i></a>
+          <a class="sbtn" data-rete="threads" href="#" target="_blank" rel="noopener" aria-label="Condividi su Threads" title="Threads"><i class="bi bi-threads"></i></a>
+          <a class="sbtn" data-rete="facebook" href="#" target="_blank" rel="noopener" aria-label="Condividi su Facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="sbtn" data-rete="linkedin" href="#" target="_blank" rel="noopener" aria-label="Condividi su LinkedIn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a class="sbtn" data-rete="telegram" href="#" target="_blank" rel="noopener" aria-label="Condividi su Telegram" title="Telegram"><i class="bi bi-telegram"></i></a>
+          <a class="sbtn" data-rete="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Condividi su WhatsApp" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <button class="sbtn" id="sLink" type="button" aria-label="Copia il link" title="Copia il link"><i class="bi bi-link-45deg"></i></button>
+        </div>
+        <span class="social-esito" id="sEsito" role="status"></span>
+      </div>
     </div>
   </header>
 
@@ -351,7 +449,7 @@ footer a{color:var(--t2)}
     <input id="provaRange" type="range" min="0" max="330" value="80" step="2">
     <b id="provaOra">18:20</b>
     <button id="provaPlay" class="sm">Avvia lo scorrimento</button>
-    <label style="display:flex;gap:6px;align-items:center">Risultato vero <select id="provaScen">
+    <label>Risultato vero <select id="provaScen">
       <option value="0.475">Lula 47,5%</option><option value="0.495">Lula 49,5%</option>
       <option value="0.505" selected>Lula 50,5%</option><option value="0.525">Lula 52,5%</option></select></label>
     <button id="provaNuova" class="sm">Nuova simulazione</button>
@@ -370,10 +468,10 @@ footer a{color:var(--t2)}
 
   <section class="main-grid">
     <article class="card">
-      <div class="cardhead"><div><span class="kicker" id="duelloKicker">In attesa</span><h2>Il testa a testa</h2></div><span class="pill neutral" id="duelloPill">voti validi</span></div>
+      <div class="cardhead"><h2>Il testa a testa</h2><span class="cmeta" id="duelloKicker">In attesa</span></div>
       <div class="duello">
-        <div class="cand" id="cL" style="--c:var(--lula)"><div class="cn">Lula · PT</div><div class="cp" id="pL">—</div><div class="cv" id="vL">—</div></div>
-        <div class="cand dx" id="cF" style="--c:var(--flavio)"><div class="cn">Flávio Bolsonaro · PL</div><div class="cp" id="pF">—</div><div class="cv" id="vF">—</div></div>
+        <div class="cand" id="cL" style="--c:var(--lula)"><div class="cn"><i></i>Lula · PT</div><div class="cp" id="pL">—</div><div class="cv" id="vL">—</div></div>
+        <div class="cand dx" id="cF" style="--c:var(--flavio)"><div class="cn">Flávio Bolsonaro · PL<i></i></div><div class="cp" id="pF">—</div><div class="cv" id="vF">—</div></div>
       </div>
       <div class="split" id="split"><b id="splitL" style="width:50%;background:var(--lula)"></b><b id="splitF" style="width:50%;background:var(--flavio)"></b><i class="mid"></i></div>
       <div class="splitl"><span>voti contati</span><span>50%</span><span id="splitInfo">—</span></div>
@@ -387,37 +485,37 @@ footer a{color:var(--t2)}
     </article>
 
     <article class="card">
-      <div class="cardhead"><div><span class="kicker">Lungo la notte</span><h2>La forchetta che si stringe</h2></div><span class="pill neutral" id="forkPill">quota di Lula sui voti validi</span></div>
+      <div class="cardhead"><h2>La forchetta che si stringe</h2><span class="cmeta" id="forkPill">quota di Lula sui voti validi</span></div>
       <svg id="forkSvg" viewBox="0 0 640 330" role="img" aria-label="Proiezione e voti contati al crescere dello scrutinio"></svg>
       <div class="legenda">
-        <span><i style="background:rgba(242,210,75,.28)"></i>forchetta al 95%</span>
-        <span><i style="background:rgba(242,210,75,.55)"></i>all’80%</span>
-        <span><i style="background:var(--acc);height:3px"></i>proiezione</span>
-        <span><i style="background:#fff;height:3px"></i>voti contati</span>
-        <span><i style="background:#7e8f86;height:2px"></i>primo turno, come si mosse il conteggio</span>
+        <span><i style="background:rgba(244,246,246,.18)"></i>forchetta al 95%</span>
+        <span><i style="background:rgba(244,246,246,.34)"></i>all’80%</span>
+        <span><i style="background:#f4f6f6;height:3px"></i>proiezione</span>
+        <span><i style="background:#f2c14e;height:3px"></i>voti contati</span>
+        <span><i style="background:#6c777d;height:2px"></i>primo turno, come si mosse il conteggio</span>
       </div>
-      <p class="methodnote" id="forkNote">Sull’asse orizzontale le sezioni scrutinate. La linea bianca è la quota di Lula fra i voti già contati; quella gialla la proiezione del risultato finale. La linea grigia mostra come si mosse la stessa quota durante lo spoglio del primo turno: i voti contati all’inizio sottostimano Lula.</p>
+      <p class="methodnote" id="forkNote">Sull’asse orizzontale le sezioni scrutinate. La linea gialla è la quota di Lula fra i voti già contati, quella bianca la proiezione del risultato finale con la sua forchetta. La linea grigia punteggiata mostra come si mosse la stessa quota durante lo spoglio del primo turno: i voti contati all’inizio sottostimano Lula.</p>
     </article>
   </section>
 
   <section class="grid2">
     <article class="card">
-      <div class="cardhead"><div><span class="kicker">Il non scrutinato</span><h2>Cosa manca da contare</h2></div><span class="pill neutral" id="mancaPill">stima</span></div>
+      <div class="cardhead"><h2>Cosa manca da contare</h2><span class="cmeta" id="mancaPill">stima</span></div>
       <div class="mancatop" id="mancaTop">I voti ancora da contare, regione per regione, e come avevano votato le stesse regioni al primo turno.</div>
       <div id="manca" class="manca"></div>
       <p class="methodnote">Voti validi ancora da contare stimati dalle sezioni mancanti e dall’affluenza osservata. Sotto ogni valore, la quota di Lula sui voti dei due candidati al primo turno nella stessa regione.</p>
     </article>
     <article class="card">
-      <div class="cardhead"><div><span class="kicker">Rispetto al 4 ottobre</span><h2>Chi si sposta</h2></div><span class="pill neutral">quota di Lula fra i due</span></div>
+      <div class="cardhead"><h2>Chi si sposta</h2><span class="cmeta">quota di Lula fra i due</span></div>
       <p class="subcopy">Quanto cambia, stato per stato, la quota di Lula sui voti dei due candidati fra il primo turno e i voti contati finora. Al primo turno l’altro 7,8% andò soprattutto a Cury, Renan Santos e Caiado.</p>
       <div id="swingBox" class="manca"></div>
       <p class="methodnote">Solo gli stati con almeno il 5% delle sezioni. Nelle prime ore il confronto è distorto dall’ordine di arrivo: le sezioni che arrivano prima, dentro ogni stato, al primo turno erano più favorevoli a Flávio.</p>
     </article>
   </section>
 
-  <section class="card" style="margin-bottom:14px">
+  <section class="card blocco">
     <div class="cardhead">
-      <div><span class="kicker">Territorio</span><h2>La mappa degli stati</h2></div>
+      <h2>La mappa degli stati</h2>
       <div class="seg" id="mapModoB">
         <button data-m="conto" aria-pressed="true">Voti contati</button>
         <button data-m="proiezione" aria-pressed="false">Proiezione</button>
@@ -429,14 +527,14 @@ footer a{color:var(--t2)}
     <p class="mapnote" id="mapNoteB">Il voto all’estero non ha un poligono: compare nell’elenco e nella tabella. L’intensità del colore cresce con il distacco fra i due candidati; gli stati con meno del 5% delle sezioni sono più chiari.</p>
   </section>
 
-  <section class="card" style="margin-bottom:14px">
-    <div class="cardhead"><div><span class="kicker">Il dettaglio</span><h2>Stato per stato</h2></div><span class="pill neutral" id="tabPill">clic su una colonna per ordinare</span></div>
+  <section class="card blocco">
+    <div class="cardhead"><h2>Stato per stato</h2><span class="cmeta" id="tabPill">clic su una colonna per ordinare</span></div>
     <div class="tablewrap"><table id="ufTable"></table></div>
     <p class="methodnote">Quote sui voti validi, che al ballottaggio sono solo quelli dei due candidati. La proiezione per stato è la media delle simulazioni, fra parentesi l’intervallo all’80%. «Da contare» è la stima dei voti validi ancora mancanti.</p>
   </section>
 
-  <section class="card solo-red" style="margin-bottom:14px" id="redPanel">
-    <div class="cardhead"><div><span class="kicker">Redazione</span><h2>Strumenti</h2></div><span class="pill neutral">solo in questo browser</span></div>
+  <section class="card blocco solo-red" id="redPanel">
+    <div class="cardhead"><h2>Strumenti</h2><span class="cmeta">solo in questo browser</span></div>
     <p class="subcopy">Il sondaggio di partenza conta solo prima dei voti veri: con l’1–2% delle sezioni il modello lo ha già quasi dimenticato. Se il feed si blocca, importa i file JSON del TSE (anche tutti insieme, uno per stato) scaricati a mano da resultados.tse.jus.br, oppure inserisci i totali nazionali.</p>
     <div class="red-grid">
       <div class="fld"><label for="sLula">Sondaggio: Lula % validi</label><input id="sLula" inputmode="decimal" placeholder="48"></div>
@@ -455,14 +553,14 @@ footer a{color:var(--t2)}
     </div>
   </section>
 
-  <section class="card" style="margin-bottom:14px">
-    <div class="cardhead"><div><span class="kicker">Metodo</span><h2>Come funziona la proiezione</h2></div></div>
+  <section class="card blocco">
+    <div class="cardhead"><h2>Come funziona la proiezione</h2></div>
     <div class="metodo">
       <div><h4>Il problema</h4>I voti non arrivano a caso. Al primo turno sono arrivati prima Sud, Centro-Ovest e i piccoli stati del Nord, poi il Nordeste; e dentro ogni stato le sezioni contate per prime erano più favorevoli a Flávio. Con il 14% delle sezioni Flávio era avanti di 10,8 punti, alla fine di 1,9. Nel 2022 Bolsonaro è stato in testa fino al 67% dello spoglio del ballottaggio, poi ha vinto Lula.</div>
       <div><h4>La correzione</h4>Il modello confronta ogni stato con se stesso al primo turno: misura di quanto si è spostata la quota di Lula fra i due candidati nei voti già contati, corregge l’effetto dell’ordine di arrivo dentro lo stato (stimato sul primo turno, e ricalcolato durante la notte dai lotti che arrivano) e lo applica alle sezioni che mancano. Gli stati senza dati prendono lo spostamento medio della loro regione e del paese.</div>
       <div><h4>La forchetta</h4>Ogni aggiornamento rifà 4.000 simulazioni dei voti mancanti, con l’incertezza sullo spostamento di ogni stato, sull’ordine di arrivo e sull’affluenza. La forchetta contiene il 95% (o l’80%) dei risultati simulati e si stringe man mano che resta meno da contare. Provato su 150 notti simulate con i tempi veri del primo turno: il risultato vero è rimasto nella forchetta al 95% in almeno 98 casi su 100, a ogni ora; l’errore medio scende da circa un punto con il 3% delle sezioni a due decimi con il 40%. La forchetta è volutamente prudente: la notte vera può essere più disordinata di una simulata.</div>
     </div>
-    <p class="methodnote" id="metodoNote">Prima dei voti la proiezione parte dal sondaggio indicato sotto; i voti veri lo sostituiscono rapidamente. È una stima statistica, non un risultato: il risultato è quello del TSE.</p>
+    <p class="methodnote" id="metodoNote">Prima dei voti la proiezione parte dall’ultimo sondaggio (oggi Datafolha del 6–7 ottobre: Lula 48% dei voti validi); i voti veri lo sostituiscono rapidamente. È una stima statistica, non un risultato: il risultato è quello del TSE.</p>
   </section>
 
   <footer><span>Voti: Tribunale superiore elettorale (TSE), resultados.tse.jus.br · Primo turno: totalizzazione TSE del 5 ottobre 2026 · Curva dello spoglio del primo turno: ricostruzione dai boletins de urna di Gabriel-Alexandre/apuracao-eleicoes-2026 · Mappe: IBGE</span><span id="footProxy">—</span></footer>
@@ -471,9 +569,11 @@ footer a{color:var(--t2)}
 <!-- ============================ TAB 2 — PRIMO TURNO ============================ -->
 <section id="tab-t1" role="tabpanel" aria-labelledby="tabbtn-t1" class="hidden">
   <header class="hero">
-    <div class="eyebrow">Primo turno · domenica 4 ottobre 2026 · risultato definitivo</div>
-    <h1>Flávio 47,0%, Lula 45,2%</h1>
-    <p>Nessuno supera la metà dei voti validi: Flávio Bolsonaro e Lula vanno al ballottaggio del 25 ottobre. Flávio vince in 14 stati e nel Distretto federale, Lula in 12 (in Amapá per 225 voti). L’astensione arriva al 21,1%, un record.</p>
+    <div class="hero-main">
+      <div class="eyebrow">Primo turno, domenica 4 ottobre 2026 · risultato definitivo</div>
+      <h1>Flávio 47,0%, Lula 45,2%</h1>
+      <p>Nessuno supera la metà dei voti validi: Flávio Bolsonaro e Lula vanno al ballottaggio del 25 ottobre. Flávio vince in 14 stati e nel Distretto federale, Lula in 12 (in Amapá per 225 voti). L’astensione arriva al 21,1%, un record.</p>
+    </div>
   </header>
 
   <section class="kpis">
@@ -485,26 +585,26 @@ footer a{color:var(--t2)}
 
   <section class="grid2">
     <article class="card">
-      <div class="cardhead"><div><span class="kicker">Risultato nazionale</span><h2>I dodici candidati</h2></div><span class="pill neutral">% dei voti validi</span></div>
+      <div class="cardhead"><h2>I dodici candidati</h2><span class="cmeta">% dei voti validi</span></div>
       <div class="bars" id="t1Bars"></div>
       <p class="methodnote">Totalizzazione del TSE del 5 ottobre alle 12:51, con il 100% delle sezioni.</p>
     </article>
     <article class="card">
-      <div class="cardhead"><div><span class="kicker">La notte del 4 ottobre</span><h2>Perché il primo vantaggio inganna</h2></div><span class="pill neutral">distacco Flávio − Lula</span></div>
+      <div class="cardhead"><h2>Perché il primo vantaggio inganna</h2><span class="cmeta">distacco Flávio − Lula</span></div>
       <svg id="curvaSvg" viewBox="0 0 640 330" role="img" aria-label="Distacco durante lo spoglio"></svg>
       <div class="legenda">
-        <span><i style="background:var(--acc);height:3px"></i>2026, primo turno (Flávio − Lula)</span>
-        <span><i style="background:#b9c7bf;height:2px"></i>2022, ballottaggio (Bolsonaro − Lula)</span>
-        <span><i style="background:#6f8479;height:2px"></i>2022, primo turno</span>
+        <span><i style="background:#f4f6f6;height:3px"></i>2026, primo turno (Flávio − Lula)</span>
+        <span><i style="background:#9ba6ab;height:2px"></i>2022, ballottaggio (Bolsonaro − Lula)</span>
+        <span><i style="background:#5b666b;height:2px"></i>2022, primo turno</span>
       </div>
       <div class="testo" style="padding-top:10px">Con il 14% delle sezioni Flávio era avanti di <b>10,8 punti</b>; alle 19:06, al 64,8%, di 7,4; poi lo schermo del TSE è rimasto fermo per un’ora; alla fine il distacco era di <b>1,9 punti</b>. Circa il 70% del calo si spiega con l’ordine in cui arrivano gli stati (il Nordeste per ultimo), il resto con l’ordine dentro ciascuno stato. Lo stesso disegno si era visto nel 2022.</div>
     </article>
   </section>
 
-  <section class="card" style="margin-bottom:14px">
+  <section class="card blocco">
     <div class="cardhead">
-      <div><span class="kicker">Territorio</span><h2>La mappa del primo turno</h2></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+      <h2>La mappa del primo turno</h2>
+      <div class="segs">
         <div class="seg" id="mapLivT1"><button data-l="uf" aria-pressed="true">Stati</button><button data-l="mun" aria-pressed="false">Comuni</button></div>
         <div class="seg" id="mapModoT1"><button data-m="primo" aria-pressed="true">Lula o Flávio</button><button data-m="altri" aria-pressed="false">Gli altri candidati</button></div>
       </div>
@@ -513,8 +613,8 @@ footer a{color:var(--t2)}
     <p class="mapnote" id="mapNoteT1">—</p>
   </section>
 
-  <section class="card" style="margin-bottom:14px">
-    <div class="cardhead"><div><span class="kicker">Il dettaglio</span><h2>Il primo turno stato per stato</h2></div><span class="pill neutral">% dei voti validi</span></div>
+  <section class="card blocco">
+    <div class="cardhead"><h2>Il primo turno stato per stato</h2><span class="cmeta">% dei voti validi</span></div>
     <div class="tablewrap"><table id="t1Table"></table></div>
     <p class="methodnote">Gli «altri» sono i dieci candidati esclusi dal ballottaggio: soprattutto Augusto Cury (2,9%), Renan Santos (2,2%) e Ronaldo Caiado (2,2%). Per il voto all’estero la percentuale degli altri è ricavata per differenza.</p>
   </section>
@@ -524,15 +624,17 @@ footer a{color:var(--t2)}
 
 <!-- ============================ TAB 3 — CARD ============================ -->
 <section id="tab-card" role="tabpanel" aria-labelledby="tabbtn-card" class="hidden">
-  <header class="hero" style="padding:22px clamp(18px,3.2vw,30px)">
-    <div class="eyebrow">1600×900 · export PNG 3200×1800</div>
-    <h1 style="font-size:clamp(28px,5vw,44px);margin:9px 0 10px">Card per X</h1>
-    <p>Le card si compilano da sole con i dati della dashboard: proiezione, mappa degli stati e forchetta. Nessun dato va reinserito.</p>
+  <header class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">X 1600×900 · Instagram 1080×1350 · export PNG in doppia risoluzione</div>
+      <h1>Card per X e Instagram</h1>
+      <p>Le card si compilano da sole con i dati della dashboard: proiezione, mappa degli stati e forchetta. Scegli il formato, poi scarica o condividi: «Condividi» apre il menu del sistema con l’immagine e il testo (da lì Instagram, X, WhatsApp); dove non si può, scarica l’immagine e copia il testo.</p>
+    </div>
   </header>
   <div class="card-grid">
     <aside class="side">
       <div class="card">
-        <div class="cardhead"><div><span class="kicker">Testata</span><h2>Impostazioni</h2></div></div>
+        <div class="cardhead"><h2>Impostazioni</h2></div>
         <div class="inner" style="padding-top:12px">
           <div class="fld"><label for="cAmbito">Occhiello</label><input id="cAmbito" value="Brasile · ballottaggio del 25 ottobre 2026"></div>
           <div class="fld"><label for="cFirma">Firma</label><input id="cFirma" value="@FocusAmerica_it"></div>
@@ -540,12 +642,13 @@ footer a{color:var(--t2)}
         </div>
       </div>
       <div class="card">
-        <div class="cardhead"><div><span class="kicker">Titoli</span><h2>Uno per card</h2></div></div>
+        <div class="cardhead"><h2>Titoli, uno per card</h2></div>
         <div class="inner" style="padding-top:12px" id="cTitoli"></div>
       </div>
     </aside>
     <div>
       <div class="toolbar">
+        <div class="seg" id="cFormato" role="group" aria-label="Formato delle card"><button data-f="x" aria-pressed="true">X · 16:9</button><button data-f="ig" aria-pressed="false">Instagram · 4:5</button></div>
         <button class="primary" id="cScarica">Scarica le card</button>
         <button id="cAggiorna">Aggiorna anteprima</button>
         <button id="cCopia">Copia tutti i testi</button>
@@ -611,7 +714,7 @@ function nf(v, d = 0) {
 /* sezioni: mai «100%» finché manca anche una sola sezione */
 const fmtSez = c => c == null || !isFinite(c) ? '—' : c >= 1 ? '100%' : c >= 0.99 ? nf(Math.floor(c * 10000) / 100, 2) + '%' : nf(Math.floor(c * 1000) / 10, c < 0.1 ? 1 : 0) + '%';
 const pct = (v, d = 1) => v == null || !isFinite(v) ? '—' : nf(v * 100, d) + '%';
-const pti = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '±') + nf(Math.abs(v * 100), d);
+const pti = (v, d = 1) => { if (v == null || !isFinite(v)) return '—'; const a = Math.abs(v * 100); if (a < 0.5 * Math.pow(10, -d)) return nf(0, d); return (v > 0 ? '+' : '−') + nf(a, d); };
 function mln(v) {
   if (v == null || !isFinite(v)) return '—';
   if (Math.abs(v) >= 1e6) return nf(v / 1e6, Math.abs(v) >= 1e7 ? 1 : 2) + ' mln';
@@ -1086,8 +1189,8 @@ function renderHero() {
   if (PROVA) { lu.textContent = 'Prova · ore ' + $('provaOra').textContent + ' a Brasília'; lu.className = 'pill'; }
   else if (S.manuale) { lu.textContent = 'Totali inseriti a mano'; lu.className = 'pill danger'; }
   else if (S.aggiornato) { lu.textContent = 'File del TSE delle ' + oraBR(S.aggiornato) + ' a Brasília (' + oraIT(S.aggiornato) + ' in Italia)'; lu.className = 'pill'; }
-  if (ELE === '6257' && !PROVA) { $('testBadge').textContent = 'FEED DEL PRIMO TURNO · PROVA DEL PROXY'; $('testBadge').classList.remove('hidden'); }
-  if (PROVA) { $('testBadge').textContent = 'PROVA · NOTTE SIMULATA'; $('testBadge').classList.remove('hidden'); }
+  if (ELE === '6257' && !PROVA) { $('testBadge').textContent = 'Feed del primo turno: prova del proxy'; $('testBadge').classList.remove('hidden'); }
+  if (PROVA) { $('testBadge').textContent = 'Prova: notte simulata'; $('testBadge').classList.remove('hidden'); }
 }
 function renderKpi() {
   const C = contato();
@@ -1198,16 +1301,16 @@ function assiProiezione(a, b, P) {
   const W = larghProj(), x0 = 14, x1 = W - 14, X = v => x0 + (v - a) / (b - a) * (x1 - x0), y = 30, h = 26;
   let s = '<rect x="' + x0 + '" y="' + y + '" width="' + (X(0.5) - x0) + '" height="' + h + '" fill="' + FLAV.c + '" opacity=".13" rx="4"/>' +
     '<rect x="' + X(0.5) + '" y="' + y + '" width="' + (x1 - X(0.5)) + '" height="' + h + '" fill="' + LULA.c + '" opacity=".13" rx="4"/>';
-  s += '<text x="' + (x0 + 4) + '" y="20" fill="#7fa7f7" font-size="11" font-weight="800" letter-spacing="1">← VINCE FLÁVIO</text>';
-  s += '<text x="' + (x1 - 4) + '" y="20" fill="#f08b8e" font-size="11" font-weight="800" letter-spacing="1" text-anchor="end">VINCE LULA →</text>';
+  s += '<text x="' + (x0 + 4) + '" y="20" fill="#86a8f5" font-size="12" font-weight="600">← vince Flávio</text>';
+  s += '<text x="' + (x1 - 4) + '" y="20" fill="#f08b8e" font-size="12" font-weight="600" text-anchor="end">vince Lula →</text>';
   const passo = (b - a) > 0.2 ? 0.05 : (b - a) > 0.1 ? 0.02 : 0.01;
   for (let v = Math.ceil(a / passo - 1e-9) * passo; v <= b + 1e-9; v += passo) {
     s += '<line x1="' + X(v) + '" x2="' + X(v) + '" y1="' + (y + h) + '" y2="' + (y + h + 5) + '" stroke="#6f8479"/>' +
-      '<text x="' + X(v) + '" y="' + (y + h + 18) + '" fill="#8fa399" font-size="11" text-anchor="middle">' + nf(v * 100, 0) + '%</text>';
+      '<text x="' + X(v) + '" y="' + (y + h + 18) + '" fill="#7d878c" font-size="11" text-anchor="middle">' + nf(v * 100, 0) + '%</text>';
   }
   if (P) {
-    s += '<rect x="' + X(P.q025) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q975) - X(P.q025)) + '" height="' + (h - 6) + '" fill="#f2d24b" opacity=".35" rx="3"/>';
-    s += '<rect x="' + X(P.q10) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q90) - X(P.q10)) + '" height="' + (h - 6) + '" fill="#f2d24b" opacity=".6" rx="3"/>';
+    s += '<rect x="' + X(P.q025) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q975) - X(P.q025)) + '" height="' + (h - 6) + '" fill="#f4f6f6" opacity=".2" rx="2"/>';
+    s += '<rect x="' + X(P.q10) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q90) - X(P.q10)) + '" height="' + (h - 6) + '" fill="#f4f6f6" opacity=".42" rx="2"/>';
     s += '<line x1="' + X(P.media) + '" x2="' + X(P.media) + '" y1="' + (y - 3) + '" y2="' + (y + h + 3) + '" stroke="#fff" stroke-width="3"/>';
   }
   s += '<line x1="' + X(0.5) + '" x2="' + X(0.5) + '" y1="' + (y - 6) + '" y2="' + (y + h + 4) + '" stroke="#fff" stroke-dasharray="3 3" opacity=".7"/>';
@@ -1229,7 +1332,7 @@ function disegnaFork(W, H, T, o) {
   pts.forEach(p => { lo = Math.min(lo, p.a95, p.q); hi = Math.max(hi, p.b95, p.q); });
   const pad = 0.006; lo = Math.max(0.3, Math.floor((lo - pad) * 100) / 100); hi = Math.min(0.7, Math.ceil((hi + pad) * 100) / 100);
   const X = x => m.l + x * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
-  const col = o.colori || { t: '#8fa399', g: 'rgba(255,255,255,.07)' };
+  const col = o.colori || { t: '#7d878c', g: 'rgba(255,255,255,.07)' };
   let s = '';
   const passo = (hi - lo) > 0.12 ? 0.02 : (hi - lo) > 0.05 ? 0.01 : 0.005;
   for (let v = Math.ceil(lo / passo) * passo; v <= hi + 1e-9; v += passo) {
@@ -1248,22 +1351,22 @@ function disegnaFork(W, H, T, o) {
   s += '<defs><clipPath id="' + cid + '"><rect x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '"/></clipPath></defs>';
   if (!o.senzaRif) {
     const r = RIF_T1;
-    if (r.length > 1) s += '<polyline clip-path="url(#' + cid + ')" fill="none" stroke="#7e8f86" stroke-width="1.6" opacity=".8" points="' + r.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
+    if (r.length > 1) s += '<polyline clip-path="url(#' + cid + ')" fill="none" stroke="#6c777d" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round" points="' + r.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
   }
   if (pts.length) {
     const poly = (a, b) => pts.map(p => X(p.x).toFixed(1) + ',' + Y(p[a]).toFixed(1)).join(' ') + ' ' + pts.slice().reverse().map(p => X(p.x).toFixed(1) + ',' + Y(p[b]).toFixed(1)).join(' ');
     if (pts.length > 1) {
-      s += '<polygon points="' + poly('a95', 'b95') + '" fill="#f2d24b" opacity=".2"/>';
-      s += '<polygon points="' + poly('a80', 'b80') + '" fill="#f2d24b" opacity=".3"/>';
-      s += '<polyline fill="none" stroke="#fff" stroke-width="2" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.q).toFixed(1)).join(' ') + '"/>';
-      s += '<polyline fill="none" stroke="#f2d24b" stroke-width="2.6" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
+      s += '<polygon points="' + poly('a95', 'b95') + '" fill="#f4f6f6" opacity=".13"/>';
+      s += '<polygon points="' + poly('a80', 'b80') + '" fill="#f4f6f6" opacity=".2"/>';
+      s += '<polyline fill="none" stroke="#f2c14e" stroke-width="2" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.q).toFixed(1)).join(' ') + '"/>';
+      s += '<polyline fill="none" stroke="#f4f6f6" stroke-width="2.6" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
     }
     const u = pts[pts.length - 1];
-    s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f2d24b" stroke-width="5" opacity=".6"/>';
-    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#fff"/><circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f2d24b" stroke="#04120d" stroke-width="1.5"/>';
+    s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f4f6f6" stroke-width="5" opacity=".35"/>';
+    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/><circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f4f6f6" stroke="#04120d" stroke-width="1.5"/>';
     const lab = 'proiezione ' + nf(u.m * 100, 1) + '%';
     const lx = X(u.x) > W * 0.7 ? X(u.x) - 9 : X(u.x) + 9, an = X(u.x) > W * 0.7 ? 'end' : 'start';
-    s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f2d24b" font-size="' + (o.fs || 12) + '" font-weight="800" text-anchor="' + an + '">' + lab + '</text>';
+    s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f4f6f6" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
   } else if (!o.senzaVuoto) {
     s += '<text x="' + (W / 2) + '" y="' + (m.t + 40) + '" fill="' + col.t + '" font-size="13" text-anchor="middle">Il grafico si riempie a ogni nuovo file del TSE.</text>';
   }
@@ -1284,7 +1387,7 @@ function renderManca() {
   });
   const max = Math.max(...reg.map(r => r.resta), 1);
   box.innerHTML = reg.map(r => {
-    const q1 = r.L1 / (r.L1 + r.F1), c = mix('#55665e', q1 >= 0.5 ? LULA.c : FLAV.c, 0.35 + Math.abs(q1 - 0.5) * 2.2);
+    const q1 = r.L1 / (r.L1 + r.F1), c = mix('#4a5459', q1 >= 0.5 ? LULA.c : FLAV.c, 0.35 + Math.abs(q1 - 0.5) * 2.2);
     return '<div class="mr"><div class="nm">' + REGIONI[r.r] + '<small>' + (r.L + r.F ? 'ora Lula ' + pct(r.L / (r.L + r.F)) : 'nessun voto contato') + '</small></div>' +
       '<div class="tk"><b style="width:' + (r.resta / max * 100) + '%;background:' + c + '"></b></div>' +
       '<div class="vv">' + mln(r.resta) + '<small>1º turno ' + pct(q1, 0) + '</small></div></div>';
@@ -1323,10 +1426,10 @@ const COLONNE = [
   { k: 'c', t: 'Sezioni', f: r => r.c },
   { k: 'qL', t: 'Lula', s: 'contati', f: r => r.q },
   { k: 'qF', t: 'Flávio', s: 'contati', f: r => r.q == null ? null : 1 - r.q },
-  { k: 'sw', t: 'Lula vs 1º t.', s: 'punti, quota fra i due', f: r => r.q == null || r.c < 0.02 ? null : r.q - r.b.q },
+  { k: 'sw', sec: 1, t: 'Lula vs 1º t.', s: 'punti, quota fra i due', f: r => r.q == null || r.c < 0.02 ? null : r.q - r.b.q },
   { k: 'pr', t: 'Proiezione Lula', s: 'intervallo all’80%', f: r => r.p ? r.p.media : null },
-  { k: 'ra', t: 'Da contare', s: 'stima voti', f: r => r.p ? r.p.resta : null },
-  { k: 'V', t: '1º turno', s: 'Lula – Flávio', f: r => r.b.V }
+  { k: 'ra', sec: 1, t: 'Da contare', s: 'stima voti', f: r => r.p ? r.p.resta : null },
+  { k: 'V', sec: 1, t: '1º turno', s: 'Lula – Flávio', f: r => r.b.V }
 ];
 function righeUF() {
   const P = projVisibile() ? S.proj : null;
@@ -1344,20 +1447,20 @@ function renderTabella() {
     if (x == null) return 1; if (y == null) return -1;
     return typeof x === 'string' ? x.localeCompare(y) * S.ord.dir * -1 : (x - y) * S.ord.dir;
   });
-  const th = COLONNE.map(c => '<th data-k="' + c.k + '" class="' + (c.k === S.ord.col ? 'ord' : '') + '">' + c.t + (c.s ? '<small>' + c.s + '</small>' : '') + '</th>').join('');
+  const th = COLONNE.map(c => '<th data-k="' + c.k + '" class="' + (c.k === S.ord.col ? 'ord' : '') + (c.sec ? ' c-sec' : '') + '">' + c.t + (c.s ? '<small>' + c.s + '</small>' : '') + '</th>').join('');
   const tb = righe.map(r => {
     const sw = COLONNE[4].f(r);
-    return '<tr data-uf="' + r.b.uf + '"><td><b>' + esc(r.b.n) + '</b><span class="sub">' + REGIONI[r.b.r] + (r.b.uf !== 'ZZ' ? ' · ' + r.b.uf : '') + '</span></td>' +
+    return '<tr data-uf="' + r.b.uf + '"><td><b>' + esc(r.b.n) + '</b><span class="sub reg">' + REGIONI[r.b.r] + (r.b.uf !== 'ZZ' ? ' · ' + r.b.uf : '') + '</span></td>' +
       '<td>' + (r.c ? fmtSez(r.c) : '<span class="mute">—</span>') + '<span class="mini"><b style="width:' + (r.c * 100) + '%"></b></span></td>' +
       '<td class="' + (r.q != null && r.q > 0.5 ? 'cl' : '') + '">' + (r.q != null ? '<b>' + pct(r.q) + '</b><span class="sub">' + nf(r.L) + '</span>' : '<span class="mute">—</span>') + '</td>' +
       '<td class="' + (r.q != null && r.q < 0.5 ? 'cf' : '') + '">' + (r.q != null ? '<b>' + pct(1 - r.q) + '</b><span class="sub">' + nf(r.F) + '</span>' : '<span class="mute">—</span>') + '</td>' +
-      '<td class="' + (sw == null ? 'mute' : sw >= 0 ? 'cl' : 'cf') + '">' + (sw == null ? '—' : pti(sw)) + '</td>' +
+      '<td class="c-sec ' + (sw == null ? 'mute' : sw >= 0 ? 'cl' : 'cf') + '">' + (sw == null ? '—' : pti(sw)) + '</td>' +
       '<td>' + (r.p ? '<b>' + pct(r.p.media) + '</b><span class="rng">' + nf(r.p.q10 * 100, 1) + '–' + nf(r.p.q90 * 100, 1) + '</span>' : '<span class="mute">—</span>') + '</td>' +
-      '<td>' + (r.p ? (r.p.resta < 500 ? '<span class="mute">—</span>' : mln(r.p.resta)) : '<span class="mute">' + mln(r.b.V) + '</span>') + '</td>' +
-      '<td><span class="cl">' + nf(r.b.pL * 100, 1) + '</span> – <span class="cf">' + nf(r.b.pF * 100, 1) + '</span></td></tr>';
+      '<td class="c-sec">' + (r.p ? (r.p.resta < 500 ? '<span class="mute">—</span>' : mln(r.p.resta)) : '<span class="mute">' + mln(r.b.V) + '</span>') + '</td>' +
+      '<td class="c-sec"><span class="cl">' + nf(r.b.pL * 100, 1) + '</span> – <span class="cf">' + nf(r.b.pF * 100, 1) + '</span></td></tr>';
   }).join('');
   const C = contato(), P = projVisibile() ? S.proj : null;
-  const tot = C && (C.L + C.F) ? '<tr class="tot"><td>Brasile</td><td>' + fmtSez(C.c) + '</td><td class="cl">' + pct(C.L / (C.L + C.F)) + '</td><td class="cf">' + pct(C.F / (C.L + C.F)) + '</td><td>' + pti(C.L / (C.L + C.F) - B1_NAZ.q) + '</td><td>' + (P ? pct(P.media) + '<span class="rng">' + nf(P.q10 * 100, 1) + '–' + nf(P.q90 * 100, 1) + '</span>' : '—') + '</td><td>' + (P ? mln(P.resta) : '—') + '</td><td><span class="cl">45,2</span> – <span class="cf">47,0</span></td></tr>' : '';
+  const tot = C && (C.L + C.F) ? '<tr class="tot"><td>Brasile</td><td>' + fmtSez(C.c) + '</td><td class="cl">' + pct(C.L / (C.L + C.F)) + '</td><td class="cf">' + pct(C.F / (C.L + C.F)) + '</td><td class="c-sec">' + pti(C.L / (C.L + C.F) - B1_NAZ.q) + '</td><td>' + (P ? pct(P.media) + '<span class="rng">' + nf(P.q10 * 100, 1) + '–' + nf(P.q90 * 100, 1) + '</span>' : '—') + '</td><td class="c-sec">' + (P ? mln(P.resta) : '—') + '</td><td class="c-sec"><span class="cl">45,2</span> – <span class="cf">47,0</span></td></tr>' : '';
   $('ufTable').innerHTML = '<thead><tr>' + th + '</tr></thead><tbody>' + tb + tot + '</tbody>';
 }
 
@@ -1412,25 +1515,25 @@ function caricaComuni() {
   }).catch(e => { MUN_PROMESSA = null; throw e; });
   return MUN_PROMESSA;
 }
-const COL_VUOTO = '#1f2c27', COL_ND = '#2b3330';
+const COL_VUOTO = '#1f282d', COL_ND = '#2b3338';
 function coloreMargine(m, forte = 0.5) {
   if (m == null || !isFinite(m)) return COL_VUOTO;
   const t = 0.2 + 0.8 * clamp(Math.abs(m) / forte, 0, 1);
   return mix(COL_VUOTO, m >= 0 ? LULA.c : FLAV.c, t);
 }
-const coloreAltri = a => a == null ? COL_ND : mix(COL_VUOTO, '#f2d24b', 0.12 + 0.88 * clamp(a / 0.2, 0, 1));
+const coloreAltri = a => a == null ? COL_ND : mix(COL_VUOTO, '#e9b949', 0.12 + 0.88 * clamp(a / 0.2, 0, 1));
 const rampaMargine = forte => '<div class="ramp" style="background:linear-gradient(90deg,' + FLAV.c + ',' + coloreMargine(-forte * 0.35) + ',' + COL_VUOTO + ',' + coloreMargine(forte * 0.35) + ',' + LULA.c + ')"></div>';
 
 function Mappa(cfg) {
   const root = cfg.el;
   root.innerHTML =
     '<div class="mapside l maplist"><h4>' + cfg.titoloLista + '</h4><input class="cerca" placeholder="' + cfg.cerca + '" autocomplete="off"><div class="rows"></div></div>' +
-    '<div class="mapcol"><div class="mapstage"><svg role="img" aria-label="' + esc(cfg.aria) + '"><g class="ufl"></g><g class="munl"></g><g class="bordi"></g><g class="sigle"></g></svg>' +
-    '<span class="maphint">Tocca uno stato · rotellina o +/− per ingrandire</span>' +
+    '<div class="mapcol"><div class="mapstage"><svg role="img" aria-label="' + esc(cfg.aria) + '"><g class="ufl"></g><g class="munl"></g><g class="bordi"></g><g class="sigle"></g><g class="hil"></g></svg>' +
+    '<span class="maphint">Tocca uno stato · due dita, rotellina o +/− per ingrandire</span>' +
     '<div class="mapzoom"><button class="zi" title="Ingrandisci" aria-label="Ingrandisci">+</button><button class="zo" title="Riduci" aria-label="Riduci">−</button><button class="zr" title="Vista intera" aria-label="Torna alla vista intera">⤢</button></div></div></div>' +
     '<div class="mapside r"><div class="mapleg"></div><div class="dett"></div></div>';
   const svg = root.querySelector('svg'), stage = root.querySelector('.mapstage');
-  const gU = root.querySelector('.ufl'), gM = root.querySelector('.munl'), gB = root.querySelector('.bordi'), gS = root.querySelector('.sigle');
+  const gU = root.querySelector('.ufl'), gM = root.querySelector('.munl'), gB = root.querySelector('.bordi'), gS = root.querySelector('.sigle'), gH = root.querySelector('.hil');
   const lista = root.querySelector('.rows'), cerca = root.querySelector('.cerca'), leg = root.querySelector('.mapleg'), det = root.querySelector('.dett'), hint = root.querySelector('.maphint');
   const M = { sel: null, vista: null, munPronti: false };
   gU.innerHTML = GEO.uf.map(g => '<path d="' + g.d + '" data-uf="' + g.id + '"></path>').join('');
@@ -1451,17 +1554,48 @@ function Mappa(cfg) {
     setVista({ x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h });
   }
   setVista(V0());
-  let drag = null;
-  svg.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, v: { ...M.vista }, mosso: false, id: e.pointerId }; });
+  /* trascinamento con un dito o con il mouse, ingrandimento con due dita */
+  let drag = null, pinch = null;
+  const punti = new Map();
+  const inSvg = (cx, cy, v) => {
+    const r = svg.getBoundingClientRect(), k = Math.max(v.w / r.width, v.h / r.height);
+    const ox = (r.width - v.w / k) / 2, oy = (r.height - v.h / k) / 2;
+    return [v.x + (cx - r.left - ox) * k, v.y + (cy - r.top - oy) * k];
+  };
+  const distanza = () => { const [a, b] = [...punti.values()]; return Math.hypot(a.x - b.x, a.y - b.y); };
+  const centro = () => { const [a, b] = [...punti.values()]; return [(a.x + b.x) / 2, (a.y + b.y) / 2]; };
+  svg.addEventListener('pointerdown', e => {
+    punti.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (punti.size === 2) {
+      const [cx, cy] = centro();
+      pinch = { d: distanza(), v: { ...M.vista }, c: inSvg(cx, cy, M.vista) };
+      drag = null; svg.classList.remove('drag');
+      return;
+    }
+    drag = { x: e.clientX, y: e.clientY, v: { ...M.vista }, mosso: false, id: e.pointerId };
+  });
   svg.addEventListener('pointermove', e => {
-    if (!drag) return;
+    if (punti.has(e.pointerId)) punti.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && punti.size === 2) {
+      const f = distanza() / Math.max(pinch.d, 1), v = pinch.v;
+      const w = clamp(v.w / f, GEO.W / 60, GEO.W), h = w * GEO.H / GEO.W;
+      const [px, py] = pinch.c, [cx, cy] = centro();
+      /* il punto sotto le dita resta sotto le dita */
+      const r = svg.getBoundingClientRect(), k = Math.max(w / r.width, h / r.height);
+      const ox = (r.width - w / k) / 2, oy = (r.height - h / k) / 2;
+      setVista({ x: px - (cx - r.left - ox) * k, y: py - (cy - r.top - oy) * k, w, h });
+      return;
+    }
+    if (!drag) { if (e.pointerType === 'mouse') evidenziaSopra(e.target); return; }
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!drag.mosso && Math.hypot(dx, dy) < 5) return;
-    if (!drag.mosso) { drag.mosso = true; try { svg.setPointerCapture(drag.id); } catch (_) { } svg.classList.add('drag'); }
+    if (!drag.mosso) { drag.mosso = true; try { svg.setPointerCapture(drag.id); } catch (_) { } svg.classList.add('drag'); evidenziaSopra(null); }
     const r = svg.getBoundingClientRect(), k = Math.max(drag.v.w / r.width, drag.v.h / r.height);
     setVista({ ...drag.v, x: drag.v.x - dx * k, y: drag.v.y - dy * k });
   });
   const fine = e => {
+    punti.delete(e.pointerId);
+    if (punti.size < 2) pinch = null;
     if (!drag) return;
     if (!drag.mosso && e.type === 'pointerup') {
       const el = document.elementFromPoint(e.clientX, e.clientY), ds = el && el.dataset ? el.dataset : {};
@@ -1471,6 +1605,26 @@ function Mappa(cfg) {
     svg.classList.remove('drag'); drag = null;
   };
   svg.addEventListener('pointerup', fine); svg.addEventListener('pointercancel', fine);
+  svg.addEventListener('pointerleave', () => evidenziaSopra(null));
+  /* contorni su uno strato sopra tutto: la selezione e il passaggio del mouse */
+  let sopra = null;
+  function evidenziaSopra(el) {
+    const id = el && el.dataset ? (el.dataset.mun ? 'm' + el.dataset.mun : el.dataset.uf || null) : null;
+    if (id === sopra) return;
+    sopra = id; disegnaContorni();
+  }
+  function dDi(id) {
+    if (!id) return null;
+    const p = id.startsWith('m') ? gM.querySelector('path[data-mun="' + id.slice(1) + '"]') : gU.querySelector('path[data-uf="' + id + '"]');
+    return p ? p.getAttribute('d') : null;
+  }
+  function disegnaContorni() {
+    let h = '';
+    const ds = dDi(M.sel), dh = sopra && sopra !== M.sel ? dDi(sopra) : null;
+    if (dh) h += '<path class="ov-hover" d="' + dh + '"></path>';
+    if (ds) h += '<path class="ov-sel" d="' + ds + '"></path>';
+    gH.innerHTML = h;
+  }
   svg.addEventListener('wheel', e => {
     e.preventDefault();
     const r = svg.getBoundingClientRect(), v = M.vista, k = Math.max(v.w / r.width, v.h / r.height);
@@ -1489,9 +1643,10 @@ function Mappa(cfg) {
     root.querySelectorAll('svg path.sel').forEach(p => p.classList.remove('sel'));
     if (id) {
       const p = id.startsWith('m') ? gM.querySelector('path[data-mun="' + id.slice(1) + '"]') : gU.querySelector('path[data-uf="' + id + '"]');
-      if (p) { p.classList.add('sel'); p.parentNode.appendChild(p); }
+      if (p) p.classList.add('sel');
       if (centra) zoomSu(id.startsWith('m') ? GEO.munById[id.slice(1)] : GEO.ufById[id]);
     }
+    disegnaContorni();
     svg.classList.toggle('hassel', !!id && !id.startsWith('m') && cfg.livello() === 'uf');
     det.innerHTML = cfg.dettaglio(id);
     disegnaLista();
@@ -1517,10 +1672,10 @@ function Mappa(cfg) {
     if (munOn) {
       const paths = gM.children;
       for (let i = 0; i < paths.length; i++) paths[i].setAttribute('fill', cfg.coloreMun(paths[i].dataset.mun));
-      hint.textContent = 'Tocca un comune · rotellina o +/− per ingrandire';
+      hint.textContent = 'Tocca un comune · due dita, rotellina o +/− per ingrandire';
     } else {
       gU.querySelectorAll('path').forEach(p => { const c = cfg.coloreUF(p.dataset.uf); p.setAttribute('fill', c.f); p.style.opacity = c.o == null ? '' : c.o; });
-      if (liv !== 'mun') hint.textContent = 'Tocca uno stato · rotellina o +/− per ingrandire';
+      if (liv !== 'mun') hint.textContent = 'Tocca uno stato · due dita, rotellina o +/− per ingrandire';
     }
     if (M.sel && (M.sel.startsWith('m') !== (liv === 'mun'))) M.sel = null;
     cerca.placeholder = liv === 'mun' ? 'Cerca un comune…' : cfg.cerca;
@@ -1674,31 +1829,37 @@ function renderPrimoTurno() {
     const c = nome === 'Lula' ? LULA.c : nome === 'Flávio Bolsonaro' ? FLAV.c : (COL_ALTRI[nome] || '#7d8c86');
     return '<div class="bar-row"><div class="nm"><i style="background:' + c + '"></i><span>' + esc(nome) + ' <small>' + esc(p) + '</small></span></div><div class="track"><b style="width:' + Math.max(q / max * 100, 0.4) + '%;background:' + c + '"></b></div><div class="vv">' + nf(q, 2) + '%</div><div class="dd">' + nf(v) + '</div></div>';
   }).join('');
-  $('curvaSvg').innerHTML = disegnaCurva(640, 330, {});
+  renderCurva();
   const righe = B1.slice().sort((a, b) => b.V - a.V);
-  $('t1Table').innerHTML = '<thead><tr><th>Stato</th><th>Flávio</th><th>Lula</th><th>Altri</th><th>Distacco<small>punti</small></th><th>Voti validi</th><th>Lula fra i due</th></tr></thead><tbody>' +
-    righe.map(b => '<tr data-uf="' + b.uf + '"><td><b>' + esc(b.n) + '</b><span class="sub">' + REGIONI[b.r] + '</span></td><td class="' + (b.pF > b.pL ? 'cf' : '') + '"><b>' + nf(b.pF * 100, 2) + '%</b><span class="sub">' + nf(b.F) + '</span></td><td class="' + (b.pL > b.pF ? 'cl' : '') + '"><b>' + nf(b.pL * 100, 2) + '%</b><span class="sub">' + nf(b.L) + '</span></td><td>' + nf(b.alt * 100, 2) + '%</td><td class="' + (b.pL > b.pF ? 'cl' : 'cf') + '">' + (b.pL > b.pF ? 'Lula +' : 'Flávio +') + nf(Math.abs(b.pL - b.pF) * 100, Math.abs(b.pL - b.pF) < 0.001 ? 2 : 1) + '</td><td>' + nf(b.V) + (BASE.uf[b.uf].es ? '' : '<span class="sub">stima</span>') + '</td><td>' + pct(b.q) + '</td></tr>').join('') +
-    '<tr class="tot"><td>Brasile</td><td class="cf">47,03%</td><td class="cl">45,16%</td><td>7,81%</td><td class="cf">Flávio +1,9</td><td>' + nf(BASE.naz.vv) + '</td><td>' + pct(B1_NAZ.q) + '</td></tr></tbody>';
+  $('t1Table').innerHTML = '<thead><tr><th>Stato</th><th>Flávio</th><th>Lula</th><th class="c-sec">Altri</th><th>Distacco<small>punti</small></th><th class="c-sec">Voti validi</th><th class="c-sec">Lula fra i due</th></tr></thead><tbody>' +
+    righe.map(b => '<tr data-uf="' + b.uf + '"><td><b>' + esc(b.n) + '</b><span class="sub reg">' + REGIONI[b.r] + '</span></td><td class="' + (b.pF > b.pL ? 'cf' : '') + '"><b>' + nf(b.pF * 100, 2) + '%</b><span class="sub">' + nf(b.F) + '</span></td><td class="' + (b.pL > b.pF ? 'cl' : '') + '"><b>' + nf(b.pL * 100, 2) + '%</b><span class="sub">' + nf(b.L) + '</span></td><td class="c-sec">' + nf(b.alt * 100, 2) + '%</td><td class="' + (b.pL > b.pF ? 'cl' : 'cf') + '">' + (b.pL > b.pF ? 'Lula +' : 'Flávio +') + nf(Math.abs(b.pL - b.pF) * 100, Math.abs(b.pL - b.pF) < 0.001 ? 2 : 1) + '</td><td class="c-sec">' + nf(b.V) + '</td><td class="c-sec">' + pct(b.q) + '</td></tr>').join('') +
+    '<tr class="tot"><td>Brasile</td><td class="cf">47,03%</td><td class="cl">45,16%</td><td class="c-sec">7,81%</td><td class="cf">Flávio +1,9</td><td class="c-sec">' + nf(BASE.naz.vv) + '</td><td class="c-sec">' + pct(B1_NAZ.q) + '</td></tr></tbody>';
+}
+function renderCurva() {
+  const el = $('curvaSvg'), stretto = el.clientWidth && el.clientWidth < 520;
+  const W = stretto ? 400 : 640, H = stretto ? 320 : 330;
+  el.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  el.innerHTML = disegnaCurva(W, H, { stretto });
 }
 /* distacco Flávio − Lula (punti sui validi) al crescere delle sezioni: 2026 T1 e 2022 */
 function disegnaCurva(W, H, o) {
   const m = { l: 44, r: 14, t: 16, b: 34 }, lo = -6, hi = 12;
   const X = x => m.l + x / 100 * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
-  const fs = o.fs || 11, ct = o.ct || '#8fa399';
+  const fs = o.fs || 11, ct = o.ct || '#7d878c';
   let s = '';
   for (let v = lo; v <= hi; v += 2) s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + (v === 0 ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.07)') + '"' + (v === 0 ? ' stroke-dasharray="4 4"' : '') + '/><text x="' + (m.l - 7) + '" y="' + (Y(v) + 4) + '" fill="' + ct + '" font-size="' + fs + '" text-anchor="end">' + (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '</text>';
   for (let x = 0; x <= 100; x += 20) s += '<text x="' + X(x) + '" y="' + (H - m.b + 18) + '" fill="' + ct + '" font-size="' + fs + '" text-anchor="middle">' + x + '%</text>';
   s += '<text x="' + (W - m.r) + '" y="' + (H - 4) + '" fill="' + ct + '" font-size="' + (fs - 1) + '" text-anchor="end">sezioni scrutinate</text>';
-  s += '<text x="' + (m.l + 6) + '" y="' + (Y(0) - 7) + '" fill="#7fa7f7" font-size="' + (fs - 1) + '" font-weight="700">sopra lo zero: avanti Flávio (Bolsonaro nel 2022)</text>';
-  s += '<text x="' + (m.l + 6) + '" y="' + (Y(0) + 15) + '" fill="#f08b8e" font-size="' + (fs - 1) + '" font-weight="700">sotto: avanti Lula</text>';
+  s += '<text x="' + (m.l + 6) + '" y="' + (Y(0) - 7) + '" fill="#7fa7f7" font-size="' + (fs - 1) + '" font-weight="600">' + (o.stretto ? 'sopra lo zero: avanti Flávio (Bolsonaro)' : 'sopra lo zero: avanti Flávio (Bolsonaro nel 2022)') + '</text>';
+  s += '<text x="' + (m.l + 6) + '" y="' + (Y(0) + 15) + '" fill="#f08b8e" font-size="' + (fs - 1) + '" font-weight="600">sotto: avanti Lula</text>';
   const line = (pts, c, w, dash) => '<polyline fill="none" stroke="' + c + '" stroke-width="' + w + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + ' points="' + pts.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
-  s += line(BASE.curva22t1, '#6f8479', 1.8, '2 4');
-  s += line(BASE.curva22t2, '#b9c7bf', 2, '6 4');
-  s += line(BASE.curva26.map(([p, mm]) => [p, mm]), '#f2d24b', 3);
+  s += line(BASE.curva22t1, '#5b666b', 1.8, '2 4');
+  s += line(BASE.curva22t2, '#9ba6ab', 2, '6 4');
+  s += line(BASE.curva26.map(([p, mm]) => [p, mm]), '#f4f6f6', 2.6);
   /* il punto più alto, il blocco delle 19:06 e la fine */
   const pk = BASE.curva26.reduce((a, b) => b[1] > a[1] ? b : a);
-  const ann = [[pk[0], pk[1], '+' + nf(pk[1], 1) + ' al ' + nf(pk[0], 0) + '%', 'start', -10], [64.81, 7.37, '19:06, 64,8%: lo schermo si ferma per un’ora', 'end', 22], [100, 1.87, '+1,9 alla fine', 'end', 22], [67.5, 0, '2022: il sorpasso di Lula al 67%', 'end', 20]];
-  ann.forEach(([x, v, t, an, dy]) => { s += '<circle cx="' + X(x) + '" cy="' + Y(v) + '" r="4" fill="' + (x === 67.5 ? '#b9c7bf' : '#f2d24b') + '" stroke="#04120d" stroke-width="1.5"/><text x="' + (X(x) + (an === 'end' ? -6 : 6)) + '" y="' + (Y(v) + dy) + '" fill="#e9e3c1" font-size="' + fs + '" font-weight="700" text-anchor="' + an + '">' + t + '</text>'; });
+  const ann = [[pk[0], pk[1], '+' + nf(pk[1], 1) + ' al ' + nf(pk[0], 0) + '%', 'start', -10], [64.81, 7.37, o.stretto ? '19:06: schermo fermo per un’ora' : '19:06, 64,8%: lo schermo si ferma per un’ora', 'end', 22], [100, 1.87, '+1,9 alla fine', 'end', 22], [67.5, 0, '2022: il sorpasso di Lula al 67%', 'end', o.stretto ? 40 : 20]];
+  ann.forEach(([x, v, t, an, dy]) => { s += '<circle cx="' + X(x) + '" cy="' + Y(v) + '" r="4" fill="' + (x === 67.5 ? '#9ba6ab' : '#f4f6f6') + '" stroke="#04120d" stroke-width="1.5"/><text x="' + (X(x) + (an === 'end' ? -6 : 6)) + '" y="' + (Y(v) + dy) + '" fill="#d9dfe1" font-size="' + fs + '" font-weight="700" text-anchor="' + an + '">' + t + '</text>'; });
   return s;
 }
 
@@ -1860,12 +2021,61 @@ const intero = v => { const n = parseInt(String(v).replace(/\D/g, ''), 10); retu
 const decimale = v => { const n = parseFloat(String(v).replace(/\s/g, '').replace(',', '.')); return isFinite(n) ? n : null; };
 
 /* =====================================================================
+   CONDIVISIONE
+   Sette pulsanti: X, Threads, Facebook, LinkedIn, Telegram, WhatsApp e il link. Il testo
+   segue i dati: prima del voto presenta la pagina, durante lo spoglio riporta le sezioni,
+   i voti contati e la proiezione, alla fine il risultato. Il link: sui telefoni apre il
+   menu di condivisione del sistema (da lì Instagram, Messaggi…), altrove va negli appunti.
+   ===================================================================== */
+const URL_PAGINA = 'https://angrisanidj.github.io/risultati-brasile/';
+function testoCondivisione() {
+  const C = contato(), P = projVisibile() ? S.proj : null;
+  if (PROVA || !C || !(C.L + C.F)) return 'Brasile, ballottaggio del 25 ottobre: Lula contro Flávio Bolsonaro. Lo spoglio in diretta stato per stato, con la proiezione del risultato finale';
+  const q = C.L / (C.L + C.F), voti = 'Lula ' + pct(q) + ', Flávio ' + pct(1 - q);
+  if (S.naz && S.naz.eletto) return 'Brasile: ' + (S.naz.eletto === 'L' ? LULA.nl : FLAV.nl) + ' eletto presidente. ' + voti + ' con il ' + fmtSez(C.c) + ' delle sezioni. I risultati stato per stato';
+  if (C.c >= 0.9999) return 'Brasile, spoglio concluso: ' + voti + '. I risultati stato per stato';
+  return 'Brasile, ballottaggio con il ' + fmtSez(C.c) + ' delle sezioni: ' + voti + '.' + (P ? ' La proiezione dà Lula al ' + pct(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ').' : '') + ' Lo spoglio in diretta';
+}
+function linkSocial(rete) {
+  const u = encodeURIComponent(URL_PAGINA), t = testoCondivisione(), tu = encodeURIComponent(t + ' ' + URL_PAGINA), te = encodeURIComponent(t);
+  return {
+    x: 'https://x.com/intent/post?text=' + te + '&url=' + u,
+    threads: 'https://www.threads.net/intent/post?text=' + tu,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+    linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + u,
+    telegram: 'https://t.me/share/url?url=' + u + '&text=' + te,
+    whatsapp: 'https://wa.me/?text=' + tu
+  }[rete];
+}
+const MENU_CONDIVISIONE = !!navigator.share && !!window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+function esitoSocial(msg) { const e = $('sEsito'); e.textContent = msg; clearTimeout(esitoSocial.t); esitoSocial.t = setTimeout(() => e.textContent = '', 2600); }
+function copiaLink() {
+  const ok = () => esitoSocial('Link copiato');
+  if (navigator.clipboard) navigator.clipboard.writeText(URL_PAGINA).then(ok, () => window.prompt('Copia il link', URL_PAGINA));
+  else window.prompt('Copia il link', URL_PAGINA);
+}
+function eventiSocial() {
+  /* l'indirizzo si calcola al clic, così il testo riflette i dati di quel momento */
+  document.querySelectorAll('.sbtn[data-rete]').forEach(a => {
+    const agg = () => { a.href = linkSocial(a.dataset.rete); };
+    a.addEventListener('pointerdown', agg); a.addEventListener('focus', agg); a.addEventListener('click', agg);
+    agg();
+  });
+  if (MENU_CONDIVISIONE) $('sLink').setAttribute('aria-label', 'Condividi il link');
+  $('sLink').onclick = () => {
+    if (!MENU_CONDIVISIONE) { copiaLink(); return; }
+    navigator.share({ title: 'Brasile 2026 — Il ballottaggio in diretta', text: testoCondivisione(), url: URL_PAGINA })
+      .catch(e => { if (!e || e.name !== 'AbortError') copiaLink(); });
+  };
+}
+
+/* =====================================================================
    8 · EVENTI E AVVIO
    ===================================================================== */
 function scheda(id) {
   document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x.id === 'tabbtn-' + id ? 'true' : 'false'));
   ['live', 't1', 'card'].forEach(k => $('tab-' + k).classList.toggle('hidden', k !== id));
-  if (id === 't1') { if (!MAPPE.T1) { MAPPE.T1 = Mappa({ el: $('mappaT1'), ...CFG_T1 }); } renderT1Mappa(); }
+  if (id === 't1') { if (!MAPPE.T1) { MAPPE.T1 = Mappa({ el: $('mappaT1'), ...CFG_T1 }); } renderT1Mappa(); renderCurva(); }
   if (id === 'card' && window.CARD) window.CARD.mostra();
   window.scrollTo({ top: 0 });
 }
@@ -1879,7 +2089,7 @@ function renderT1Mappa() {
 }
 function eventi() {
   let rsz = null;
-  window.addEventListener('resize', () => { clearTimeout(rsz); rsz = setTimeout(() => { renderFork(); renderDuello(); }, 200); });
+  window.addEventListener('resize', () => { clearTimeout(rsz); rsz = setTimeout(() => { renderFork(); renderDuello(); renderCurva(); }, 200); });
   document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => scheda(b.id.replace('tabbtn-', '')));
   $('refreshBtn').onclick = () => { FEED.firma = null; poll(true); };
   $('pauseBtn').onclick = () => {
@@ -1967,7 +2177,7 @@ async function avvio() {
   if (REDAZIONE) riempiRedazione();
   MAPPE.B = Mappa({ el: $('mappaB'), ...CFG_B });
   document.querySelectorAll('#mapModoB button').forEach(x => x.setAttribute('aria-pressed', x.dataset.m === S.modoB ? 'true' : 'false'));
-  eventi();
+  eventi(); eventiSocial();
   renderPrimoTurno();
   $('footProxy').textContent = 'Proxy: ' + (() => { try { return new URL(PROXY).host; } catch (_) { return PROXY; } })();
   if (!PROVA) caricaNotte();
@@ -1983,105 +2193,145 @@ avvio();
 <script>
 'use strict';
 /* =====================================================================
-   CARD PER X — 1600×900, export PNG 3200×1800
+   CARD PER X E INSTAGRAM — 1600×900 (export 3200×1800) e 1080×1350 (export 2160×2700)
    Tutte le card leggono lo stato della dashboard: nessun dato si reinserisce.
+   Il formato 4:5 è quello che Instagram mostra per intero nel feed, e va bene anche per
+   Facebook, Threads e WhatsApp.
    ===================================================================== */
 window.CARD = (function () {
-  const C = { t1: '#F1F5F2', t2: '#A9BDB2', t3: '#73897D', line: 'rgba(255,255,255,.12)', acc: '#F2D24B', bg1: '#071a12', bg2: '#04110c' };
+  const C = { bg: '#0b0f11', t1: '#EEF1F2', t2: '#A9B2B6', t3: '#7D878C', line: 'rgba(255,255,255,.12)', band: 'rgba(244,246,246,' };
   const F = (w, s, fam) => w + ' ' + s + 'px ' + (fam === 'serif' ? 'Lora, Georgia, serif' : 'Inter, "Segoe UI", Arial, sans-serif');
-  const W = 1600, H = 900;
-  let sporco = true, visibile = false;
+  const FORMATI = { x: { W: 1600, H: 900, M: 70, ig: false }, ig: { W: 1080, H: 1350, M: 60, ig: true } };
+  let formato = 'x', sporco = true, visibile = false;
   const titoli = {}, testi = {}, modificati = new Set();
   function T(x, s, px, py, o) {
     x.save(); x.font = o.font; x.fillStyle = o.color || C.t1; x.textAlign = o.align || 'left'; x.textBaseline = 'alphabetic';
-    if ('letterSpacing' in x) x.letterSpacing = (o.ls || 0) + 'px';
     x.fillText(s, px, py); x.restore();
   }
   function Wt(x, s, font) { x.save(); x.font = font; const w = x.measureText(s).width; x.restore(); return w; }
-  function fit(x, s, maxW, start, min, w, fam) { let z = start; while (Wt(x, s, F(w, z, fam)) > maxW && z > min) z--; return F(w, z, fam); }
   function rr(x, px, py, w, h, r) { x.beginPath(); x.moveTo(px + r, py); x.arcTo(px + w, py, px + w, py + h, r); x.arcTo(px + w, py + h, px, py + h, r); x.arcTo(px, py + h, px, py, r); x.arcTo(px, py, px + w, py, r); x.closePath(); }
   function box(x, px, py, w, h, r, c) { if (w <= 0) return; rr(x, px, py, w, h, Math.min(r, w / 2, h / 2)); x.fillStyle = c; x.fill(); }
   function a_capo(x, s, font, maxW) {
-    const parole = s.split(' '), righe = []; let r = '';
+    const parole = String(s || '').split(' '), righe = []; let r = '';
     parole.forEach(p => { const t = r ? r + ' ' + p : p; if (Wt(x, t, font) > maxW && r) { righe.push(r); r = p; } else r = t; });
     if (r) righe.push(r); return righe;
   }
-  function cornice(x, k) {
-    const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, C.bg1); g.addColorStop(1, C.bg2);
-    x.fillStyle = g; x.fillRect(0, 0, W, H);
-    const rg = x.createRadialGradient(W * 0.9, -40, 10, W * 0.9, -40, 700); rg.addColorStop(0, 'rgba(0,156,59,.30)'); rg.addColorStop(1, 'rgba(0,156,59,0)');
-    x.fillStyle = rg; x.fillRect(0, 0, W, H);
+  /* sfondo, striscia, occhiello, titolo, piede: restituisce la quota sotto il titolo */
+  function cornice(x, k, L) {
+    const { W, H, M } = L;
+    x.fillStyle = C.bg; x.fillRect(0, 0, W, H);
     x.fillStyle = '#009c3b'; x.fillRect(0, 0, W * 0.46, 10); x.fillStyle = '#ffdf00'; x.fillRect(W * 0.46, 0, W * 0.26, 10); x.fillStyle = '#002776'; x.fillRect(W * 0.72, 0, W * 0.28, 10);
-    T(x, ($('cAmbito').value || '').toUpperCase(), 70, 76, { font: F(800, 21), color: C.acc, ls: 3 });
-    const tit = titoli[k] || '';
-    const fnt = F(700, 50, 'serif'), righe = a_capo(x, tit, fnt, W - 140).slice(0, 2);
-    righe.forEach((r, i) => T(x, r, 70, 140 + i * 60, { font: fnt }));
-    x.fillStyle = C.line; x.fillRect(70, H - 76, W - 140, 1);
-    const fonte = PROVA ? 'PROVA · notte simulata, dati non reali' : 'Fonte: TSE' + (S.aggiornato ? ', file delle ' + oraBR(S.aggiornato) + ' di Brasília' : '') + ' · proiezione statistica, non risultato ufficiale';
-    T(x, fonte, 70, H - 38, { font: F(500, 20), color: C.t3 });
-    T(x, $('cFirma').value || '', W - 70, H - 38, { font: F(800, 22), color: C.t2, align: 'right' });
-    return 140 + righe.length * 60;
+    T(x, $('cAmbito').value || '', M, 78, { font: F(600, L.ig ? 24 : 22), color: C.t2 });
+    const fnt = F(600, L.ig ? 56 : 50, 'serif'), lh = L.ig ? 66 : 60, righe = a_capo(x, titoli[k] || '', fnt, W - 2 * M).slice(0, L.ig ? 3 : 2);
+    righe.forEach((r, i) => T(x, r, M, 144 + i * lh, { font: fnt }));
+    x.fillStyle = C.line; x.fillRect(M, H - 78, W - 2 * M, 1);
+    const fonte = PROVA ? 'Prova: notte simulata, dati non reali' : 'Fonte: TSE' + (S.aggiornato ? ', file delle ' + oraBR(S.aggiornato) + ' di Brasília' : '') + (L.ig ? '' : ' · proiezione statistica, non risultato ufficiale');
+    T(x, fonte, M, H - 40, { font: F(500, L.ig ? 21 : 20), color: C.t3 });
+    T(x, $('cFirma').value || '', W - M, H - 40, { font: F(700, 22), color: C.t2, align: 'right' });
+    return 144 + (righe.length - 1) * lh;
   }
+  /* asse della proiezione: metà «vince Flávio» e metà «vince Lula», forchette e media */
+  function asse(x, P, x0, x1, y, h) {
+    const span = Math.max(0.06, Math.abs(P.q025 - 0.5) + 0.02, Math.abs(P.q975 - 0.5) + 0.02), a = 0.5 - span, b = 0.5 + span;
+    const X = v => x0 + (v - a) / (b - a) * (x1 - x0);
+    box(x, x0, y, X(0.5) - x0, h, 4, 'rgba(61,123,245,.16)'); box(x, X(0.5), y, x1 - X(0.5), h, 4, 'rgba(229,72,77,.16)');
+    box(x, X(P.q025), y + 6, Math.max(4, X(P.q975) - X(P.q025)), h - 12, 3, C.band + '.22)');
+    box(x, X(P.q10), y + 6, Math.max(4, X(P.q90) - X(P.q10)), h - 12, 3, C.band + '.45)');
+    x.fillStyle = '#fff'; x.fillRect(X(P.media) - 2.5, y - 6, 5, h + 12);
+    x.fillStyle = 'rgba(255,255,255,.7)'; x.fillRect(X(0.5) - 1, y - 10, 2, h + 20);
+    T(x, '← vince Flávio', x0 + 2, y + h + 34, { font: F(600, 21), color: '#8fb0f8' });
+    T(x, 'vince Lula →', x1 - 2, y + h + 34, { font: F(600, 21), color: '#f39a9c', align: 'right' });
+  }
+  const pctTxt = (v, d = 1) => nf(v * 100, d) + '%';
+  const probTxt = pw => 'Probabilità di vittoria: Lula ' + nf(pw * 100, pw > 0.99 || pw < 0.01 ? 1 : 0) + '% · Flávio ' + nf((1 - pw) * 100, pw > 0.99 || pw < 0.01 ? 1 : 0) + '%';
+
   /* ---------- 1 · proiezione ---------- */
-  function cardProiezione(x) {
-    let y = cornice(x, 'proj') + 36;
+  function cardProiezione(x, L) {
+    const { W, M } = L;
+    /* quote verticali per formato: nomi, numeri, barra, proiezione, asse, probabilità, nota */
+    const Q = L.ig ? { gap: 110, big: 124, bar: 118, proj: 190, riga: 56, asse: 98, prob: 262, nota: 316 }
+                   : { gap: 70, big: 112, bar: 92, proj: 128, riga: 46, asse: 80, prob: 206, nota: 0 };
+    let y = cornice(x, 'proj', L) + Q.gap;
     const Cn = contato(), P = projVisibile() ? S.proj : null;
     const tot = Cn ? Cn.L + Cn.F : 0, q = tot ? Cn.L / tot : 0.5;
-    [[LULA, q, Cn ? Cn.L : 0, 70, 'left'], [FLAV, 1 - q, Cn ? Cn.F : 0, W - 70, 'right']].forEach(([c, v, voti, px, al]) => {
-      T(x, (c.nl + ' · ' + c.p).toUpperCase(), px, y + 26, { font: F(800, 22), color: C.t2, align: al, ls: 2 });
-      T(x, tot ? nf(v * 100, 1) + '%' : '—', px, y + 128, { font: F(700, 112, 'serif'), color: c.c, align: al });
-      T(x, tot ? nf(voti) + ' voti' : '', px, y + 168, { font: F(500, 24), color: C.t3, align: al });
+    [[LULA, q, Cn ? Cn.L : 0, M, 'left'], [FLAV, 1 - q, Cn ? Cn.F : 0, W - M, 'right']].forEach(([c, v, voti, px, al]) => {
+      T(x, c.nl + ' · ' + c.p, px, y, { font: F(600, 24), color: C.t2, align: al });
+      T(x, tot ? pctTxt(v) : '—', px, y + Q.big + 4, { font: F(600, Q.big), color: c.c, align: al });
+      T(x, tot ? nf(voti) + ' voti' : '', px, y + Q.big + 46, { font: F(500, 24), color: C.t3, align: al });
     });
-    T(x, tot ? 'voti contati · ' + nf(Cn.c * 100, Cn.c < 0.1 ? 1 : 0) + '% delle sezioni' : 'in attesa dei primi voti', W / 2, y + 90, { font: F(700, 24), color: C.t2, align: 'center' });
-    y += 226;
-    box(x, 70, y, (W - 140) * q, 30, 8, LULA.c); box(x, 70 + (W - 140) * q, y, (W - 140) * (1 - q), 30, 8, FLAV.c);
-    x.fillStyle = '#fff'; x.fillRect(W / 2 - 1.5, y - 6, 3, 42);
-    y += 112;
-    if (!P) { T(x, 'La proiezione parte con i primi ' + nf(PROJ_MIN_VOTI) + ' voti contati.', 70, y + 30, { font: F(600, 26), color: C.t2 }); return; }
-    T(x, 'PROIEZIONE DEL RISULTATO FINALE', 70, y, { font: F(800, 20), color: C.t3, ls: 2 });
-    T(x, 'Lula ' + nf(P.media * 100, 1) + '% · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + '%', 70, y + 40, { font: F(700, 34, 'serif') });
-    const span = Math.max(0.06, Math.abs(P.q025 - 0.5) + 0.02, Math.abs(P.q975 - 0.5) + 0.02), a = 0.5 - span, b = 0.5 + span;
-    const X = v => 70 + (v - a) / (b - a) * (W - 140), yy = y + 66;
-    box(x, 70, yy, X(0.5) - 70, 46, 8, 'rgba(61,123,245,.18)'); box(x, X(0.5), yy, W - 70 - X(0.5), 46, 8, 'rgba(229,72,77,.18)');
-    box(x, X(P.q025), yy + 6, Math.max(4, X(P.q975) - X(P.q025)), 34, 6, 'rgba(242,210,75,.4)');
-    box(x, X(P.q10), yy + 6, Math.max(4, X(P.q90) - X(P.q10)), 34, 6, 'rgba(242,210,75,.75)');
-    x.fillStyle = '#fff'; x.fillRect(X(P.media) - 2.5, yy - 6, 5, 58); x.fillRect(X(0.5) - 1, yy - 10, 2, 66);
-    T(x, '← VINCE FLÁVIO', 74, yy + 84, { font: F(800, 19), color: '#8fb0f8', ls: 1 });
-    T(x, 'VINCE LULA →', W - 74, yy + 84, { font: F(800, 19), color: '#f39a9c', align: 'right', ls: 1 });
-    const pw = P.pL;
-    T(x, 'Probabilità di vittoria: Lula ' + nf(pw * 100, pw > 0.99 || pw < 0.01 ? 1 : 0) + '% · Flávio ' + nf((1 - pw) * 100, pw > 0.99 || pw < 0.01 ? 1 : 0) + '%', W / 2, yy + 134, { font: F(700, 30, 'serif'), color: C.t1, align: 'center' });
+    y += Q.big + Q.bar;
+    box(x, M, y, (W - 2 * M) * q, 26, 3, LULA.c); box(x, M + (W - 2 * M) * q, y, (W - 2 * M) * (1 - q), 26, 3, FLAV.c);
+    x.fillStyle = '#fff'; x.fillRect(W / 2 - 1.5, y - 8, 3, 42);
+    T(x, tot ? 'Voti contati, ' + fmtSez(Cn.c) + ' delle sezioni' : 'In attesa dei primi voti', M, y + 62, { font: F(500, 23), color: C.t2 });
+    y += Q.proj;
+    if (!P) { T(x, 'La proiezione parte con i primi ' + nf(PROJ_MIN_VOTI) + ' voti contati.', M, y, { font: F(500, 26), color: C.t2 }); return; }
+    x.fillStyle = C.line; x.fillRect(M, y - 48, W - 2 * M, 1);
+    T(x, 'Proiezione del risultato finale', M, y, { font: F(600, 24), color: C.t2 });
+    T(x, 'Lula ' + pctTxt(P.media) + ' · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + pctTxt(P.q975), M, y + Q.riga, { font: F(600, L.ig ? 40 : 36, 'serif') });
+    asse(x, P, M, W - M, y + Q.asse, 44);
+    T(x, probTxt(P.pL), L.ig ? M : W / 2, y + Q.prob, { font: F(600, L.ig ? 30 : 28), color: C.t1, align: L.ig ? 'left' : 'center' });
+    if (Q.nota) {
+      const nota = 'Stima statistica su ' + nf(N_SIM) + ' simulazioni dei voti mancanti' + (P.resta >= 1000 ? ': restano da contare circa ' + mln(P.resta) + (P.resta >= 1e6 ? ' di' : '') + ' voti validi.' : '.');
+      a_capo(x, nota, F(500, 24), W - 2 * M).slice(0, 2).forEach((r, i) => T(x, r, M, y + Q.nota + i * 34, { font: F(500, 24), color: C.t3 }));
+    }
   }
   /* ---------- 2 · mappa degli stati ---------- */
-  function cardMappa(x) {
-    const y0 = cornice(x, 'mappa') + 14, hMap = H - 100 - y0, sc = hMap / GEO.H, ox = 70;
-    x.save(); x.translate(ox, y0); x.scale(sc, sc);
-    GEO.uf.forEach(g => { const p = new Path2D(g.d), c = coloreB(g.id); x.globalAlpha = c.o == null ? 1 : c.o; x.fillStyle = c.f; x.fill(p); x.globalAlpha = 1; x.strokeStyle = '#04110c'; x.lineWidth = 1.4 / sc; x.stroke(p); });
-    x.restore();
-    const lx = ox + GEO.W * sc + 60, Cn = contato();
-    const tit = S.modoB === 'primo' ? 'Primo turno' : S.modoB === 'proiezione' ? 'Proiezione per stato' : S.modoB === 'swing' ? 'Spostamento sul primo turno' : 'Voti contati';
-    T(x, tit.toUpperCase(), lx, y0 + 30, { font: F(800, 21), color: C.t3, ls: 2 });
+  function contaStati(modo) {
     let l = 0, f = 0;
-    UFS.forEach(u => { if (u === 'ZZ') return; const v = valoreB(infoUF(u), S.modoB); if (v == null) return; if (v >= 0) l++; else f++; });
-    [[LULA, l], [FLAV, f]].forEach(([c, n], i) => {
-      box(x, lx, y0 + 62 + i * 92, 16, 64, 4, c.c);
-      T(x, String(n), lx + 34, y0 + 120 + i * 92, { font: F(700, 64, 'serif'), color: c.c });
-      T(x, c.n + ' avanti' + (S.modoB === 'swing' ? ' rispetto al 4 ottobre' : ''), lx + 34 + Wt(x, String(n), F(700, 64, 'serif')) + 16, y0 + 112 + i * 92, { font: F(600, 26), color: C.t2 });
-    });
-    const P = projVisibile() ? S.proj : null;
-    let y = y0 + 280;
+    UFS.forEach(u => { if (u === 'ZZ') return; const v = valoreB(infoUF(u), modo); if (v == null) return; if (v >= 0) l++; else f++; });
+    return [l, f];
+  }
+  function disegnaStati(x, ox, oy, sc) {
+    x.save(); x.translate(ox, oy); x.scale(sc, sc);
+    GEO.uf.forEach(g => { const p = new Path2D(g.d), c = coloreB(g.id); x.globalAlpha = c.o == null ? 1 : c.o; x.fillStyle = c.f; x.fill(p); x.globalAlpha = 1; x.strokeStyle = C.bg; x.lineWidth = 1.4 / sc; x.stroke(p); });
+    x.restore();
+  }
+  function cardMappa(x, L) {
+    const { W, H, M } = L;
+    const y0 = cornice(x, 'mappa', L) + (L.ig ? 40 : 30);
+    const Cn = contato(), P = projVisibile() ? S.proj : null;
+    const tit = S.modoB === 'primo' ? 'Primo turno' : S.modoB === 'proiezione' ? 'Proiezione per stato' : S.modoB === 'swing' ? 'Spostamento sul primo turno' : 'Voti contati';
+    const [l, f] = contaStati(S.modoB);
     const righe = [];
-    if (Cn && Cn.L + Cn.F) righe.push('Voti contati: Lula ' + nf(Cn.L / (Cn.L + Cn.F) * 100, 1) + '%, Flávio ' + nf(Cn.F / (Cn.L + Cn.F) * 100, 1) + '%', 'Sezioni scrutinate: ' + nf(Cn.c * 100, 1) + '%');
-    if (P) righe.push('Proiezione: Lula ' + nf(P.media * 100, 1) + '% (' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ')');
-    righe.forEach((r, i) => T(x, r, lx, y + i * 44, { font: F(600, 27), color: C.t1 }));
-    T(x, 'Stati più chiari: meno del 5% delle sezioni', lx, H - 110, { font: F(500, 19), color: C.t3 });
+    if (Cn && Cn.L + Cn.F) righe.push('Voti contati: Lula ' + pctTxt(Cn.L / (Cn.L + Cn.F)) + ', Flávio ' + pctTxt(Cn.F / (Cn.L + Cn.F)), 'Sezioni scrutinate: ' + fmtSez(Cn.c));
+    if (P) righe.push('Proiezione: Lula ' + pctTxt(P.media) + ' (' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ')');
+    const numeri = (lx, ly) => {
+      T(x, tit, lx, ly, { font: F(600, 24), color: C.t2 });
+      [[LULA, l], [FLAV, f]].forEach(([c, n], i) => {
+        const yy = ly + 34 + i * 84;
+        box(x, lx, yy, 12, 58, 2, c.c);
+        T(x, String(n), lx + 30, yy + 52, { font: F(600, 60), color: c.c });
+        T(x, (c.n + ' avanti') + (S.modoB === 'swing' ? ' sul 4 ottobre' : ''), lx + 30 + Wt(x, String(n), F(600, 60)) + 14, yy + 46, { font: F(500, 25), color: C.t2 });
+      });
+    };
+    if (L.ig) {
+      const hMap = 720, sc = hMap / GEO.H, wMap = GEO.W * sc;
+      disegnaStati(x, (W - wMap) / 2, y0, sc);
+      const ly = y0 + hMap + 40;
+      numeri(M, ly);
+      righe.forEach((r, i) => T(x, r, W / 2 + 10, ly + 46 + i * 42, { font: F(500, 25), color: C.t1 }));
+    } else {
+      const hMap = H - 104 - y0, sc = hMap / GEO.H;
+      disegnaStati(x, M, y0, sc);
+      const lx = M + GEO.W * sc + 60;
+      numeri(lx, y0 + 30);
+      righe.forEach((r, i) => T(x, r, lx, y0 + 270 + i * 44, { font: F(500, 27), color: C.t1 }));
+      if (S.modoB === 'conto') T(x, 'Più chiari gli stati con meno del 5% delle sezioni', lx, H - 112, { font: F(500, 19), color: C.t3 });
+    }
   }
   /* ---------- 3 · la forchetta ---------- */
-  function cardForchetta(x) {
-    const y0 = cornice(x, 'fork') + 10;
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="' + (H - 110 - y0) + '" viewBox="0 0 960 ' + Math.round((H - 110 - y0) * 960 / 1460) + '" font-family="Arial, Helvetica, sans-serif">' + disegnaFork(960, Math.round((H - 110 - y0) * 960 / 1460), S.traccia, { fs: 13, id: 'c', colori: { t: '#9fb2a8', g: 'rgba(255,255,255,.08)' } }) + '</svg>';
+  function cardForchetta(x, L) {
+    const { W, H, M } = L;
+    const y0 = cornice(x, 'fork', L) + (L.ig ? 40 : 20), w = W - 2 * M, h = H - 110 - y0 - (L.ig ? 90 : 0);
+    const vw = L.ig ? 640 : 960, vh = Math.round(h * vw / w);
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + vw + ' ' + vh + '" font-family="Inter, Segoe UI, Arial, sans-serif">' + disegnaFork(vw, vh, S.traccia, { fs: L.ig ? 14 : 13, id: 'c', colori: { t: '#9ba6ab', g: 'rgba(255,255,255,.08)' } }) + '</svg>';
+    if (L.ig) {
+      const leg = [['#f4f6f6', 'proiezione'], ['#f2c14e', 'voti contati'], ['#6c777d', 'primo turno']];
+      let lx = M; leg.forEach(([c, t]) => { box(x, lx, H - 158, 26, 5, 1, c); T(x, t, lx + 36, H - 150, { font: F(500, 22), color: C.t2 }); lx += 60 + Wt(x, t, F(500, 22)) + 30; });
+    }
     return new Promise(res => {
       const img = new Image();
-      img.onload = () => { x.drawImage(img, 70, y0, 1460, H - 110 - y0); res(); };
+      img.onload = () => { x.drawImage(img, M, y0, w, h); res(); };
       img.onerror = () => res();
       img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     });
@@ -2098,69 +2348,98 @@ window.CARD = (function () {
     for (const k in xx) if (!modificati.has('x' + k)) testi[k] = xx[k];
   }
   function calcolaTitoli(titoli, testi) {
-    const Cn = contato(), P = projVisibile() ? S.proj : null, sez = Cn ? nf(Cn.c * 100, Cn.c < 0.1 ? 1 : 0) + '%' : '';
+    const Cn = contato(), P = projVisibile() ? S.proj : null, sez = Cn ? fmtSez(Cn.c) : '';
     const tot = Cn ? Cn.L + Cn.F : 0, q = tot ? Cn.L / tot : null;
     const lead = q == null ? null : q >= 0.5 ? 'Lula' : 'Flávio';
     if (!tot) {
       titoli.proj = 'Brasile al ballottaggio: Lula contro Flávio Bolsonaro'; titoli.mappa = 'Il primo turno stato per stato'; titoli.fork = 'Come si muove lo spoglio';
-      testi.proj = 'Brasile, ballottaggio presidenziale: le urne chiudono alle 21 italiane. Al primo turno Flávio Bolsonaro 47%, Lula 45,2%. Su questa dashboard lo spoglio stato per stato e la proiezione del risultato finale.';
+      testi.proj = 'Brasile, ballottaggio presidenziale: le urne chiudono alle 21 italiane. Al primo turno Flávio Bolsonaro 47%, Lula 45,2%. Lo spoglio stato per stato e la proiezione del risultato finale.';
       testi.mappa = 'Al primo turno Flávio Bolsonaro ha vinto in 14 stati e nel Distretto federale, Lula in 12, quasi tutti al Nord e nel Nordest.';
       testi.fork = 'Attenzione ai primi dati del Brasile: al primo turno Flávio Bolsonaro era avanti di 10,8 punti con il 14% delle sezioni, alla fine di 1,9. I voti del Nordest, dove Lula è più forte, arrivano per ultimi.';
       return;
     }
     const kP = P ? (P.media >= 0.5 ? 'Lula' : 'Flávio') : null;
-    titoli.proj = P ? 'Con il ' + sez + ' delle sezioni, la proiezione dà ' + kP + ' al ' + nf((kP === 'Lula' ? P.media : 1 - P.media) * 100, 1) + '%' : 'Con il ' + sez + ' delle sezioni, ' + lead + ' avanti nei voti contati';
+    titoli.proj = P ? 'Con il ' + sez + ' delle sezioni, la proiezione dà ' + kP + ' al ' + pctTxt(kP === 'Lula' ? P.media : 1 - P.media) : 'Con il ' + sez + ' delle sezioni, ' + lead + ' avanti nei voti contati';
     titoli.mappa = 'Il Brasile stato per stato con il ' + sez + ' delle sezioni';
-    titoli.fork = P ? 'La forchetta si stringe: ' + kP + ' fra il ' + nf((kP === 'Lula' ? P.q025 : 1 - P.q975) * 100, 1) + ' e il ' + nf((kP === 'Lula' ? P.q975 : 1 - P.q025) * 100, 1) + '%' : 'Come si muove lo spoglio';
-    const base = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni scrutinate Lula ' + nf(q * 100, 1) + '%, Flávio Bolsonaro ' + nf((1 - q) * 100, 1) + '%.';
-    testi.proj = base + (P ? ' La proiezione dà Lula al ' + nf(P.media * 100, 1) + '% (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + '), probabilità di vittoria ' + nf(P.pL * 100, 0) + '%.' : '');
-    let l = 0, f = 0; UFS.forEach(u => { if (u === 'ZZ') return; const v = valoreB(infoUF(u), 'conto'); if (v == null) return; if (v >= 0) l++; else f++; });
-    testi.mappa = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni Lula è avanti in ' + l + ' stati, Flávio Bolsonaro in ' + f + '. Nei voti contati: Lula ' + nf(q * 100, 1) + '%, Flávio ' + nf((1 - q) * 100, 1) + '%.';
-    testi.fork = P ? 'La proiezione sul Brasile con il ' + sez + ' delle sezioni: Lula fra il ' + nf(P.q025 * 100, 1) + ' e il ' + nf(P.q975 * 100, 1) + '%. I primi voti contati sottostimano Lula: il Nordest arriva per ultimo.' : base;
+    titoli.fork = P ? 'La forchetta si stringe: ' + kP + ' fra il ' + nf((kP === 'Lula' ? P.q025 : 1 - P.q975) * 100, 1) + ' e il ' + pctTxt(kP === 'Lula' ? P.q975 : 1 - P.q025) : 'Come si muove lo spoglio';
+    const base = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni scrutinate Lula ' + pctTxt(q) + ', Flávio Bolsonaro ' + pctTxt(1 - q) + '.';
+    testi.proj = base + (P ? ' La proiezione dà Lula al ' + pctTxt(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + '), probabilità di vittoria ' + nf(P.pL * 100, 0) + '%.' : '');
+    const [l, f] = contaStati('conto');
+    testi.mappa = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni Lula è avanti in ' + l + ' stati, Flávio Bolsonaro in ' + f + '. Nei voti contati: Lula ' + pctTxt(q) + ', Flávio ' + pctTxt(1 - q) + '.';
+    testi.fork = P ? 'La proiezione sul Brasile con il ' + sez + ' delle sezioni: Lula fra il ' + nf(P.q025 * 100, 1) + ' e il ' + pctTxt(P.q975) + '. I primi voti contati sottostimano Lula: il Nordest arriva per ultimo.' : base;
   }
   function campiTitoli() {
     $('cTitoli').innerHTML = CARDS.map(c => '<div class="fld"><label for="ct-' + c.k + '">' + esc(c.n) + '</label><input id="ct-' + c.k + '" value="' + esc(titoli[c.k] || '') + '"></div>').join('');
     CARDS.forEach(c => { $('ct-' + c.k).oninput = e => { titoli[c.k] = e.target.value; modificati.add('t' + c.k); disegna(); }; });
   }
+  const g = k => document.querySelector('.gencard[data-k="' + k + '"]');
   async function disegna() {
     if (!visibile) { sporco = true; return; }
     sporco = false;
     try { await document.fonts.ready; } catch (_) { }
-    const box_ = $('cCards');
+    const box_ = $('cCards'), L = FORMATI[formato];
     if (!box_.children.length) {
-      box_.innerHTML = CARDS.map(c => '<div class="gencard" data-k="' + c.k + '"><canvas width="' + (W * 2) + '" height="' + (H * 2) + '"></canvas><div class="bar2"><b>' + esc(c.n) + '</b><button class="sm" data-dl="' + c.k + '">Scarica PNG</button></div><div class="post"><textarea data-t="' + c.k + '"></textarea><div class="foot"><span class="cnt"></span><button class="sm" data-cp="' + c.k + '">Copia il testo</button></div></div></div>').join('');
+      box_.innerHTML = CARDS.map(c => '<div class="gencard" data-k="' + c.k + '"><canvas></canvas><div class="bar2"><b>' + esc(c.n) + '</b><span style="display:flex;gap:7px;flex-wrap:wrap"><button class="sm" data-dl="' + c.k + '">Scarica PNG</button><button class="sm" data-sh="' + c.k + '">Condividi</button><button class="sm" data-xi="' + c.k + '" title="Apre X con il testo; l’immagine va allegata a mano">Pubblica su X</button></span></div><div class="post"><textarea data-t="' + c.k + '" aria-label="Testo per ' + esc(c.n) + '"></textarea><div class="foot"><span class="cnt"></span><button class="sm" data-cp="' + c.k + '">Copia il testo</button></div></div></div>').join('');
       box_.onclick = e => {
-        const d = e.target.dataset;
+        const b = e.target.closest('button'); if (!b) return;
+        const d = b.dataset;
         if (d.dl) scarica(d.dl);
-        if (d.cp) { const t = box_.querySelector('textarea[data-t="' + d.cp + '"]').value; navigator.clipboard && navigator.clipboard.writeText(t); e.target.textContent = 'Copiato'; setTimeout(() => e.target.textContent = 'Copia il testo', 1500); }
+        if (d.sh) condividi(d.sh, b);
+        if (d.xi) window.open('https://x.com/intent/post?text=' + encodeURIComponent((testi[d.xi] || '').trim()), '_blank', 'noopener');
+        if (d.cp) copia(testi[d.cp] || '', b);
       };
       box_.oninput = e => { const k = e.target.dataset.t; if (k) { testi[k] = e.target.value; modificati.add('x' + k); conta(); } };
     }
     for (const c of CARDS) {
-      const cv = box_.querySelector('.gencard[data-k="' + c.k + '"] canvas'), x = cv.getContext('2d');
-      x.setTransform(2, 0, 0, 2, 0, 0); x.clearRect(0, 0, W, H);
-      await c.draw(x);
-      const ta = box_.querySelector('textarea[data-t="' + c.k + '"]');
+      const el = g(c.k), cv = el.querySelector('canvas');
+      if (cv.width !== L.W * 2 || cv.height !== L.H * 2) { cv.width = L.W * 2; cv.height = L.H * 2; }
+      el.classList.toggle('ig', L.ig);
+      const x = cv.getContext('2d');
+      x.setTransform(2, 0, 0, 2, 0, 0); x.clearRect(0, 0, L.W, L.H);
+      await c.draw(x, L);
+      const ta = el.querySelector('textarea');
       if (document.activeElement !== ta) ta.value = testi[c.k] || '';
     }
     conta();
-    $('cStato').textContent = 'Aggiornate alle ' + oraIT(new Date());
+    $('cStato').textContent = (L.ig ? 'Instagram 1080×1350' : 'X 1600×900') + ' · aggiornate alle ' + oraIT(new Date());
   }
   function conta() {
-    document.querySelectorAll('#cCards textarea').forEach(t => { const n = [...t.value].length, el = t.parentNode.querySelector('.cnt'); el.textContent = n + ' / 240'; el.classList.toggle('over', n > 240); });
+    document.querySelectorAll('#cCards textarea').forEach(t => { const n = [...t.value.trim()].length, el = t.parentNode.querySelector('.cnt'); el.textContent = n + ' / 240'; el.classList.toggle('over', n > 240); });
   }
+  function copia(t, btn) {
+    const ok = () => { if (btn) { const o = btn.textContent; btn.textContent = 'Copiato'; setTimeout(() => btn.textContent = o, 1400); } };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => window.prompt('Copia il testo', t)); else window.prompt('Copia il testo', t);
+  }
+  const nomeFile = k => 'brasile-ballottaggio-' + k + (formato === 'ig' ? '-instagram' : '') + '-' + new Date().toISOString().slice(0, 16).replace(/[:T-]/g, '') + '.png';
   function scarica(k) {
-    const cv = document.querySelector('.gencard[data-k="' + k + '"] canvas'); if (!cv) return;
-    const a = document.createElement('a');
-    a.download = 'brasile-ballottaggio-' + k + '-' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '') + '.png';
-    a.href = cv.toDataURL('image/png'); a.click();
+    const cv = g(k) && g(k).querySelector('canvas'); if (!cv) return;
+    cv.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = nomeFile(k); document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800); }, 'image/png');
+  }
+  /* Sul telefono (e su Windows e Mac con Chrome o Edge) apre il menu di condivisione del
+     sistema con l'immagine e il testo: da lì Instagram, X, WhatsApp. Dove non si può,
+     scarica l'immagine e copia il testo. */
+  function condividi(k, btn) {
+    const cv = g(k).querySelector('canvas'), testo = (testi[k] || '').trim();
+    cv.toBlob(async b => {
+      const file = new File([b], nomeFile(k), { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], text: testo }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      scarica(k); copia(testo, btn);
+    }, 'image/png');
   }
   function rigenera() { modificati.clear(); autoTitoli(); campiTitoli(); disegna(); }
   $('cRigenera').onclick = rigenera;
   $('cAggiorna').onclick = () => disegna();
-  $('cScarica').onclick = () => CARDS.forEach((c, i) => setTimeout(() => scarica(c.k), i * 400));
-  $('cCopia').onclick = () => { const t = CARDS.map(c => testi[c.k] || '').join('\n\n'); navigator.clipboard && navigator.clipboard.writeText(t); };
+  $('cScarica').onclick = () => CARDS.forEach((c, i) => setTimeout(() => scarica(c.k), i * 450));
+  $('cCopia').onclick = e => copia(CARDS.map(c => (testi[c.k] || '').trim()).filter(Boolean).join('\n\n'), e.target);
   $('cAmbito').oninput = $('cFirma').oninput = () => disegna();
+  document.querySelectorAll('#cFormato button').forEach(b => b.onclick = () => {
+    formato = b.dataset.f;
+    document.querySelectorAll('#cFormato button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    disegna();
+  });
   return {
     mostra() { visibile = true; if (!Object.keys(titoli).length) rigenera(); else if (sporco) disegna(); },
     segnaSporco() { sporco = true; if (visibile && !$('tab-card').classList.contains('hidden')) { autoTitoli(); campiTitoli(); disegna(); } }

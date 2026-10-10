@@ -9,6 +9,7 @@ Dashboard per seguire in diretta lo spoglio del ballottaggio presidenziale brasi
 | `index.html` | La dashboard, file unico. Base del primo turno per stato e confini degli stati incorporati. |
 | `dati/municipi.json` | Confini dei 5.571 comuni e voti del primo turno per comune. Si carica solo quando si apre il livello «Comuni». |
 | `stime.json` | Il sondaggio di partenza della proiezione. Si modifica a mano. |
+| `condivisione.jpg` | L'anteprima del link sui social (1200×630). |
 | `proxy/` | Il progetto Vercel: `api/tse.js` più la configurazione. |
 | `strumenti/comuni_da_tse.py` | Rifà i voti per comune dal file ufficiale del TSE (vedi «Comuni»). |
 
@@ -75,7 +76,7 @@ Crea il repository `angrisanidj/risultati-brasile` e carica tutto (la cartella `
 - il sondaggio da modificare in locale e il pulsante «Copia per stime.json»;
 - i totali manuali (voti di Lula, di Flávio, % sezioni) se il feed si blocca: hanno la precedenza finché non li rimuovi, e la proiezione resta sospesa;
 - «Importa file TSE»: i JSON scaricati a mano da resultados.tse.jus.br, anche tutti e 29 insieme, con il loro nome originale (`sp-c0001-e006258-u.json`); il feed va in pausa;
-- la scheda «Card per X»: proiezione, mappa degli stati e forchetta, 1600×900 (PNG 3200×1800), con un testo da 240 caratteri.
+- la scheda «Card»: proiezione, mappa degli stati e forchetta, per X (16:9, 1600×900) o Instagram (4:5, 1080×1350), con un testo da 240 caratteri (vedi «Condivisione»).
 
 La pagina tiene in memoria nel browser la storia della notte (grafico e stima dell'ordine di arrivo): chi ricarica la pagina la ritrova.
 
@@ -83,6 +84,15 @@ La pagina tiene in memoria nel browser la storia della notte (grafico e stima de
 
 - **Il TSE blocca Vercel:** la soluzione più rapida è importare i file a mano (redazione). In alternativa una funzione equivalente su un altro servizio, indicata con `?proxy=`.
 - **Il TSE non risponde per tutti:** i totali manuali.
+
+## Condivisione
+
+- **Pulsanti per i lettori.** Sono sette, in testa alla pagina: X, Threads, Facebook, LinkedIn, Telegram, WhatsApp e il link. Il testo segue i dati: prima del voto presenta la pagina, durante lo spoglio riporta le sezioni scrutinate, i voti contati e la proiezione, alla fine il risultato. Il pulsante del link sul telefono apre il menu di condivisione del sistema, altrove copia l'indirizzo. Le icone vengono da [Bootstrap Icons](https://icons.getbootstrap.com) (licenza MIT), caricate da jsDelivr.
+- **Anteprima del link.** Quando l'indirizzo viene condiviso su X, WhatsApp, Facebook o Telegram compare `condivisione.jpg`, 1200×630, attraverso i tag Open Graph e Twitter Card: il titolo, la mappa degli stati al primo turno e la fonte.
+- **Card per X e Instagram.** Si trovano nella scheda «Card», in modalità redazione. Il selettore del formato passa da X (16:9, 1600×900) a Instagram (4:5, 1080×1350), con un'impaginazione propria; il formato verticale va bene anche per Facebook, Threads e WhatsApp. Per ogni card ci sono tre pulsanti:
+  - **Scarica PNG** scarica l'immagine in doppia risoluzione;
+  - **Condividi** apre il menu del sistema con immagine e testo, da cui scegli Instagram, X o WhatsApp; dove il menu non c'è, scarica e copia il testo;
+  - **Pubblica su X** apre X con il testo già scritto; l'immagine va allegata a mano.
 
 ## Il modello
 
