@@ -11,6 +11,7 @@ Dashboard per seguire in diretta lo spoglio del ballottaggio presidenziale brasi
 | `stime.json` | Il sondaggio di partenza della proiezione. Si modifica a mano. |
 | `condivisione.jpg` | L'anteprima del link sui social (1200×630). |
 | `proxy/` | Il progetto Vercel: `api/tse.js` più la configurazione. |
+| `strumenti/comuni_live.mjs` | La sera del voto, dal PC: raccoglie i comuni del ballottaggio e li pubblica (vedi «Comuni»). |
 | `strumenti/comuni_da_tse.py` | Rifà i voti per comune dal file ufficiale del TSE (vedi «Comuni»). |
 
 ## Da dove arrivano i dati
@@ -21,7 +22,7 @@ Il TSE pubblica in `resultados.tse.jus.br` un file JSON per ogni abrangência e 
 https://resultados.tse.jus.br/oficial/ele2026/<elezione>/dados/<uf>/<uf>-c0001-e00<elezione>-u.json
 ```
 
-`c0001` è il Presidente. I codici delle elezioni sono in `oficial/comum/config/ele-c.json`: **6257** è il primo turno, **6258** il ballottaggio. Ci sono 29 file: `br`, le 27 UF, `zz` (l'estero). Ogni file ha le sezioni (`s.ts` totali, `s.st` totalizzate), l'elettorato e l'affluenza (`e`), i voti (`v`) e i candidati in `carg[].agr[].par[].cand[]` con `n` (13 Lula, 22 Flávio) e `vap` (voti). Il formato è stato verificato sui file del primo turno. Nel 2022 il TSE usava un formato «simplificado» diverso: il proxy accetta tutti e due.
+`c0001` è il Presidente. I codici delle elezioni sono in `oficial/comum/config/ele-c.json`: **6257** è il primo turno, **6258** il ballottaggio. Ci sono 29 file: `br`, le 27 UF, `zz` (l'estero). Ogni file ha le sezioni (`s.ts` totali, `s.st` totalizzate), l'elettorato e l'affluenza (`e`), i voti (`v`) e i candidati in `carg[].agr[].par[].cand[]` con `n` (13 Lula, 22 Flávio Bolsonaro) e `vap` (voti). Il formato è stato verificato sui file del primo turno. Nel 2022 il TSE usava un formato «simplificado» diverso: il proxy accetta tutti e due.
 
 Il proxy legge i 29 file in parallelo e restituisce una risposta sola, compatta. La pagina la chiede ogni 30 secondi; la cache del CDN di Vercel (15 secondi) fa sì che molti lettori aperti producano al massimo una raffica di richieste al TSE ogni 15 secondi.
 
@@ -49,7 +50,7 @@ Prova `ele-c.json`, il file nazionale del primo turno e i file del ballottaggio 
 
 | Esito | Significato |
 |---|---|
-| 200 sul primo turno (6257) | La catena funziona. Il riassunto deve dare Flávio 56.104.503 e Lula 53.879.538. |
+| 200 sul primo turno (6257) | La catena funziona. Il riassunto deve dare Flávio Bolsonaro 56.104.503 e Lula 53.879.538. |
 | 200 sul ballottaggio (6258) con pochi voti o nessuno | Normale prima della sera del voto: il TSE pubblica i file in anticipo e completa la configurazione nei giorni prima. Il giorno prima il file `br` deve dare circa 499.000 sezioni (`s.ts`). |
 | 403 o tempo scaduto | Blocco del TSE verso Vercel: vedi «Se il feed si blocca». |
 
@@ -62,7 +63,7 @@ Crea il repository `angrisanidj/risultati-brasile` e carica tutto (la cartella `
 ## 3. La prova generale
 
 - **`…/risultati-brasile/?prova=1`** simula un'intera notte di spoglio. I tempi di arrivo sono quelli veri del primo turno, stato per stato; il risultato vero si sceglie dal menu (Lula 47,5 / 49,5 / 50,5 / 52,5%), il resto (spostamenti per regione e per stato, ordine di arrivo, affluenza) è estratto a caso. Il cursore va dalle 17 alle 22:30 di Brasília; «Avvia lo scorrimento» la fa scorrere da sola, «Nuova simulazione» cambia notte. La pagina dice qual è il risultato vero della simulazione, così si vede la forchetta stringersi attorno ad esso.
-- **`…/risultati-brasile/?ele=6257`** usa il feed live, ma con i file definitivi del primo turno: prova l'intera catena browser → Vercel → TSE. Deve mostrare il 100% delle sezioni e Flávio al 51,0% dei voti dei due.
+- **`…/risultati-brasile/?ele=6257`** usa il feed live, ma con i file definitivi del primo turno: prova l'intera catena browser → Vercel → TSE. Deve mostrare il 100% delle sezioni e Flávio Bolsonaro al 51,0% dei voti dei due.
 - **`?proxy=https://…`** sostituisce il proxy predefinito.
 - **Feed spento fino al pomeriggio del voto:** senza parametri la pagina non chiama il proxy fino a domenica 25 ottobre alle 16:30 di Brasília (20:30 in Italia), poi si accende da sola. **`?feed=1`** la accende subito.
 
@@ -75,7 +76,7 @@ Crea il repository `angrisanidj/risultati-brasile` e carica tutto (la cartella `
 **Modalità redazione:** la stessa chiave della dashboard di Israele, `?redazione=CHIAVE` una volta (il browser la ricorda, `?redazione=esci` la dimentica). Compaiono:
 - i pulsanti «Aggiorna ora» e «Metti in pausa» del feed, e l'avviso «In attesa del primo file» (i lettori vedono solo l'ora dell'ultimo file, quando c'è);
 - il sondaggio da modificare in locale e il pulsante «Copia per stime.json»;
-- i totali manuali (voti di Lula, di Flávio, % sezioni) se il feed si blocca: hanno la precedenza finché non li rimuovi, e la proiezione resta sospesa;
+- i totali manuali (voti di Lula, di Flávio Bolsonaro, % sezioni) se il feed si blocca: hanno la precedenza finché non li rimuovi, e la proiezione resta sospesa;
 - «Importa file TSE»: i JSON scaricati a mano da resultados.tse.jus.br, anche tutti e 29 insieme, con il loro nome originale (`sp-c0001-e006258-u.json`); il feed va in pausa;
 - la scheda «Card»: proiezione, mappa degli stati e forchetta, per X (16:9, 1600×900) o Instagram (4:5, 1080×1350), con un testo da 240 caratteri (vedi «Condivisione»).
 
@@ -97,7 +98,7 @@ La pagina tiene in memoria nel browser la storia della notte (grafico e stima de
 
 ## Il modello
 
-Il problema è che i voti non arrivano a caso. Al primo turno sono arrivati prima Sud, Centro-Ovest e i piccoli stati del Nord, per ultimo il Nordest; e dentro ogni stato le sezioni contate per prime erano più favorevoli a Flávio. Con il 14% delle sezioni Flávio era avanti di 10,8 punti, alla fine di 1,9.
+Il problema è che i voti non arrivano a caso. Al primo turno sono arrivati prima Sud, Centro-Ovest e i piccoli stati del Nord, per ultimo il Nordest; e dentro ogni stato le sezioni contate per prime erano più favorevoli a Flávio Bolsonaro. Con il 14% delle sezioni Flávio Bolsonaro era avanti di 10,8 punti, alla fine di 1,9.
 
 Il modello lavora su 28 unità (27 UF più l'estero) e confronta ogni stato con se stesso al primo turno, sulla quota di Lula fra i due candidati. Lo spostamento di ogni stato (in logit) è la somma di un termine nazionale, uno regionale e uno statale, con una normale a priori centrata sul sondaggio. I voti contati osservano questo spostamento con due correzioni: l'ordine di arrivo dentro lo stato (una pendenza k: la parte contata fino a c sta k(1−c)/2 sotto la media dello stato) e il rumore di un campione parziale, che scende come (1−c)/c. Dalla normale a posteriori si estraggono 4.000 simulazioni dei voti mancanti, con l'incertezza su k, sull'affluenza e sulle sezioni residue.
 
@@ -108,9 +109,23 @@ I parametri stanno in testa al modello, nella costante `PAR`.
 
 ## Comuni
 
-**Primo turno.** I voti per comune vengono dai file ufficiali del TSE, uno per comune (`<uf><codice>-c0001-e006257-u.json`), scaricati il 10 ottobre: 5.571 comuni, tutti. La somma dei voti di Lula e di Flávio sui comuni coincide al voto con il totale nazionale meno l'estero. In `dati/municipi.json` ogni comune (codice IBGE) ha `[Flávio, Lula, voti validi, capitale, codice TSE]`.
+**Primo turno.** I voti per comune vengono dai file ufficiali del TSE, uno per comune (`<uf><codice>-c0001-e006257-u.json`), scaricati il 10 ottobre: 5.571 comuni, tutti. La somma dei voti di Lula e di Flávio Bolsonaro sui comuni coincide al voto con il totale nazionale meno l'estero. In `dati/municipi.json` ogni comune (codice IBGE) ha `[Flávio Bolsonaro, Lula, voti validi, capitale, codice TSE]`.
 
-**Ballottaggio, per comune: per ora no.** Il TSE pubblica un file per comune e un file dell'avanzamento per stato (`<uf>-e006258-ab.json`), ma scaricarli dal proxy di Vercel ha fatto bloccare l'indirizzo per 7 minuti e mezzo (429 su tutti i file, feed principale compreso) durante una prova del 10 ottobre con 240 richieste contemporanee. Il codice è pronto ma spento (`COMUNI_LIVE = false` nella pagina); si riaccende solo con un modo che non passi dall'indirizzo del feed.
+**Ballottaggio, per comune: dal tuo PC.** La mappa del ballottaggio ha il livello «Comuni». I dati non passano dal proxy: il 10 ottobre una raffica di file dei comuni dal proxy di Vercel (240 richieste contemporanee) ha fatto bloccare dal TSE il suo indirizzo per 7 minuti e mezzo, feed degli stati compreso. Li raccoglie invece `strumenti/comuni_live.mjs`, dal PC della redazione, e li pubblica in `dati/comuni-ballottaggio.json`; la pagina rilegge quel file ogni 2 minuti, solo mentre la mappa è sul livello dei comuni.
+
+La sera del voto, verso le 21 italiane, dalla cartella del progetto:
+
+```
+node strumenti/comuni_live.mjs
+```
+
+- A ogni giro (ogni 15 minuti) legge i 27 file dell'avanzamento del TSE (`<uf>-e006258-ab.json`, sezioni contate per comune) e scarica solo i comuni con sezioni nuove, al massimo 10 richieste al secondo, 4 alla volta. A fine notte un giro completo, 5.571 comuni, dura circa 9 minuti.
+- Al primo 429 o 403 si ferma, salva quello che ha, aspetta 10 minuti e riparte a metà velocità.
+- Se il file è cambiato fa commit e push di quel file solo; GitHub Pages lo serve dopo un minuto circa. Quattro pubblicazioni all'ora, sotto il limite di Pages.
+- Quando tutte le sezioni sono contate fa l'ultimo push e si ferma. Ctrl+C lo ferma prima: la pagina resta all'ultimo file.
+- I comuni restano quindi indietro di 15–20 minuti rispetto ai totali degli stati, e la pagina lo scrive sotto la mappa.
+- Opzioni: `--una-volta`, `--no-push`, `--ogni=15`, `--rps=10`, `--ele=6257` (il primo turno, solo con `--no-push`, per provare).
+- La proiezione è solo per stato: sul livello dei comuni il pulsante «Proiezione» è spento. In `?prova=1` i comuni sono inventati a partire dal primo turno e dalla notte simulata.
 
 `strumenti/campioni/` contiene i file del TSE usati per costruire e provare tutto questo, e `mun6257.json`, i voti ufficiali del primo turno per comune. `strumenti/comuni_da_tse.py` resta per rifare i comuni dal file dei dati aperti del TSE, se servisse.
 
