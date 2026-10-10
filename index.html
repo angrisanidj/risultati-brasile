@@ -231,7 +231,7 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .mapstage .sigle text{fill:rgba(255,255,255,.9);text-anchor:middle;dominant-baseline:central;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:.2em}
 .mapzoom{position:absolute;top:10px;right:10px;z-index:2;display:grid;gap:4px}
 .mapzoom button{width:34px;height:34px;padding:0;font:500 17px/1 var(--sans);border-radius:var(--r-s);background:rgba(9,29,20,.94)}
-.maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(9,29,20,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.maphint{position:absolute;left:10px;bottom:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(9,29,20,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:40%;line-height:1.35}
 .mapleg{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--s2)}
 .mapleg h4,.maplist h4{margin:0 0 9px;font:600 13px/1.25 var(--sans);color:var(--t1)}
 .mapleg .ramp{height:8px;border-radius:2px;margin:4px 0 5px}
@@ -1554,7 +1554,7 @@ const rampaMargine = forte => '<div class="ramp" style="background:linear-gradie
 
 /* sul telefono si tocca e si ingrandisce con due dita; col mouse si clicca e si usa la rotellina */
 const TATTILE = window.matchMedia && matchMedia('(hover: none)').matches;
-const suggerimento = cosa => TATTILE ? 'Tocca ' + cosa + ' · ingrandisci con due dita' : 'Clicca ' + cosa + ' · rotellina o +/− per ingrandire';
+const suggerimento = cosa => TATTILE ? 'Tocca ' + cosa + ' · ingrandisci con due dita' : 'Clicca ' + cosa + ' · rotellina o +\u2060/\u2060− per ingrandire';
 /* sul telefono queste sigle si accavallano nel Nordest: si nascondono (l'elenco e il tocco restano) */
 const SIGLE_PICCOLE = new Set(['RN', 'PB', 'AL', 'SE', 'ES', 'DF']);
 function Mappa(cfg) {
