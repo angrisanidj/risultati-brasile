@@ -52,7 +52,8 @@ try { const j = JSON.parse(fs.readFileSync(FILE, 'utf8')); if (j.ele === ELE && 
 
 class Blocco extends Error { }
 let ultima = 0, fermo = null;
-async function prendi(url) {
+const ERR = { rete: 0, http: 0 };   /* errori del giro: di rete (DNS, timeout) o risposte HTTP diverse da 200 */
+async function prendi(url, secondo) {
   if (fermo) throw new Blocco(fermo);   /* dopo un 429 nessun'altra richiesta in questo giro */
   /* ritmo: una partenza ogni 1000/RPS millisecondi, comunque vadano le altre */
   const attesa = ultima + 1000 / RPS - Date.now();
@@ -62,10 +63,13 @@ async function prendi(url) {
   try {
     const r = await fetch(url + '?nocache=' + Date.now(), { signal: ctl.signal, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'Accept': 'application/json,*/*', 'Accept-Language': 'pt-BR,pt;q=0.9,it;q=0.8' } });
     if (r.status === 429 || r.status === 403) { fermo = 'HTTP ' + r.status; throw new Blocco(fermo); }
-    if (!r.ok) return null;
+    if (!r.ok) { ERR.http++; return null; }
     return await r.json();
   } catch (e) {
     if (e instanceof Blocco) throw e;
+    /* errore di rete (DNS, connessione, tempo scaduto): un secondo tentativo dopo 2 secondi */
+    if (!secondo) { clearTimeout(t); await dorme(2000); return prendi(url, true); }
+    ERR.rete++;
     return null;
   } finally { clearTimeout(t); }
 }
@@ -79,12 +83,12 @@ function voti(d, n) {
 async function giro() {
   const t0 = Date.now(), prima = JSON.stringify(M);
   let letti = 0, errori = 0, abLetti = 0, bloccato = null, st = 0, ts = 0;
-  fermo = null;
+  fermo = null; ERR.rete = 0; ERR.http = 0;
   const coda = [];
   try {
     for (const uf of UF) {
       const ab = await prendi(BASE + ELE + '/dados/' + uf + '/' + uf + '-e00' + ELE + '-ab.json');
-      if (!ab) { errori++; continue; }
+      if (!ab) continue;
       abLetti++;
       for (const a of ab.abr || []) {
         if (a.tpabr !== 'mun' && a.tpabr !== 'mu') continue;
@@ -97,7 +101,12 @@ async function giro() {
         else if (p.length < 5) M[id] = [s, t];
       }
     }
-    log('Avanzamento letto: sezioni', st, 'su', ts, '·', coda.length, 'comuni da scaricare');
+    if (!abLetti) {
+      log('ATTENZIONE: nessuno dei 27 file dell’avanzamento letto (' + ERR.http + ' risposte HTTP non valide, ' + ERR.rete + ' errori di rete): controlla la connessione. Il file non viene toccato.');
+      return { bloccato: fermo, finito: false };
+    }
+    log('Avanzamento letto: ' + abLetti + ' file su 27' + (abLetti < 27 ? ' (gli altri: ' + ERR.http + ' non pubblicati o non validi, ' + ERR.rete + ' errori di rete)' : '') + ' · sezioni', st, 'su', ts, '·', coda.length, 'comuni da scaricare');
+    ERR.rete = 0; ERR.http = 0;
     let i = 0;
     await Promise.all(Array.from({ length: 4 }, async () => {
       while (i < coda.length) {
@@ -120,7 +129,7 @@ async function giro() {
   }
   const out = { ele: ELE, aggiornato: new Date().toISOString(), sezioni: [st, ts], comuni: Object.keys(M).length, con_voti: conVoti, m: M };
   fs.writeFileSync(FILE, JSON.stringify(out));
-  log('Scritto', path.relative(RADICE, FILE), '·', conVoti, 'comuni con voti ·', letti, 'scaricati,', errori, 'errori ·', Math.round((Date.now() - t0) / 1000), 's' + (bloccato ? ' · FERMATO: ' + bloccato : ''));
+  log('Scritto', path.relative(RADICE, FILE), '·', conVoti, 'comuni con voti ·', letti, 'scaricati,', errori, 'errori' + (errori ? ' (' + ERR.rete + ' di rete, ' + ERR.http + ' HTTP: si riprovano al giro dopo)' : '') + ' ·', Math.round((Date.now() - t0) / 1000), 's' + (bloccato ? ' · FERMATO: ' + bloccato : ''));
   return { bloccato, finito: !bloccato && !errori && abLetti === UF.length && ts > 0 && st === ts };
 }
 
@@ -140,7 +149,7 @@ process.on('SIGINT', () => { if (fermati) process.exit(0); fermati = true; log('
 while (true) {
   const r = await giro();
   if (PUSH) { try { pubblica(); } catch (e) { log('Push non riuscito:', String(e.message || e).split('\n')[0]); } }
-  if (r.finito) { log('Spoglio dei comuni concluso: ultimo file pubblicato, mi fermo.'); break; }
+  if (r.finito) { log('Spoglio dei comuni concluso: ' + (PUSH ? 'ultimo file pubblicato' : 'file scritto, senza push') + ', mi fermo.'); break; }
   if (UNA || fermati) break;
   let pausa = OGNI_MIN * 60000;
   if (r.bloccato) { RPS = Math.max(2, RPS / 2); pausa = Math.max(pausa, 10 * 60000); log('Il TSE ha risposto', r.bloccato, ': riprendo fra', pausa / 60000, 'minuti a', RPS, 'richieste al secondo'); }

@@ -123,6 +123,8 @@ node strumenti/comuni_live.mjs
 - Al primo 429 o 403 si ferma, salva quello che ha, aspetta 10 minuti e riparte a metà velocità.
 - Se il file è cambiato fa commit e push di quel file solo; GitHub Pages lo serve dopo un minuto circa. Quattro pubblicazioni all'ora, sotto il limite di Pages.
 - Quando tutte le sezioni sono contate fa l'ultimo push e si ferma. Ctrl+C lo ferma prima: la pagina resta all'ultimo file.
+- `dati/comuni-ballottaggio.json` è pubblicato vuoto finché lo script non gira, così la pagina non trova un 404. Lo script lo riempie al primo giro.
+- Se un comune non arriva per un errore di rete (dopo un secondo tentativo), resta fuori fino al giro dopo, che lo recupera. Se non arriva nessuno dei 27 file dell'avanzamento, lo script lo dice e non tocca il file.
 - I comuni restano quindi indietro di 15–20 minuti rispetto ai totali degli stati, e la pagina lo scrive sotto la mappa.
 - Opzioni: `--una-volta`, `--no-push`, `--ogni=15`, `--rps=10`, `--ele=6257` (il primo turno, solo con `--no-push`, per provare).
 - La proiezione è solo per stato: sul livello dei comuni il pulsante «Proiezione» è spento. In `?prova=1` i comuni sono inventati a partire dal primo turno e dalla notte simulata.
