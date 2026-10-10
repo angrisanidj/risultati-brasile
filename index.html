@@ -227,7 +227,8 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .mapstage .hil path.ov-sel{stroke-width:2.2}
 .mapstage .hil path.ov-hover{stroke-width:1.5;opacity:.85}
 .mapstage svg.hassel .ufl path:not(.sel){opacity:.55}
-.mapstage .sigle text{font:600 11px var(--sans);fill:rgba(255,255,255,.85);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:2.2px}
+.mapstage .sigle{font-family:var(--sans);font-weight:600;font-size:11px}
+.mapstage .sigle text{fill:rgba(255,255,255,.9);text-anchor:middle;dominant-baseline:central;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:.2em}
 .mapzoom{position:absolute;top:10px;right:10px;z-index:2;display:grid;gap:4px}
 .mapzoom button{width:34px;height:34px;padding:0;font:500 17px/1 var(--sans);border-radius:var(--r-s);background:rgba(9,29,20,.94)}
 .maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(9,29,20,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -361,7 +362,6 @@ footer a{color:var(--t2)}
   .mapzoom{position:static;grid-auto-flow:column;gap:6px;padding:6px 8px 6px 0}
   .mapzoom button{width:38px;height:38px;background:var(--s2)}
   /* sigle leggibili, solo negli stati abbastanza grandi */
-  .mapstage .sigle text{font-size:27px;stroke-width:5px}
   .mapstage .sigle text.pic{display:none}
   .mapleg .lg div{font-size:13.5px}
   .ufrow{padding:9px 8px;font-size:14px}
@@ -1570,7 +1570,15 @@ function Mappa(cfg) {
   const lista = root.querySelector('.rows'), cerca = root.querySelector('.cerca'), leg = root.querySelector('.mapleg'), det = root.querySelector('.dett'), hint = root.querySelector('.maphint');
   const M = { sel: null, vista: null, munPronti: false };
   gU.innerHTML = GEO.uf.map(g => '<path d="' + g.d + '" data-uf="' + g.id + '"></path>').join('');
-  gS.innerHTML = GEO.uf.filter(g => g.bx[2] - g.bx[0] > 34).map(g => '<text' + (SIGLE_PICCOLE.has(g.id) ? ' class="pic"' : '') + ' x="' + g.cx.toFixed(1) + '" y="' + (g.cy + 4).toFixed(1) + '">' + g.id + '</text>').join('');
+  gS.innerHTML = GEO.uf.filter(g => g.bx[2] - g.bx[0] > 34).map(g => '<text' + (SIGLE_PICCOLE.has(g.id) ? ' class="pic"' : '') + ' x="' + g.cx.toFixed(1) + '" y="' + g.cy.toFixed(1) + '">' + g.id + '</text>').join('');
+  /* le sigle hanno la stessa grandezza sullo schermo qualunque sia l'altezza della mappa:
+     12 px al computer, 10 px sul telefono */
+  function scalaSigle() {
+    const r = svg.getBoundingClientRect(); if (!r.height || !r.width) return;
+    const k = Math.max(GEO.W / r.width, GEO.H / r.height), px = window.innerWidth <= 560 ? 10 : 12;
+    gS.style.fontSize = (px * k).toFixed(1) + 'px';
+  }
+  if (window.ResizeObserver) new ResizeObserver(scalaSigle).observe(svg);
   const V0 = () => ({ x: 0, y: 0, w: GEO.W, h: GEO.H });
   function setVista(v) { M.vista = v; svg.setAttribute('viewBox', v.x.toFixed(1) + ' ' + v.y.toFixed(1) + ' ' + v.w.toFixed(1) + ' ' + v.h.toFixed(1)); stage.classList.toggle('zoomed', v.w < GEO.W * 0.98); gS.style.display = v.w < GEO.W * 0.98 || cfg.livello() === 'mun' ? 'none' : ''; }
   function zoom(f, cx, cy) {
@@ -1586,7 +1594,7 @@ function Mappa(cfg) {
     if (y1 - y0 + 2 * mg > h) { h = y1 - y0 + 2 * mg; w = h * GEO.W / GEO.H; }
     setVista({ x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h });
   }
-  setVista(V0());
+  setVista(V0()); scalaSigle();
   /* trascinamento con un dito o con il mouse, ingrandimento con due dita */
   let drag = null, pinch = null;
   const punti = new Map();
