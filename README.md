@@ -7,7 +7,7 @@ Dashboard per seguire in diretta lo spoglio del ballottaggio presidenziale brasi
 | File | A cosa serve |
 |---|---|
 | `index.html` | La dashboard, file unico. Base del primo turno per stato e confini degli stati incorporati. |
-| `dati/municipi.json` | Confini dei 5.571 comuni e voti del primo turno per comune. Si carica solo quando si apre il livello «Comuni». |
+| `dati/municipi.json` | Confini dei 5.571 comuni, voti ufficiali del primo turno per comune e codici TSE. Si carica solo quando si apre il livello «Comuni». |
 | `stime.json` | Il sondaggio di partenza della proiezione. Si modifica a mano. |
 | `condivisione.jpg` | L'anteprima del link sui social (1200×630). |
 | `proxy/` | Il progetto Vercel: `api/tse.js` più la configurazione. |
@@ -108,12 +108,11 @@ I parametri stanno in testa al modello, nella costante `PAR`.
 
 ## Comuni
 
-I voti del primo turno per comune vengono da una ricostruzione pubblica dai boletins de urna del TSE ([Gabriel-Alexandre/apuracao-eleicoes-2026](https://github.com/Gabriel-Alexandre/apuracao-eleicoes-2026)), verificata dall'autore sul risultato ufficiale comune per comune. Copre 5.273 comuni su 5.571; gli altri sono in grigio. Per averli tutti dai dati ufficiali:
+**Primo turno.** I voti per comune vengono dai file ufficiali del TSE, uno per comune (`<uf><codice>-c0001-e006257-u.json`), scaricati il 10 ottobre: 5.571 comuni, tutti. La somma dei voti di Lula e di Flávio sui comuni coincide al voto con il totale nazionale meno l'estero. In `dati/municipi.json` ogni comune (codice IBGE) ha `[Flávio, Lula, voti validi, capitale, codice TSE]`.
 
-1. scarica `votacao_candidato_munzona_2026.zip` da dadosabertos.tse.jus.br (Resultados 2026 → Votação nominal por município e zona);
-2. `python strumenti/comuni_da_tse.py votacao_candidato_munzona_2026.zip`
+**Ballottaggio, per comune: per ora no.** Il TSE pubblica un file per comune e un file dell'avanzamento per stato (`<uf>-e006258-ab.json`), ma scaricarli dal proxy di Vercel ha fatto bloccare l'indirizzo per 7 minuti e mezzo (429 su tutti i file, feed principale compreso) durante una prova del 10 ottobre con 240 richieste contemporanee. Il codice è pronto ma spento (`COMUNI_LIVE = false` nella pagina); si riaccende solo con un modo che non passi dall'indirizzo del feed.
 
-Lo script riscrive `dati/municipi.json`. Con `--turno 2`, dopo il ballottaggio, stampa i totali del secondo turno per comune.
+`strumenti/campioni/` contiene i file del TSE usati per costruire e provare tutto questo, e `mun6257.json`, i voti ufficiali del primo turno per comune. `strumenti/comuni_da_tse.py` resta per rifare i comuni dal file dei dati aperti del TSE, se servisse.
 
 ## Fonti e licenze
 

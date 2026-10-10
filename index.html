@@ -209,6 +209,7 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .seg{display:flex;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:2px;flex-wrap:wrap}
 .seg button{border:0;background:transparent;color:var(--t2);border-radius:var(--r-s);padding:5px 10px;font:600 12px/1 var(--sans);cursor:pointer;white-space:nowrap}
 .seg button[aria-pressed="true"]{background:var(--acc);color:var(--acc-t)}
+.seg button:disabled{opacity:.35;cursor:default}
 .segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .maparea{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:start;padding:12px 18px 0}
 .mapside{min-width:0;width:100%}
@@ -526,12 +527,15 @@ footer a{color:var(--t2)}
 
   <section class="card blocco">
     <div class="cardhead">
-      <h2>La mappa degli stati</h2>
-      <div class="seg" id="mapModoB">
-        <button data-m="conto" aria-pressed="true">Voti contati</button>
-        <button data-m="proiezione" aria-pressed="false">Proiezione</button>
-        <button data-m="swing" aria-pressed="false">Spostamento</button>
-        <button data-m="primo" aria-pressed="false">Primo turno</button>
+      <h2 id="titMappaB">La mappa degli stati</h2>
+      <div class="segs">
+        <div class="seg" id="mapLivB"><button data-l="uf" aria-pressed="true">Stati</button><button data-l="mun" aria-pressed="false">Comuni</button></div>
+        <div class="seg" id="mapModoB">
+          <button data-m="conto" aria-pressed="true">Voti contati</button>
+          <button data-m="proiezione" aria-pressed="false">Proiezione</button>
+          <button data-m="swing" aria-pressed="false">Spostamento</button>
+          <button data-m="primo" aria-pressed="false">Primo turno</button>
+        </div>
       </div>
     </div>
     <div class="maparea" id="mappaB"></div>
@@ -645,7 +649,7 @@ footer a{color:var(--t2)}
     <p class="methodnote">Gli «altri» sono i dieci candidati esclusi dal ballottaggio: soprattutto Augusto Cury (2,9%), Renan Santos (2,2%) e Ronaldo Caiado (2,2%). Per il voto all’estero la percentuale degli altri è ricavata per differenza.</p>
   </section>
 
-  <footer><span>Primo turno: Tribunale superiore elettorale (TSE), totalizzazione del 5 ottobre 2026 · Comuni: ricostruzione dai boletins de urna (Gabriel-Alexandre/apuracao-eleicoes-2026), verificata sul risultato ufficiale · Curva dello spoglio: stessa fonte · Confini: IBGE, via tbrugz/geodata-br (CC0)</span><span>Agência Brasil e Jornal de Brasília per il blocco delle 19:06</span></footer>
+  <footer><span>Primo turno: Tribunale superiore elettorale (TSE), totalizzazione del 5 ottobre 2026 · Comuni: file ufficiali del TSE per comune · Curva dello spoglio: ricostruzione dai boletins de urna (Gabriel-Alexandre/apuracao-eleicoes-2026) · Confini: IBGE, via tbrugz/geodata-br (CC0)</span><span>Agência Brasil e Jornal de Brasília per il blocco delle 19:06</span></footer>
 </section>
 
 <!-- ============================ TAB 3 — CARD ============================ -->
@@ -1052,7 +1056,7 @@ const S = {
   manuale: null,        /* {L, F, sez} */
   sond: { lula: 0.48, fonte: 'Datafolha, 6–7 ottobre' },
   sondLocale: null,
-  modoB: 'conto', modoT1: 'primo', livT1: 'uf',
+  modoB: 'conto', modoT1: 'primo', livT1: 'uf', livB: 'uf',
   ord: { col: 'V', dir: -1 },
   tsCorretti: new Set()   /* file con il totale delle sezioni incompleto */
 };
@@ -1062,11 +1066,12 @@ const S = {
     if (st.modoB) S.modoB = st.modoB;
     if (st.modoT1) S.modoT1 = st.modoT1;
     if (st.livT1) S.livT1 = st.livT1;
+    if (st.livB) S.livB = st.livB;
   }
   S.sondLocale = store('-sond');
   S.manuale = store('-manuale');
 })();
-function salvaPref() { store('-pref', { modoB: S.modoB, modoT1: S.modoT1, livT1: S.livT1 }); }
+function salvaPref() { store('-pref', { modoB: S.modoB, modoT1: S.modoT1, livT1: S.livT1, livB: S.livB }); }
 const sondaggio = () => (REDAZIONE && S.sondLocale) ? S.sondLocale : S.sond;
 
 /* Il file compatto del proxy (o un file del TSE importato) → valori per unità */
@@ -1207,6 +1212,7 @@ const colC = k => k === 'L' ? LULA.c : FLAV.c;
 function render() {
   renderHero(); renderKpi(); renderVerdetto(); renderDuello(); renderFork();
   renderManca(); renderSwing(); renderTabella();
+  if (PROVA && S.livB === 'mun' && GEO.mun) comuniProva();
   if (MAPPE.B) MAPPE.B.render();
   if (window.CARD) window.CARD.segnaSporco();
 }
@@ -1750,10 +1756,11 @@ function coloreB(u, modo) {
 }
 const CFG_B = {
   titoloLista: 'Gli stati', cerca: 'Cerca uno stato…', aria: 'Mappa degli stati brasiliani',
-  livello: () => 'uf',
+  livello: () => S.livB,
   coloreUF: u => coloreB(u),
-  coloreMun: () => COL_VUOTO,
+  coloreMun: id => coloreMunB(id),
   legenda() {
+    if (S.livB === 'mun') return legendaMunB();
     const m = S.modoB;
     if (m === 'swing') return '<h4>Spostamento sul primo turno</h4><div class="ramp" style="background:linear-gradient(90deg,' + FLAV.c + ',' + COL_VUOTO + ',' + LULA.c + ')"></div><div class="rampl"><span>Flávio +8 punti</span><span>0</span><span>Lula +8</span></div><p>Variazione della quota di Lula sui voti dei due candidati, fra il primo turno e i voti contati. Solo gli stati con almeno il 2% delle sezioni.</p>';
     const tit = m === 'primo' ? 'Primo turno: Lula − Flávio' : m === 'proiezione' ? 'Proiezione per stato' : 'Voti contati';
@@ -1767,7 +1774,8 @@ const CFG_B = {
     return '<h4>' + tit + '</h4>' + rampaMargine(0.5) + '<div class="rampl"><span>Flávio +50</span><span>pari</span><span>Lula +50</span></div>' + cont + '<p>' + nota + '</p>';
   },
   dettaglio(id) {
-    if (!id) return '<div class="dm">Tocca uno stato sulla mappa o nell’elenco: voti contati, proiezione e confronto con il primo turno.</div>';
+    if (!id) return S.livB === 'mun' ? '<div class="dm">Tocca un comune sulla mappa o cercalo nell’elenco: voti contati e confronto con il primo turno.</div>' : '<div class="dm">Tocca uno stato sulla mappa o nell’elenco: voti contati, proiezione e confronto con il primo turno.</div>';
+    if (id.startsWith('m')) return dettaglioMunB(id.slice(1));
     const x = infoUF(id), b = x.b;
     let h = '<div class="dh"><h3>' + esc(b.n) + '</h3><span class="muted" style="font-size:12px">' + REGIONI[b.r] + '</span></div>';
     h += '<div class="dm">' + (x.c ? fmtSez(x.c) + ' delle sezioni' + (S.U && S.U.ts[x.i] ? ' (' + nf(S.U.st[x.i]) + ' su ' + nf(S.U.ts[x.i]) + ')' : '') + ' · ' + nf(x.n) + ' voti validi' : 'Nessuna sezione scrutinata') + '</div>';
@@ -1781,6 +1789,7 @@ const CFG_B = {
     return h;
   },
   lista(q, sel) {
+    if (S.livB === 'mun') return listaMunB(q, sel);
     return B1.slice().sort((a, b) => b.V - a.V).filter(b => !q || b.n.toLowerCase().includes(q) || b.uf.toLowerCase() === q).map(b => {
       const x = infoUF(b.uf), v = valoreB(x, S.modoB === 'swing' ? 'conto' : S.modoB);
       const c = v == null ? COL_VUOTO : v >= 0 ? LULA.c : FLAV.c;
@@ -1829,7 +1838,7 @@ const CFG_T1 = {
     if (id.startsWith('m')) {
       const g = GEO.munById[id.slice(1)], d = GEO.munDati[id.slice(1)];
       nome = g ? g.p.n : id; sotto = g ? (BASE.uf[g.p.uf] || {}).n || g.p.uf : '';
-      if (!d) return '<div class="dh"><h3>' + esc(nome) + '</h3><span class="muted" style="font-size:12px">' + esc(sotto) + '</span></div><div class="dm">Voti per comune non disponibili' + (GEO.munCompleto ? '' : ': la ricostruzione pubblica copre 5.273 comuni su 5.571. I totali dello stato sono comunque completi.') + '</div>';
+      if (!d) return '<div class="dh"><h3>' + esc(nome) + '</h3><span class="muted" style="font-size:12px">' + esc(sotto) + '</span></div><div class="dm">Voti per comune non disponibili.</div>';
       [F, L, V] = d; if (d[3]) extra = ' · capitale';
     } else {
       const b = B1[IDX[id]]; nome = b.n; sotto = REGIONI[b.r]; F = b.F; L = b.L; V = b.V;
@@ -1858,6 +1867,187 @@ const CFG_T1 = {
     }).join('');
   }
 };
+
+/* =====================================================================
+   6b · I COMUNI DEL BALLOTTAGGIO, DAL VIVO
+   Il TSE pubblica un file per comune; il proxy (?comuni=<uf>) legge l'avanzamento dello
+   stato e scarica solo i comuni con sezioni contate, con una cache di 150 secondi.
+   La pagina chiede i 27 stati ogni 3 minuti, sei alla volta, solo mentre la mappa è sul
+   livello dei comuni. Da stime.json ("comuni": false) la redazione può spegnere tutto.
+   Dato per comune (codice IBGE): [sezioni contate, sezioni totali, voti validi, Lula, Flávio].
+   ===================================================================== */
+const MUNB = { dati: {}, quando: null, timer: null, busy: false, spento: false, errori: 0, letti: 0, stati: 0 };
+const MUNB_MS = 180000;
+/* SPENTO il 10 ottobre: la prova dal proxy di Vercel (240 richieste contemporanee) ha fatto
+   bloccare dal TSE l'indirizzo di uscita per 7 minuti e mezzo, feed principale compreso.
+   Finché non c'è un modo che non tocchi l'indirizzo del feed, il livello dei comuni del
+   ballottaggio non compare e la pagina non chiede niente. */
+const COMUNI_LIVE = false;
+const COL_ATTESA = '#24312a';   /* comune senza sezioni contate: quasi lo sfondo, così risaltano quelli con voti */
+const UF_MUN = ['ac', 'al', 'am', 'ap', 'ba', 'ce', 'df', 'es', 'go', 'ma', 'mg', 'ms', 'mt', 'pa', 'pb', 'pe', 'pi', 'pr', 'rj', 'rn', 'ro', 'rr', 'rs', 'sc', 'se', 'sp', 'to'];
+
+/* codice TSE → codice IBGE, dal quinto campo dei dati del primo turno */
+function tseIbge() {
+  if (GEO.tse) return GEO.tse;
+  if (!GEO.munDati) return {};
+  GEO.tse = {};
+  for (const id in GEO.munDati) { const t = GEO.munDati[id][4]; if (t) GEO.tse[t] = id; }
+  return GEO.tse;
+}
+function uniscicomuni(j) {
+  const mappa = tseIbge();
+  for (const cd in j.m) {
+    const id = mappa[cd]; if (!id) continue;
+    const x = j.m[cd], prima = MUNB.dati[id];
+    if (x.length >= 5) MUNB.dati[id] = x;
+    /* file del comune non letto in questo giro: si tiene l'ultimo dato buono */
+    else if (!(prima && prima.length >= 5 && x[0] > 0)) MUNB.dati[id] = x;
+  }
+}
+const comuniAttivi = () => COMUNI_LIVE && S.livB === 'mun' && !MUNB.spento && !PROVA && feedAcceso();
+async function cicloComuni() {
+  clearTimeout(MUNB.timer);
+  if (!comuniAttivi()) { MUNB.timer = null; return; }
+  if (document.hidden) { MUNB.timer = setTimeout(cicloComuni, 30000); return; }
+  if (MUNB.busy) return;
+  MUNB.busy = true;
+  try {
+    await caricaComuni();
+    const coda = UF_MUN.slice();
+    let ok = 0, err = 0;
+    const base = PROXY + (PROXY.includes('?') ? '&' : '?');
+    await Promise.all(Array.from({ length: 6 }, async () => {
+      while (coda.length) {
+        const uf = coda.shift();
+        try {
+          const r = await conTimeout(base + 'comuni=' + uf + '&ele=' + ELE, { cache: 'no-cache' }, 30000);
+          const j = await r.json();
+          if (!r.ok || !j.m) throw 0;
+          uniscicomuni(j); ok++;
+        } catch (_) { err++; }
+      }
+    }));
+    MUNB.stati = ok; MUNB.errori = err; MUNB.quando = new Date();
+  } catch (_) { MUNB.errori = UF_MUN.length; }
+  finally {
+    MUNB.busy = false;
+    if (MAPPE.B) MAPPE.B.render();
+    notaMappaB();
+    if (comuniAttivi()) MUNB.timer = setTimeout(cicloComuni, MUNB_MS);
+  }
+}
+
+/* prova generale: comuni inventati dai voti del primo turno e dalla notte simulata dello stato */
+function hash01(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10000) / 10000; }
+function comuniProva() {
+  if (!GEO.mun || !GEO.munDati || !S.U) return;
+  const out = {};
+  for (const g of GEO.mun) {
+    const d = GEO.munDati[g.id]; if (!d) continue;
+    const i = IDX[g.p.uf]; if (i == null) continue;
+    const cU = S.U.c[i], due1 = d[0] + d[1];
+    const r = hash01(g.id), r2 = hash01(g.id + 'x');
+    /* i comuni cominciano a contare in momenti diversi, poi vanno più o meno al passo dello stato */
+    const f = cU < 0.3 * r ? 0 : Math.max(0, Math.min(1, cU * (0.35 + 1.3 * r)));
+    if (f < 0.002 || !due1) { out[g.id] = [0, 100]; continue; }
+    const nU = S.U.L[i] + S.U.F[i], qU = nU ? S.U.L[i] / nU : B1[i].q;
+    const q = Math.max(0.01, Math.min(0.99, d[1] / due1 + (qU - B1[i].q) + (r2 - 0.5) * 0.04));
+    const n = Math.round(due1 * f * (0.97 + 0.06 * r2));
+    out[g.id] = [Math.round(100 * f), 100, n, Math.round(n * q), n - Math.round(n * q)];
+  }
+  MUNB.dati = out; MUNB.quando = S.aggiornato;
+}
+
+/* il modo della mappa dei comuni: la proiezione esiste solo per stato */
+const modoMunB = () => S.modoB === 'proiezione' ? 'conto' : S.modoB;
+function valoreMunB(id, modo) {
+  const t1 = GEO.munDati && GEO.munDati[id];
+  if (modo === 'primo') return t1 && t1[2] ? { v: (t1[1] - t1[0]) / t1[2] } : null;
+  const d = MUNB.dati[id];
+  if (!d || d.length < 5 || !d[0] || !(d[3] + d[4])) return null;
+  const q = d[3] / (d[3] + d[4]), c = d[1] ? d[0] / d[1] : 0;
+  if (modo === 'swing') return t1 && t1[0] + t1[1] ? { v: q - t1[1] / (t1[0] + t1[1]), c } : null;
+  return { v: 2 * q - 1, c, q };
+}
+function coloreMunB(id) {
+  const m = modoMunB(), x = valoreMunB(id, m);
+  if (!x) return m === 'primo' ? COL_ND : COL_ATTESA;
+  if (m === 'swing') return mix(COL_VUOTO, x.v >= 0 ? LULA.c : FLAV.c, 0.15 + 0.85 * clamp(Math.abs(x.v) / 0.1, 0, 1));
+  return coloreMargine(x.v, 0.6);
+}
+function legendaMunB() {
+  const m = modoMunB();
+  let h, l = 0, f = 0, nd = 0;
+  if (GEO.mun) GEO.mun.forEach(g => { const x = valoreMunB(g.id, m); if (!x) nd++; else if (x.v >= 0) l++; else f++; });
+  if (m === 'swing') h = '<h4>Spostamento sul primo turno, per comune</h4><div class="ramp" style="background:linear-gradient(90deg,' + FLAV.c + ',' + COL_VUOTO + ',' + LULA.c + ')"></div><div class="rampl"><span>Flávio +10 punti</span><span>0</span><span>Lula +10</span></div>';
+  else h = '<h4>' + (m === 'primo' ? 'Primo turno: Lula − Flávio, per comune' : 'Voti contati, per comune') + '</h4>' + rampaMargine(0.6) + '<div class="rampl"><span>Flávio +60</span><span>pari</span><span>Lula +60</span></div>';
+  const lab = m === 'primo' ? ['Comuni vinti da Lula', 'Comuni vinti da Flávio', 'Dato non disponibile'] : m === 'swing' ? ['Lula guadagna', 'Flávio guadagna', 'Non ancora contati'] : ['Lula avanti', 'Flávio avanti', 'Non ancora contati'];
+  h += '<div class="lg" style="margin-top:10px"><div><i style="background:' + LULA.c + '"></i><span>' + lab[0] + '</span><b>' + nf(l) + '</b></div><div><i style="background:' + FLAV.c + '"></i><span>' + lab[1] + '</span><b>' + nf(f) + '</b></div>' + (nd ? '<div><i style="background:' + (m === 'primo' ? COL_ND : COL_ATTESA) + ';box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)"></i><span>' + lab[2] + '</span><b>' + nf(nd) + '</b></div>' : '') + '</div>';
+  const nota = m === 'primo' ? 'Distacco sui voti validi del 4 ottobre, con tutti i dodici candidati.'
+    : m === 'swing' ? 'Variazione della quota di Lula sui voti dei due candidati rispetto al primo turno, nei comuni con almeno una sezione contata.'
+      : 'Distacco fra i due nei voti contati finora, anche dove lo spoglio è appena cominciato: la percentuale di sezioni di ogni comune è nell’elenco e nel dettaglio.' + (S.modoB === 'proiezione' ? ' La proiezione è solo per stato.' : '');
+  return h + '<p>' + nota + '</p>';
+}
+function dettaglioMunB(id) {
+  const g = GEO.munById && GEO.munById[id], t1 = GEO.munDati && GEO.munDati[id], d = MUNB.dati[id];
+  const nome = g ? g.p.n : id, uf = g ? (BASE.uf[g.p.uf] || {}).n || g.p.uf : '';
+  let h = '<div class="dh"><h3>' + esc(nome) + '</h3><span class="muted" style="font-size:12px">' + esc(uf) + (t1 && t1[3] ? ' · capitale' : '') + '</span></div>';
+  const conVoti = d && d.length >= 5 && d[0] && (d[3] + d[4]);
+  if (conVoti) {
+    const n = d[3] + d[4], q = d[3] / n;
+    h += '<div class="dm">' + fmtSez(d[1] ? d[0] / d[1] : 0) + ' delle sezioni (' + nf(d[0]) + ' su ' + nf(d[1]) + ') · ' + nf(d[2]) + ' voti validi</div>';
+    h += '<div class="dl">' + [[LULA, q, d[3]], [FLAV, 1 - q, d[4]]].map(([c, x, v]) => '<div class="dr"><div class="nm"><i style="background:' + c.c + '"></i><span>' + c.n + ' · ' + nf(v) + '</span></div><div class="tk"><b style="width:' + (x * 100) + '%;background:' + c.c + '"></b></div><div class="vv">' + pct(x) + '</div></div>').join('') + '</div>';
+  } else {
+    h += '<div class="dm">' + (feedAcceso() || PROVA ? 'Nessuna sezione contata finora.' : 'I voti del ballottaggio arrivano dalle ' + oraIT(new Date(ATTIVA_FEED)) + ' italiane del 25 ottobre.') + '</div>';
+  }
+  if (t1 && t1[2]) {
+    const q1 = t1[1] / (t1[0] + t1[1]);
+    h += '<div class="cmp">';
+    if (conVoti) h += 'Rispetto al primo turno, quota di Lula fra i due: <b>' + pti(d[3] / (d[3] + d[4]) - q1) + ' punti</b><br>';
+    h += 'Primo turno: Lula <b>' + pct(t1[1] / t1[2]) + '</b>, Flávio <b>' + pct(t1[0] / t1[2]) + '</b> · ' + nf(t1[2]) + ' voti validi</div>';
+  }
+  return h;
+}
+function listaMunB(q, sel) {
+  if (!GEO.mun) return '<div class="dm">Carico i comuni…</div>';
+  const m = modoMunB(), V = g => (GEO.munDati[g.id] || [0, 0, 0])[2];
+  let arr = q ? GEO.mun.filter(g => g.p.n && g.p.n.toLowerCase().includes(q)) : GEO.mun.slice();
+  arr = arr.sort((a, b) => V(b) - V(a)).slice(0, 80);
+  return arr.map(g => {
+    const x = valoreMunB(g.id, m), d = MUNB.dati[g.id], t1 = GEO.munDati[g.id];
+    let lab = '—', col = m === 'primo' ? COL_ND : COL_ATTESA;
+    if (x) {
+      col = x.v >= 0 ? LULA.c : FLAV.c;
+      if (m === 'swing') lab = pti(x.v);
+      else if (m === 'primo') lab = t1[1] >= t1[0] ? 'Lula ' + pct(t1[1] / t1[2], 0) : 'Flávio ' + pct(t1[0] / t1[2], 0);
+      else lab = x.q >= 0.5 ? 'Lula ' + pct(x.q, 0) : 'Flávio ' + pct(1 - x.q, 0);
+    }
+    const sez = m === 'primo' ? g.p.uf : d && d[0] && d[1] ? fmtSez(d[0] / d[1]) : '';
+    return '<div class="ufrow' + (sel === 'm' + g.id ? ' sel' : '') + (x ? '' : ' mute') + '" data-id="m' + g.id + '"><span class="ln"><i style="background:' + col + '"></i>' + esc(g.p.n) + '</span><span class="lp">' + lab + '</span><span class="lc">' + sez + '</span></div>';
+  }).join('') + (q ? '' : '<div class="dm" style="padding:6px 9px">I comuni più grandi; cerca per vedere gli altri.</div>');
+}
+function notaMappaB() {
+  const el = $('mapNoteB'); if (!el) return;
+  if (S.livB !== 'mun') { el.textContent = 'Il voto all’estero non ha un poligono: compare nell’elenco e nella tabella. L’intensità del colore cresce con il distacco fra i due candidati; gli stati con meno del 5% delle sezioni sono più chiari.'; return; }
+  let t = 'Ogni poligono è un comune (confini IBGE). ';
+  if (MUNB.spento) t += 'L’aggiornamento dei comuni è sospeso' + (Object.keys(MUNB.dati).length ? ': la mappa mostra l’ultimo dato ricevuto.' : '.');
+  else if (PROVA) t += 'Prova generale: i comuni sono inventati a partire dal primo turno e dalla notte simulata dello stato.';
+  else if (!feedAcceso()) t += 'I voti per comune arrivano dai file del TSE quando parte lo spoglio, e si aggiornano ogni 3 minuti circa.';
+  else t += 'Voti per comune dai file del TSE, riletti ogni 3 minuti circa' + (MUNB.quando ? ' (ultimo giro alle ' + oraBR(MUNB.quando) + ' a Brasília' + (MUNB.errori ? ', ' + MUNB.errori + ' stati non letti' : '') + ')' : '') + '.';
+  el.textContent = t + ' Il voto all’estero non ha un poligono.';
+}
+function aggiornaLivB() {
+  if (!COMUNI_LIVE) { S.livB = 'uf'; const sg = $('mapLivB'); if (sg) sg.classList.add('hidden'); }
+  $('titMappaB').textContent = S.livB === 'mun' ? 'La mappa dei comuni' : 'La mappa degli stati';
+  document.querySelectorAll('#mapLivB button').forEach(b => b.setAttribute('aria-pressed', b.dataset.l === S.livB ? 'true' : 'false'));
+  const bp = document.querySelector('#mapModoB button[data-m=proiezione]');
+  if (bp) { bp.disabled = S.livB === 'mun'; bp.title = S.livB === 'mun' ? 'La proiezione è solo per stato' : ''; }
+  document.querySelectorAll('#mapModoB button').forEach(x => x.setAttribute('aria-pressed', x.dataset.m === (S.livB === 'mun' ? modoMunB() : S.modoB) ? 'true' : 'false'));
+  if (S.livB === 'mun' && PROVA) caricaComuni().then(() => { comuniProva(); MAPPE.B.render(); }).catch(() => { });
+  if (comuniAttivi() && !MUNB.timer && !MUNB.busy) cicloComuni();
+  notaMappaB();
+  if (MAPPE.B) MAPPE.B.render();
+}
 
 
 /* =====================================================================
@@ -1942,6 +2132,7 @@ async function poll(manuale) {
         render();
       }
       const mancanti = UFS.filter(u => !j.uf[u.toLowerCase()] || j.uf[u.toLowerCase()].errore).length;
+      if (comuniAttivi() && !MUNB.timer && !MUNB.busy) cicloComuni();
       setFeed('Feed live · TSE ' + (S.aggiornato ? oraBR(S.aggiornato) + ' a Brasília' : '') + (mancanti ? ' · ' + mancanti + ' file mancanti' : ''), 'ok');
       if (S.tsCorretti.size) console.warn('TSE: totale delle sezioni incompleto in', [...S.tsCorretti].join(', '), '— uso le sezioni del primo turno');
       avviso('');
@@ -1967,6 +2158,9 @@ async function leggiStime() {
       const nuovo = { lula: j.sondaggio.lula / 100, fonte: j.sondaggio.fonte || '' };
       if (nuovo.lula !== S.sond.lula || nuovo.fonte !== S.sond.fonte) { S.sond = nuovo; if (S.U) aggiornaModello(false); render(); }
     }
+    /* interruttore dei comuni: "comuni": false in stime.json ferma le richieste */
+    const spento = j.comuni === false;
+    if (spento !== MUNB.spento) { MUNB.spento = spento; if (spento) { clearTimeout(MUNB.timer); MUNB.timer = null; } aggiornaLivB(); }
   } catch (_) { }
   setTimeout(leggiStime, STIME_MS);
 }
@@ -2133,7 +2327,7 @@ function renderT1Mappa() {
   document.querySelectorAll('#mapLivT1 button').forEach(b => b.setAttribute('aria-pressed', b.dataset.l === S.livT1 ? 'true' : 'false'));
   document.querySelectorAll('#mapModoT1 button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === S.modoT1 ? 'true' : 'false'));
   $('mapNoteT1').textContent = S.livT1 === 'mun'
-    ? 'Ogni poligono è un comune (confini IBGE). Voti per comune dalla ricostruzione pubblica dei boletins de urna del TSE, verificata sul risultato ufficiale; ' + (GEO.munCompleto ? 'copre tutti i comuni.' : 'copre 5.273 comuni su 5.571: quelli in grigio scuro non hanno ancora il dato.') + ' Il voto all’estero non ha un poligono.'
+    ? 'Ogni poligono è un comune (confini IBGE). Voti per comune dai file ufficiali del TSE, uno per ciascuno dei 5.571 comuni: la loro somma coincide con il totale nazionale meno l’estero. Il voto all’estero non ha un poligono.'
     : 'Gli stati colorati secondo il distacco fra Lula e Flávio sui voti validi del 4 ottobre. Il voto all’estero non ha un poligono: è nell’elenco e nella tabella.';
   if (MAPPE.T1) MAPPE.T1.render();
 }
@@ -2147,11 +2341,8 @@ function eventi() {
     $('pauseBtn').textContent = FEED.pausa ? 'Riprendi il feed' : 'Metti in pausa';
     if (FEED.pausa) { clearTimeout(FEED.timer); setFeed('Feed in pausa', 'paused'); } else poll(true);
   };
-  document.querySelectorAll('#mapModoB button').forEach(b => b.onclick = () => {
-    S.modoB = b.dataset.m; salvaPref();
-    document.querySelectorAll('#mapModoB button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
-    MAPPE.B.render();
-  });
+  document.querySelectorAll('#mapModoB button').forEach(b => b.onclick = () => { if (b.disabled) return; S.modoB = b.dataset.m; salvaPref(); aggiornaLivB(); });
+  document.querySelectorAll('#mapLivB button').forEach(b => b.onclick = () => { S.livB = b.dataset.l; salvaPref(); aggiornaLivB(); });
   document.querySelectorAll('#mapModoT1 button').forEach(b => b.onclick = () => { S.modoT1 = b.dataset.m; salvaPref(); renderT1Mappa(); });
   document.querySelectorAll('#mapLivT1 button').forEach(b => b.onclick = () => { S.livT1 = b.dataset.l; salvaPref(); renderT1Mappa(); });
   $('ufTable').onclick = e => {
@@ -2226,7 +2417,6 @@ async function avvio() {
   document.body.classList.toggle('redazione', REDAZIONE);
   if (REDAZIONE) riempiRedazione();
   MAPPE.B = Mappa({ el: $('mappaB'), ...CFG_B });
-  document.querySelectorAll('#mapModoB button').forEach(x => x.setAttribute('aria-pressed', x.dataset.m === S.modoB ? 'true' : 'false'));
   eventi(); eventiSocial();
   renderPrimoTurno();
   $('footProxy').textContent = 'Proxy: ' + (() => { try { return new URL(PROXY).host; } catch (_) { return PROXY; } })();
@@ -2235,6 +2425,7 @@ async function avvio() {
   leggiStime();
   if (PROVA) avviaProva();
   else poll(true);
+  aggiornaLivB();
   if (location.hash === '#primo-turno') scheda('t1');
 }
 avvio();
