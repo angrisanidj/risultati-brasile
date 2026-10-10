@@ -317,7 +317,7 @@ footer a{color:var(--t2)}
   .main-grid,.card-grid,.grid2{grid-template-columns:1fr}
   .side{position:static}
   .maparea{grid-template-columns:minmax(0,1fr);gap:16px}
-  .mapside{max-width:none;justify-self:stretch}
+  .mapside,.mapside.l,.mapside.r{max-width:none;justify-self:stretch}
   .mapside.l{order:3}
   .mapside.r{order:2}
   .maplist .rows{max-height:360px}
@@ -354,10 +354,21 @@ footer a{color:var(--t2)}
   .tablewrap{padding-top:6px}
   /* mappa larga quanto lo schermo, altezza dal rapporto dei lati */
   .maparea{padding-left:10px;padding-right:10px}
-  .mapstage{width:100%}
-  .mapstage svg{width:100%;height:auto;max-height:72vh}
+  .mapstage{width:100%;display:flex;flex-wrap:wrap;align-items:center}
+  .mapstage svg{flex:0 0 100%;width:100%;height:auto;max-height:72vh;border-bottom:1px solid var(--line)}
+  /* comandi sotto la mappa: non coprono più Roraima, Amapá e il Nordest */
+  .maphint{position:static;flex:1 1 0;min-width:0;max-width:none;white-space:normal;background:none;padding:8px 10px;font-size:12px;line-height:1.35}
+  .mapzoom{position:static;grid-auto-flow:column;gap:6px;padding:6px 8px 6px 0}
+  .mapzoom button{width:38px;height:38px;background:var(--s2)}
+  /* sigle leggibili, solo negli stati abbastanza grandi */
+  .mapstage .sigle text{font-size:27px;stroke-width:5px}
+  .mapstage .sigle text.pic{display:none}
+  .mapleg .lg div{font-size:13.5px}
+  .ufrow{padding:9px 8px;font-size:14px}
   .mapside.r .dett{order:-1}
-  .seg button{padding:8px 11px;font-size:12.5px}
+  .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .segs{width:100%}
+  .seg button{padding:10px 8px;font-size:13px;text-align:center}
   .segs{justify-content:flex-start}
   .cardhead{padding:14px 14px 0}
   .subcopy{padding:0 14px}
@@ -1532,7 +1543,7 @@ function caricaComuni() {
   }).catch(e => { MUN_PROMESSA = null; throw e; });
   return MUN_PROMESSA;
 }
-const COL_VUOTO = '#3a403d', COL_ND = '#24322a';
+const COL_VUOTO = '#3a403d', COL_ND = '#646d69';
 function coloreMargine(m, forte = 0.5) {
   if (m == null || !isFinite(m)) return COL_VUOTO;
   const t = 0.2 + 0.8 * clamp(Math.abs(m) / forte, 0, 1);
@@ -1541,12 +1552,17 @@ function coloreMargine(m, forte = 0.5) {
 const coloreAltri = a => a == null ? COL_ND : mix(COL_VUOTO, '#e9b949', 0.12 + 0.88 * clamp(a / 0.2, 0, 1));
 const rampaMargine = forte => '<div class="ramp" style="background:linear-gradient(90deg,' + FLAV.c + ',' + coloreMargine(-forte * 0.35) + ',' + COL_VUOTO + ',' + coloreMargine(forte * 0.35) + ',' + LULA.c + ')"></div>';
 
+/* sul telefono si tocca e si ingrandisce con due dita; col mouse si clicca e si usa la rotellina */
+const TATTILE = window.matchMedia && matchMedia('(hover: none)').matches;
+const suggerimento = cosa => TATTILE ? 'Tocca ' + cosa + ' · ingrandisci con due dita' : 'Clicca ' + cosa + ' · rotellina o +/− per ingrandire';
+/* sul telefono queste sigle si accavallano nel Nordest: si nascondono (l'elenco e il tocco restano) */
+const SIGLE_PICCOLE = new Set(['RN', 'PB', 'AL', 'SE', 'ES', 'DF']);
 function Mappa(cfg) {
   const root = cfg.el;
   root.innerHTML =
     '<div class="mapside l maplist"><h4>' + cfg.titoloLista + '</h4><input class="cerca" placeholder="' + cfg.cerca + '" autocomplete="off"><div class="rows"></div></div>' +
     '<div class="mapcol"><div class="mapstage"><svg role="img" aria-label="' + esc(cfg.aria) + '"><g class="ufl"></g><g class="munl"></g><g class="bordi"></g><g class="sigle"></g><g class="hil"></g></svg>' +
-    '<span class="maphint">Tocca uno stato · due dita, rotellina o +/− per ingrandire</span>' +
+    '<span class="maphint">' + suggerimento('uno stato') + '</span>' +
     '<div class="mapzoom"><button class="zi" title="Ingrandisci" aria-label="Ingrandisci">+</button><button class="zo" title="Riduci" aria-label="Riduci">−</button><button class="zr" title="Vista intera" aria-label="Torna alla vista intera">⤢</button></div></div></div>' +
     '<div class="mapside r"><div class="mapleg"></div><div class="dett"></div></div>';
   const svg = root.querySelector('svg'), stage = root.querySelector('.mapstage');
@@ -1554,7 +1570,7 @@ function Mappa(cfg) {
   const lista = root.querySelector('.rows'), cerca = root.querySelector('.cerca'), leg = root.querySelector('.mapleg'), det = root.querySelector('.dett'), hint = root.querySelector('.maphint');
   const M = { sel: null, vista: null, munPronti: false };
   gU.innerHTML = GEO.uf.map(g => '<path d="' + g.d + '" data-uf="' + g.id + '"></path>').join('');
-  gS.innerHTML = GEO.uf.filter(g => g.bx[2] - g.bx[0] > 34).map(g => '<text x="' + g.cx.toFixed(1) + '" y="' + (g.cy + 4).toFixed(1) + '">' + g.id + '</text>').join('');
+  gS.innerHTML = GEO.uf.filter(g => g.bx[2] - g.bx[0] > 34).map(g => '<text' + (SIGLE_PICCOLE.has(g.id) ? ' class="pic"' : '') + ' x="' + g.cx.toFixed(1) + '" y="' + (g.cy + 4).toFixed(1) + '">' + g.id + '</text>').join('');
   const V0 = () => ({ x: 0, y: 0, w: GEO.W, h: GEO.H });
   function setVista(v) { M.vista = v; svg.setAttribute('viewBox', v.x.toFixed(1) + ' ' + v.y.toFixed(1) + ' ' + v.w.toFixed(1) + ' ' + v.h.toFixed(1)); stage.classList.toggle('zoomed', v.w < GEO.W * 0.98); gS.style.display = v.w < GEO.W * 0.98 || cfg.livello() === 'mun' ? 'none' : ''; }
   function zoom(f, cx, cy) {
@@ -1689,10 +1705,10 @@ function Mappa(cfg) {
     if (munOn) {
       const paths = gM.children;
       for (let i = 0; i < paths.length; i++) paths[i].setAttribute('fill', cfg.coloreMun(paths[i].dataset.mun));
-      hint.textContent = 'Tocca un comune · due dita, rotellina o +/− per ingrandire';
+      hint.textContent = suggerimento('un comune');
     } else {
       gU.querySelectorAll('path').forEach(p => { const c = cfg.coloreUF(p.dataset.uf); p.setAttribute('fill', c.f); p.style.opacity = c.o == null ? '' : c.o; });
-      if (liv !== 'mun') hint.textContent = 'Tocca uno stato · due dita, rotellina o +/− per ingrandire';
+      if (liv !== 'mun') hint.textContent = suggerimento('uno stato');
     }
     if (M.sel && (M.sel.startsWith('m') !== (liv === 'mun'))) M.sel = null;
     cerca.placeholder = liv === 'mun' ? 'Cerca un comune…' : cfg.cerca;
