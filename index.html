@@ -386,7 +386,7 @@ footer a{color:var(--t2)}
   .hero{padding:18px 0 16px}
   .hero p{font-size:13.5px}
   .cand .cp{font-size:36px}
-  .bar-row{grid-template-columns:118px minmax(0,1fr) 54px;gap:8px}
+  .bar-row{grid-template-columns:128px minmax(0,1fr) 54px;gap:8px}
   .bar-row .dd,.bar-row .nm small{display:none}
   .cand .cn{font-size:12px}
   /* niente zoom automatico di iOS sui campi */
@@ -411,6 +411,7 @@ footer a{color:var(--t2)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media(max-width:380px){
+  .cand .cn,.livechip span{white-space:normal;line-height:1.3}
   th,td{padding-left:4px;padding-right:4px}
   td{font-size:12.5px}
   th:first-child,td:first-child{padding-left:10px;min-width:76px}
