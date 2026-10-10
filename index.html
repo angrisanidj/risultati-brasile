@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0b0f11">
+<meta name="theme-color" content="#05140d">
 <title>Brasile 2026 — Il ballottaggio in diretta</title>
 <meta name="description" content="Ballottaggio presidenziale brasiliano del 25 ottobre 2026, Lula contro Flávio Bolsonaro: lo spoglio stato per stato dai file del TSE, la proiezione del risultato finale con la sua forchetta, le mappe e il primo turno.">
 <link rel="canonical" href="https://angrisanidj.github.io/risultati-brasile/">
@@ -13,7 +13,7 @@
 <meta property="og:url" content="https://angrisanidj.github.io/risultati-brasile/">
 <meta property="og:title" content="Brasile 2026 — Il ballottaggio in diretta">
 <meta property="og:description" content="Lula contro Flávio Bolsonaro, 25 ottobre: lo spoglio stato per stato dai file del Tribunale superiore elettorale, la proiezione del risultato finale e le mappe del primo turno.">
-<meta property="og:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg">
+<meta property="og:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Brasile 2026, il ballottaggio in diretta: la mappa degli stati al primo turno, Lula contro Flávio Bolsonaro">
@@ -21,7 +21,7 @@
 <meta name="twitter:creator" content="@putino">
 <meta name="twitter:title" content="Brasile 2026 — Il ballottaggio in diretta">
 <meta name="twitter:description" content="Lula contro Flávio Bolsonaro: lo spoglio stato per stato, la proiezione con la forchetta e le mappe.">
-<meta name="twitter:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg">
+<meta name="twitter:image" content="https://angrisanidj.github.io/risultati-brasile/condivisione.jpg?v=2">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 16'%3E%3Crect width='22' height='16' fill='%23009c3b'/%3E%3Cpath d='M11 2l9 6-9 6-9-6z' fill='%23ffdf00'/%3E%3Ccircle cx='11' cy='8' r='3.4' fill='%23002776'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,18 +31,18 @@
 :root{
   --verde:#009c3b;--giallo:#ffdf00;--blu:#002776;
   --lula:#e5484d;--flavio:#3d7bf5;
-  --bg:#0b0f11;--s1:#11171a;--s2:#161d21;--s3:#1f282d;
+  --bg:#05140d;--s1:#091d14;--s2:#0d241a;--s3:#143022;
   --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
-  --t1:#eef1f2;--t2:#9ba6ab;--t3:#6c777d;--white:#f4f6f6;
+  --t1:#eef4f0;--t2:#a2b8ac;--t3:#6f897b;--white:#f5f8f4;--acc:#ffdf00;--acc-t:#05140d;
   --green:#4bd28b;--red:#ff6680;--amber:#f2c14e;
   --serif:Lora,Georgia,"Times New Roman",serif;
   --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:6px;--r-s:4px;
   --pad:clamp(14px,3vw,24px);
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;scrollbar-width:thin;scrollbar-color:#2c363b transparent}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;scrollbar-width:thin;scrollbar-color:#26402f transparent}
 ::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:#2c363b;border-radius:4px}
+::-webkit-scrollbar-thumb{background:#26402f;border-radius:4px}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100vh;color:var(--t1);background:var(--bg);font:14.5px/1.5 var(--sans)}
 h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0}
@@ -50,11 +50,11 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0
 .muted{color:var(--t2)}
 .hidden{display:none!important}
 .cl{color:var(--lula)}.cf{color:var(--flavio)}
-:focus-visible{outline:2px solid #8fb3ff;outline-offset:2px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
 /* ---------- testata ---------- */
-.flagbar{height:5px;background:var(--verde)}
-.topbar{position:sticky;top:0;z-index:40;background:rgba(11,15,17,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.flagbar{height:4px;background:var(--verde)}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(5,20,13,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1400px;margin:auto;padding:9px var(--pad);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font:600 15px/1 var(--serif);white-space:nowrap}
 .flagicon{width:22px;height:16px;flex:0 0 22px;border-radius:2px;
@@ -62,13 +62,13 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0
 .brand em{font:500 12.5px/1 var(--sans);font-style:normal;color:var(--t3)}
 .tabs{display:flex;gap:2px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:2px}
 .tabs button{border:0;background:transparent;color:var(--t2);border-radius:var(--r-s);padding:6px 12px;font:600 13px/1 var(--sans);cursor:pointer;white-space:nowrap}
-.tabs button[aria-selected="true"]{background:var(--s3);color:var(--t1)}
+.tabs button[aria-selected="true"]{background:var(--acc);color:var(--acc-t)}
 .livechip{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--t2);font-size:12.5px;font-weight:500;max-width:100%;min-width:0}
 .livechip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px;background:#7d8c9c}
 .dot.ok{background:var(--green)}
 .dot.error{background:var(--red)}
-.dot.loading{background:#8fb3ff;animation:pulse 1.4s infinite}
+.dot.loading{background:var(--acc);animation:pulse 1.4s infinite}
 .dot.paused{background:var(--amber)}
 @keyframes pulse{50%{opacity:.35}}
 .shell{max-width:1400px;margin:auto;padding:0 var(--pad) 56px}
@@ -76,8 +76,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0
 /* ---------- comandi ---------- */
 button,.uploadbtn{font-family:var(--sans);border:1px solid var(--line-2);background:transparent;color:var(--t1);border-radius:var(--r-s);padding:7px 12px;font-weight:600;font-size:13px;line-height:1.2;cursor:pointer;transition:background .12s,border-color .12s}
 button:hover,.uploadbtn:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.24)}
-button.primary{background:var(--white);border-color:var(--white);color:#0b0f11}
-button.primary:hover{background:#fff}
+button.primary{background:var(--acc);border-color:var(--acc);color:var(--acc-t)}
+button.primary:hover{background:#fff27a;border-color:#fff27a}
 button.sm,.uploadbtn.sm{padding:5px 10px;font-size:12.5px}
 button[disabled]{opacity:.4;cursor:default}
 .uploadbtn{display:inline-block}
@@ -102,9 +102,9 @@ select{background:var(--s2);color:var(--t1);border:1px solid var(--line-2);borde
 .social-lab{color:var(--t3);font-size:12.5px;font-weight:500}
 .social-btns{display:flex;gap:7px}
 .sbtn{width:34px;height:34px;flex:0 0 34px;padding:0;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--t1);display:inline-flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:background .12s,border-color .12s,color .12s}
-.sbtn:focus-visible{background:var(--white);border-color:var(--white);color:#0b0f11}
+.sbtn:focus-visible{background:var(--acc);border-color:var(--acc);color:var(--acc-t)}
 .sbtn:active{background:rgba(255,255,255,.12)}
-@media(hover:hover){.sbtn:hover{background:var(--white);border-color:var(--white);color:#0b0f11}}
+@media(hover:hover){.sbtn:hover{background:var(--acc);border-color:var(--acc);color:var(--acc-t)}}
 .sbtn .bi-link-45deg{font-size:18px}
 .social-esito{color:var(--green);font-size:12px;font-weight:600}
 
@@ -191,7 +191,7 @@ table{width:100%;border-collapse:collapse;min-width:900px}
 th{font-size:12px;color:var(--t3);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line-2);font-weight:500;white-space:nowrap;vertical-align:bottom;cursor:pointer;user-select:none}
 th small{display:block;font-weight:400;font-size:11px;color:var(--t3);opacity:.85}
 th:first-child{text-align:left;padding-left:18px}
-th.ord{color:var(--t1)}
+th.ord{color:var(--acc)}
 th.ord:after{content:" ↓";color:var(--t3)}
 td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px;white-space:nowrap}
 td:first-child{text-align:left;padding-left:18px;white-space:normal}
@@ -208,7 +208,7 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 /* ---------- mappa ---------- */
 .seg{display:flex;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:2px;flex-wrap:wrap}
 .seg button{border:0;background:transparent;color:var(--t2);border-radius:var(--r-s);padding:5px 10px;font:600 12px/1 var(--sans);cursor:pointer;white-space:nowrap}
-.seg button[aria-pressed="true"]{background:var(--s3);color:var(--t1)}
+.seg button[aria-pressed="true"]{background:var(--acc);color:var(--acc-t)}
 .segs{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .maparea{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px;align-items:start;padding:12px 18px 0}
 .mapside{min-width:0;width:100%}
@@ -219,9 +219,9 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .mapstage.zoomed{touch-action:none}
 .mapstage svg{display:block;height:clamp(440px,74vh,780px);width:auto;max-width:100%;cursor:grab}
 .mapstage svg.drag{cursor:grabbing}
-.mapstage .ufl path{stroke:#0b0f11;stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .3s,opacity .3s;stroke-linejoin:round}
-.mapstage .munl path{stroke:rgba(11,15,17,.6);stroke-width:.35;vector-effect:non-scaling-stroke;cursor:pointer;stroke-linejoin:round}
-.mapstage .bordi path{fill:none;stroke:rgba(11,15,17,.95);stroke-width:1.1;vector-effect:non-scaling-stroke;pointer-events:none}
+.mapstage .ufl path{stroke:#05140d;stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .3s,opacity .3s;stroke-linejoin:round}
+.mapstage .munl path{stroke:rgba(5,20,13,.6);stroke-width:.35;vector-effect:non-scaling-stroke;cursor:pointer;stroke-linejoin:round}
+.mapstage .bordi path{fill:none;stroke:rgba(5,20,13,.95);stroke-width:1.1;vector-effect:non-scaling-stroke;pointer-events:none}
 /* i contorni evidenziati stanno su uno strato sopra tutto: i vicini non li coprono */
 .mapstage .hil path{fill:none;stroke:#fff;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
 .mapstage .hil path.ov-sel{stroke-width:2.2}
@@ -229,8 +229,8 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .mapstage svg.hassel .ufl path:not(.sel){opacity:.55}
 .mapstage .sigle text{font:600 11px var(--sans);fill:rgba(255,255,255,.85);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:2.2px}
 .mapzoom{position:absolute;top:10px;right:10px;z-index:2;display:grid;gap:4px}
-.mapzoom button{width:34px;height:34px;padding:0;font:500 17px/1 var(--sans);border-radius:var(--r-s);background:rgba(17,23,26,.94)}
-.maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(17,23,26,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mapzoom button{width:34px;height:34px;padding:0;font:500 17px/1 var(--sans);border-radius:var(--r-s);background:rgba(9,29,20,.94)}
+.maphint{position:absolute;left:10px;top:10px;z-index:2;color:var(--t2);font-size:12px;background:rgba(9,29,20,.9);padding:5px 9px;border-radius:var(--r-s);pointer-events:none;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mapleg{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--s2)}
 .mapleg h4,.maplist h4{margin:0 0 9px;font:600 13px/1.25 var(--sans);color:var(--t1)}
 .mapleg .ramp{height:8px;border-radius:2px;margin:4px 0 5px}
@@ -258,7 +258,7 @@ tr.tot td{font-weight:700;border-top:1px solid var(--line-2);border-bottom:0}
 .maplist .rows{display:grid;max-height:min(70vh,700px);overflow:auto;padding-right:3px}
 .ufrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:6px 8px;border-radius:var(--r-s);font-size:13px;cursor:pointer;border-bottom:1px solid var(--line)}
 .ufrow:hover,.ufrow.sel{background:rgba(255,255,255,.04)}
-.ufrow.sel{box-shadow:inset 2px 0 0 var(--white)}
+.ufrow.sel{box-shadow:inset 2px 0 0 var(--acc)}
 .ufrow.mute{color:var(--t3)}
 .ufrow .ln{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .ufrow .ln i{width:8px;height:8px;border-radius:2px;flex:0 0 8px}
@@ -297,7 +297,7 @@ footer a{color:var(--t2)}
 
 /* ---------- card per i social ---------- */
 .gencard{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--s1);margin:0 0 18px}
-.gencard canvas{display:block;width:100%;height:auto;background:#0b0f11}
+.gencard canvas{display:block;width:100%;height:auto;background:#05140d}
 .gencard.ig canvas{max-width:560px;margin:0 auto}
 .gencard .bar2{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-top:1px solid var(--line);flex-wrap:wrap}
 .gencard .bar2 b{font-size:13.5px;font-weight:600}
@@ -428,7 +428,7 @@ footer a{color:var(--t2)}
         <button id="refreshBtn" class="sm">Aggiorna ora</button>
         <button id="pauseBtn" class="sm">Metti in pausa</button>
       </div>
-      <div class="social" aria-label="Condividi la pagina">
+      <div class="social" data-sezione="live" aria-label="Condividi la pagina">
         <span class="social-lab">Condividi</span>
         <div class="social-btns">
           <a class="sbtn" data-rete="x" href="#" target="_blank" rel="noopener" aria-label="Condividi su X" title="X"><i class="bi bi-twitter-x"></i></a>
@@ -437,9 +437,9 @@ footer a{color:var(--t2)}
           <a class="sbtn" data-rete="linkedin" href="#" target="_blank" rel="noopener" aria-label="Condividi su LinkedIn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
           <a class="sbtn" data-rete="telegram" href="#" target="_blank" rel="noopener" aria-label="Condividi su Telegram" title="Telegram"><i class="bi bi-telegram"></i></a>
           <a class="sbtn" data-rete="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Condividi su WhatsApp" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-          <button class="sbtn" id="sLink" type="button" aria-label="Copia il link" title="Copia il link"><i class="bi bi-link-45deg"></i></button>
+          <button class="sbtn slink" type="button" aria-label="Copia il link" title="Copia il link"><i class="bi bi-link-45deg"></i></button>
         </div>
-        <span class="social-esito" id="sEsito" role="status"></span>
+        <span class="social-esito" role="status"></span>
       </div>
     </div>
   </header>
@@ -488,11 +488,11 @@ footer a{color:var(--t2)}
       <div class="cardhead"><h2>La forchetta che si stringe</h2><span class="cmeta" id="forkPill">quota di Lula sui voti validi</span></div>
       <svg id="forkSvg" viewBox="0 0 640 330" role="img" aria-label="Proiezione e voti contati al crescere dello scrutinio"></svg>
       <div class="legenda">
-        <span><i style="background:rgba(244,246,246,.18)"></i>forchetta al 95%</span>
-        <span><i style="background:rgba(244,246,246,.34)"></i>all’80%</span>
-        <span><i style="background:#f4f6f6;height:3px"></i>proiezione</span>
+        <span><i style="background:rgba(245,248,246,.18)"></i>forchetta al 95%</span>
+        <span><i style="background:rgba(245,248,246,.34)"></i>all’80%</span>
+        <span><i style="background:#f5f8f4;height:3px"></i>proiezione</span>
         <span><i style="background:#f2c14e;height:3px"></i>voti contati</span>
-        <span><i style="background:#6c777d;height:2px"></i>primo turno, come si mosse il conteggio</span>
+        <span><i style="background:#6f897b;height:2px"></i>primo turno, come si mosse il conteggio</span>
       </div>
       <p class="methodnote" id="forkNote">Sull’asse orizzontale le sezioni scrutinate. La linea gialla è la quota di Lula fra i voti già contati, quella bianca la proiezione del risultato finale con la sua forchetta. La linea grigia punteggiata mostra come si mosse la stessa quota durante lo spoglio del primo turno: i voti contati all’inizio sottostimano Lula.</p>
     </article>
@@ -574,6 +574,21 @@ footer a{color:var(--t2)}
       <h1>Flávio 47,0%, Lula 45,2%</h1>
       <p>Nessuno supera la metà dei voti validi: Flávio Bolsonaro e Lula vanno al ballottaggio del 25 ottobre. Flávio vince in 14 stati e nel Distretto federale, Lula in 12 (in Amapá per 225 voti). L’astensione arriva al 21,1%, un record.</p>
     </div>
+    <div class="hero-side">
+      <div class="social" data-sezione="t1" aria-label="Condividi la pagina">
+        <span class="social-lab">Condividi</span>
+        <div class="social-btns">
+          <a class="sbtn" data-rete="x" href="#" target="_blank" rel="noopener" aria-label="Condividi su X" title="X"><i class="bi bi-twitter-x"></i></a>
+          <a class="sbtn" data-rete="threads" href="#" target="_blank" rel="noopener" aria-label="Condividi su Threads" title="Threads"><i class="bi bi-threads"></i></a>
+          <a class="sbtn" data-rete="facebook" href="#" target="_blank" rel="noopener" aria-label="Condividi su Facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="sbtn" data-rete="linkedin" href="#" target="_blank" rel="noopener" aria-label="Condividi su LinkedIn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a class="sbtn" data-rete="telegram" href="#" target="_blank" rel="noopener" aria-label="Condividi su Telegram" title="Telegram"><i class="bi bi-telegram"></i></a>
+          <a class="sbtn" data-rete="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Condividi su WhatsApp" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <button class="sbtn slink" type="button" aria-label="Copia il link" title="Copia il link"><i class="bi bi-link-45deg"></i></button>
+        </div>
+        <span class="social-esito" role="status"></span>
+      </div>
+    </div>
   </header>
 
   <section class="kpis">
@@ -593,8 +608,8 @@ footer a{color:var(--t2)}
       <div class="cardhead"><h2>Perché il primo vantaggio inganna</h2><span class="cmeta">distacco Flávio − Lula</span></div>
       <svg id="curvaSvg" viewBox="0 0 640 330" role="img" aria-label="Distacco durante lo spoglio"></svg>
       <div class="legenda">
-        <span><i style="background:#f4f6f6;height:3px"></i>2026, primo turno (Flávio − Lula)</span>
-        <span><i style="background:#9ba6ab;height:2px"></i>2022, ballottaggio (Bolsonaro − Lula)</span>
+        <span><i style="background:#f5f8f4;height:3px"></i>2026, primo turno (Flávio − Lula)</span>
+        <span><i style="background:#a2b8ac;height:2px"></i>2022, ballottaggio (Bolsonaro − Lula)</span>
         <span><i style="background:#5b666b;height:2px"></i>2022, primo turno</span>
       </div>
       <div class="testo" style="padding-top:10px">Con il 14% delle sezioni Flávio era avanti di <b>10,8 punti</b>; alle 19:06, al 64,8%, di 7,4; poi lo schermo del TSE è rimasto fermo per un’ora; alla fine il distacco era di <b>1,9 punti</b>. Circa il 70% del calo si spiega con l’ordine in cui arrivano gli stati (il Nordeste per ultimo), il resto con l’ordine dentro ciascuno stato. Lo stesso disegno si era visto nel 2022.</div>
@@ -1299,18 +1314,18 @@ function renderDuello() {
 /* asse da a a b (quota di Lula), con la metà sinistra «vince Flávio» e la destra «vince Lula» */
 function assiProiezione(a, b, P) {
   const W = larghProj(), x0 = 14, x1 = W - 14, X = v => x0 + (v - a) / (b - a) * (x1 - x0), y = 30, h = 26;
-  let s = '<rect x="' + x0 + '" y="' + y + '" width="' + (X(0.5) - x0) + '" height="' + h + '" fill="' + FLAV.c + '" opacity=".13" rx="4"/>' +
-    '<rect x="' + X(0.5) + '" y="' + y + '" width="' + (x1 - X(0.5)) + '" height="' + h + '" fill="' + LULA.c + '" opacity=".13" rx="4"/>';
+  let s = '<rect x="' + x0 + '" y="' + y + '" width="' + (X(0.5) - x0) + '" height="' + h + '" fill="#233657" rx="4"/>' +
+    '<rect x="' + X(0.5) + '" y="' + y + '" width="' + (x1 - X(0.5)) + '" height="' + h + '" fill="#4d292d" rx="4"/>';
   s += '<text x="' + (x0 + 4) + '" y="20" fill="#86a8f5" font-size="12" font-weight="600">← vince Flávio</text>';
   s += '<text x="' + (x1 - 4) + '" y="20" fill="#f08b8e" font-size="12" font-weight="600" text-anchor="end">vince Lula →</text>';
   const passo = (b - a) > 0.2 ? 0.05 : (b - a) > 0.1 ? 0.02 : 0.01;
   for (let v = Math.ceil(a / passo - 1e-9) * passo; v <= b + 1e-9; v += passo) {
     s += '<line x1="' + X(v) + '" x2="' + X(v) + '" y1="' + (y + h) + '" y2="' + (y + h + 5) + '" stroke="#6f8479"/>' +
-      '<text x="' + X(v) + '" y="' + (y + h + 18) + '" fill="#7d878c" font-size="11" text-anchor="middle">' + nf(v * 100, 0) + '%</text>';
+      '<text x="' + X(v) + '" y="' + (y + h + 18) + '" fill="#7e9789" font-size="11" text-anchor="middle">' + nf(v * 100, 0) + '%</text>';
   }
   if (P) {
-    s += '<rect x="' + X(P.q025) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q975) - X(P.q025)) + '" height="' + (h - 6) + '" fill="#f4f6f6" opacity=".2" rx="2"/>';
-    s += '<rect x="' + X(P.q10) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q90) - X(P.q10)) + '" height="' + (h - 6) + '" fill="#f4f6f6" opacity=".42" rx="2"/>';
+    s += '<rect x="' + X(P.q025) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q975) - X(P.q025)) + '" height="' + (h - 6) + '" fill="#f5f8f4" opacity=".2" rx="2"/>';
+    s += '<rect x="' + X(P.q10) + '" y="' + (y + 3) + '" width="' + Math.max(2, X(P.q90) - X(P.q10)) + '" height="' + (h - 6) + '" fill="#f5f8f4" opacity=".42" rx="2"/>';
     s += '<line x1="' + X(P.media) + '" x2="' + X(P.media) + '" y1="' + (y - 3) + '" y2="' + (y + h + 3) + '" stroke="#fff" stroke-width="3"/>';
   }
   s += '<line x1="' + X(0.5) + '" x2="' + X(0.5) + '" y1="' + (y - 6) + '" y2="' + (y + h + 4) + '" stroke="#fff" stroke-dasharray="3 3" opacity=".7"/>';
@@ -1332,7 +1347,7 @@ function disegnaFork(W, H, T, o) {
   pts.forEach(p => { lo = Math.min(lo, p.a95, p.q); hi = Math.max(hi, p.b95, p.q); });
   const pad = 0.006; lo = Math.max(0.3, Math.floor((lo - pad) * 100) / 100); hi = Math.min(0.7, Math.ceil((hi + pad) * 100) / 100);
   const X = x => m.l + x * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
-  const col = o.colori || { t: '#7d878c', g: 'rgba(255,255,255,.07)' };
+  const col = o.colori || { t: '#7e9789', g: 'rgba(255,255,255,.07)' };
   let s = '';
   const passo = (hi - lo) > 0.12 ? 0.02 : (hi - lo) > 0.05 ? 0.01 : 0.005;
   for (let v = Math.ceil(lo / passo) * passo; v <= hi + 1e-9; v += passo) {
@@ -1351,22 +1366,22 @@ function disegnaFork(W, H, T, o) {
   s += '<defs><clipPath id="' + cid + '"><rect x="' + m.l + '" y="' + m.t + '" width="' + (W - m.l - m.r) + '" height="' + (H - m.t - m.b) + '"/></clipPath></defs>';
   if (!o.senzaRif) {
     const r = RIF_T1;
-    if (r.length > 1) s += '<polyline clip-path="url(#' + cid + ')" fill="none" stroke="#6c777d" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round" points="' + r.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
+    if (r.length > 1) s += '<polyline clip-path="url(#' + cid + ')" fill="none" stroke="#6f897b" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round" points="' + r.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
   }
   if (pts.length) {
     const poly = (a, b) => pts.map(p => X(p.x).toFixed(1) + ',' + Y(p[a]).toFixed(1)).join(' ') + ' ' + pts.slice().reverse().map(p => X(p.x).toFixed(1) + ',' + Y(p[b]).toFixed(1)).join(' ');
     if (pts.length > 1) {
-      s += '<polygon points="' + poly('a95', 'b95') + '" fill="#f4f6f6" opacity=".13"/>';
-      s += '<polygon points="' + poly('a80', 'b80') + '" fill="#f4f6f6" opacity=".2"/>';
+      s += '<polygon points="' + poly('a95', 'b95') + '" fill="#f5f8f4" opacity=".13"/>';
+      s += '<polygon points="' + poly('a80', 'b80') + '" fill="#f5f8f4" opacity=".2"/>';
       s += '<polyline fill="none" stroke="#f2c14e" stroke-width="2" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.q).toFixed(1)).join(' ') + '"/>';
-      s += '<polyline fill="none" stroke="#f4f6f6" stroke-width="2.6" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
+      s += '<polyline fill="none" stroke="#f5f8f4" stroke-width="2.6" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
     }
     const u = pts[pts.length - 1];
-    s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f4f6f6" stroke-width="5" opacity=".35"/>';
-    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/><circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f4f6f6" stroke="#04120d" stroke-width="1.5"/>';
+    s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f5f8f4" stroke-width="5" opacity=".35"/>';
+    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/><circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f5f8f4" stroke="#04120d" stroke-width="1.5"/>';
     const lab = 'proiezione ' + nf(u.m * 100, 1) + '%';
     const lx = X(u.x) > W * 0.7 ? X(u.x) - 9 : X(u.x) + 9, an = X(u.x) > W * 0.7 ? 'end' : 'start';
-    s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f4f6f6" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
+    s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f5f8f4" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
   } else if (!o.senzaVuoto) {
     s += '<text x="' + (W / 2) + '" y="' + (m.t + 40) + '" fill="' + col.t + '" font-size="13" text-anchor="middle">Il grafico si riempie a ogni nuovo file del TSE.</text>';
   }
@@ -1387,7 +1402,7 @@ function renderManca() {
   });
   const max = Math.max(...reg.map(r => r.resta), 1);
   box.innerHTML = reg.map(r => {
-    const q1 = r.L1 / (r.L1 + r.F1), c = mix('#4a5459', q1 >= 0.5 ? LULA.c : FLAV.c, 0.35 + Math.abs(q1 - 0.5) * 2.2);
+    const q1 = r.L1 / (r.L1 + r.F1), c = mix('#4a5f53', q1 >= 0.5 ? LULA.c : FLAV.c, 0.35 + Math.abs(q1 - 0.5) * 2.2);
     return '<div class="mr"><div class="nm">' + REGIONI[r.r] + '<small>' + (r.L + r.F ? 'ora Lula ' + pct(r.L / (r.L + r.F)) : 'nessun voto contato') + '</small></div>' +
       '<div class="tk"><b style="width:' + (r.resta / max * 100) + '%;background:' + c + '"></b></div>' +
       '<div class="vv">' + mln(r.resta) + '<small>1º turno ' + pct(q1, 0) + '</small></div></div>';
@@ -1515,7 +1530,7 @@ function caricaComuni() {
   }).catch(e => { MUN_PROMESSA = null; throw e; });
   return MUN_PROMESSA;
 }
-const COL_VUOTO = '#1f282d', COL_ND = '#2b3338';
+const COL_VUOTO = '#3a403d', COL_ND = '#24322a';
 function coloreMargine(m, forte = 0.5) {
   if (m == null || !isFinite(m)) return COL_VUOTO;
   const t = 0.2 + 0.8 * clamp(Math.abs(m) / forte, 0, 1);
@@ -1845,7 +1860,7 @@ function renderCurva() {
 function disegnaCurva(W, H, o) {
   const m = { l: 44, r: 14, t: 16, b: 34 }, lo = -6, hi = 12;
   const X = x => m.l + x / 100 * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
-  const fs = o.fs || 11, ct = o.ct || '#7d878c';
+  const fs = o.fs || 11, ct = o.ct || '#7e9789';
   let s = '';
   for (let v = lo; v <= hi; v += 2) s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + (v === 0 ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.07)') + '"' + (v === 0 ? ' stroke-dasharray="4 4"' : '') + '/><text x="' + (m.l - 7) + '" y="' + (Y(v) + 4) + '" fill="' + ct + '" font-size="' + fs + '" text-anchor="end">' + (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '</text>';
   for (let x = 0; x <= 100; x += 20) s += '<text x="' + X(x) + '" y="' + (H - m.b + 18) + '" fill="' + ct + '" font-size="' + fs + '" text-anchor="middle">' + x + '%</text>';
@@ -1854,12 +1869,12 @@ function disegnaCurva(W, H, o) {
   s += '<text x="' + (m.l + 6) + '" y="' + (Y(0) + 15) + '" fill="#f08b8e" font-size="' + (fs - 1) + '" font-weight="600">sotto: avanti Lula</text>';
   const line = (pts, c, w, dash) => '<polyline fill="none" stroke="' + c + '" stroke-width="' + w + '"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + ' points="' + pts.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
   s += line(BASE.curva22t1, '#5b666b', 1.8, '2 4');
-  s += line(BASE.curva22t2, '#9ba6ab', 2, '6 4');
-  s += line(BASE.curva26.map(([p, mm]) => [p, mm]), '#f4f6f6', 2.6);
+  s += line(BASE.curva22t2, '#a2b8ac', 2, '6 4');
+  s += line(BASE.curva26.map(([p, mm]) => [p, mm]), '#f5f8f4', 2.6);
   /* il punto più alto, il blocco delle 19:06 e la fine */
   const pk = BASE.curva26.reduce((a, b) => b[1] > a[1] ? b : a);
   const ann = [[pk[0], pk[1], '+' + nf(pk[1], 1) + ' al ' + nf(pk[0], 0) + '%', 'start', -10], [64.81, 7.37, o.stretto ? '19:06: schermo fermo per un’ora' : '19:06, 64,8%: lo schermo si ferma per un’ora', 'end', 22], [100, 1.87, '+1,9 alla fine', 'end', 22], [67.5, 0, '2022: il sorpasso di Lula al 67%', 'end', o.stretto ? 40 : 20]];
-  ann.forEach(([x, v, t, an, dy]) => { s += '<circle cx="' + X(x) + '" cy="' + Y(v) + '" r="4" fill="' + (x === 67.5 ? '#9ba6ab' : '#f4f6f6') + '" stroke="#04120d" stroke-width="1.5"/><text x="' + (X(x) + (an === 'end' ? -6 : 6)) + '" y="' + (Y(v) + dy) + '" fill="#d9dfe1" font-size="' + fs + '" font-weight="700" text-anchor="' + an + '">' + t + '</text>'; });
+  ann.forEach(([x, v, t, an, dy]) => { s += '<circle cx="' + X(x) + '" cy="' + Y(v) + '" r="4" fill="' + (x === 67.5 ? '#a2b8ac' : '#f5f8f4') + '" stroke="#04120d" stroke-width="1.5"/><text x="' + (X(x) + (an === 'end' ? -6 : 6)) + '" y="' + (Y(v) + dy) + '" fill="#d9dfe1" font-size="' + fs + '" font-weight="700" text-anchor="' + an + '">' + t + '</text>'; });
   return s;
 }
 
@@ -2036,8 +2051,11 @@ function testoCondivisione() {
   if (C.c >= 0.9999) return 'Brasile, spoglio concluso: ' + voti + '. I risultati stato per stato';
   return 'Brasile, ballottaggio con il ' + fmtSez(C.c) + ' delle sezioni: ' + voti + '.' + (P ? ' La proiezione dà Lula al ' + pct(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ').' : '') + ' Lo spoglio in diretta';
 }
-function linkSocial(rete) {
-  const u = encodeURIComponent(URL_PAGINA), t = testoCondivisione(), tu = encodeURIComponent(t + ' ' + URL_PAGINA), te = encodeURIComponent(t);
+const TESTO_T1 = 'Brasile, il primo turno del 4 ottobre stato per stato e comune per comune: Flávio Bolsonaro 47,0%, Lula 45,2%. Verso il ballottaggio del 25 ottobre';
+const urlDi = sez => sez === 't1' ? URL_PAGINA + '#primo-turno' : URL_PAGINA;
+const testoDi = sez => sez === 't1' ? TESTO_T1 : testoCondivisione();
+function linkSocial(rete, sez) {
+  const url = urlDi(sez), u = encodeURIComponent(url), t = testoDi(sez), tu = encodeURIComponent(t + ' ' + url), te = encodeURIComponent(t);
   return {
     x: 'https://x.com/intent/post?text=' + te + '&url=' + u,
     threads: 'https://www.threads.net/intent/post?text=' + tu,
@@ -2048,25 +2066,30 @@ function linkSocial(rete) {
   }[rete];
 }
 const MENU_CONDIVISIONE = !!navigator.share && !!window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-function esitoSocial(msg) { const e = $('sEsito'); e.textContent = msg; clearTimeout(esitoSocial.t); esitoSocial.t = setTimeout(() => e.textContent = '', 2600); }
-function copiaLink() {
-  const ok = () => esitoSocial('Link copiato');
-  if (navigator.clipboard) navigator.clipboard.writeText(URL_PAGINA).then(ok, () => window.prompt('Copia il link', URL_PAGINA));
-  else window.prompt('Copia il link', URL_PAGINA);
+function esitoSocial(barra, msg) { const e = barra.querySelector('.social-esito'); e.textContent = msg; clearTimeout(e._t); e._t = setTimeout(() => e.textContent = '', 2600); }
+function copiaLink(barra, url) {
+  const ok = () => esitoSocial(barra, 'Link copiato');
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(ok, () => window.prompt('Copia il link', url));
+  else window.prompt('Copia il link', url);
 }
 function eventiSocial() {
-  /* l'indirizzo si calcola al clic, così il testo riflette i dati di quel momento */
-  document.querySelectorAll('.sbtn[data-rete]').forEach(a => {
-    const agg = () => { a.href = linkSocial(a.dataset.rete); };
-    a.addEventListener('pointerdown', agg); a.addEventListener('focus', agg); a.addEventListener('click', agg);
-    agg();
+  /* due barre, una per scheda: stesso funzionamento, testo e indirizzo propri.
+     L'indirizzo si calcola al clic, così il testo riflette i dati di quel momento */
+  document.querySelectorAll('.social[data-sezione]').forEach(barra => {
+    const sez = barra.dataset.sezione;
+    barra.querySelectorAll('.sbtn[data-rete]').forEach(a => {
+      const agg = () => { a.href = linkSocial(a.dataset.rete, sez); };
+      a.addEventListener('pointerdown', agg); a.addEventListener('focus', agg); a.addEventListener('click', agg);
+      agg();
+    });
+    const sl = barra.querySelector('.slink');
+    if (MENU_CONDIVISIONE) sl.setAttribute('aria-label', 'Condividi il link');
+    sl.onclick = () => {
+      if (!MENU_CONDIVISIONE) { copiaLink(barra, urlDi(sez)); return; }
+      navigator.share({ title: 'Brasile 2026 — ' + (sez === 't1' ? 'Il primo turno' : 'Il ballottaggio in diretta'), text: testoDi(sez), url: urlDi(sez) })
+        .catch(e => { if (!e || e.name !== 'AbortError') copiaLink(barra, urlDi(sez)); });
+    };
   });
-  if (MENU_CONDIVISIONE) $('sLink').setAttribute('aria-label', 'Condividi il link');
-  $('sLink').onclick = () => {
-    if (!MENU_CONDIVISIONE) { copiaLink(); return; }
-    navigator.share({ title: 'Brasile 2026 — Il ballottaggio in diretta', text: testoCondivisione(), url: URL_PAGINA })
-      .catch(e => { if (!e || e.name !== 'AbortError') copiaLink(); });
-  };
 }
 
 /* =====================================================================
@@ -2077,6 +2100,7 @@ function scheda(id) {
   ['live', 't1', 'card'].forEach(k => $('tab-' + k).classList.toggle('hidden', k !== id));
   if (id === 't1') { if (!MAPPE.T1) { MAPPE.T1 = Mappa({ el: $('mappaT1'), ...CFG_T1 }); } renderT1Mappa(); renderCurva(); }
   if (id === 'card' && window.CARD) window.CARD.mostra();
+  try { history.replaceState(null, '', location.pathname + location.search + (id === 't1' ? '#primo-turno' : '')); } catch (_) { }
   window.scrollTo({ top: 0 });
 }
 function renderT1Mappa() {
@@ -2199,7 +2223,7 @@ avvio();
    Facebook, Threads e WhatsApp.
    ===================================================================== */
 window.CARD = (function () {
-  const C = { bg: '#0b0f11', t1: '#EEF1F2', t2: '#A9B2B6', t3: '#7D878C', line: 'rgba(255,255,255,.12)', band: 'rgba(244,246,246,' };
+  const C = { bg: '#05140d', t1: '#EEF4F0', t2: '#A9BDB1', t3: '#7E9789', line: 'rgba(255,255,255,.12)', band: 'rgba(245,248,246,' };
   const F = (w, s, fam) => w + ' ' + s + 'px ' + (fam === 'serif' ? 'Lora, Georgia, serif' : 'Inter, "Segoe UI", Arial, sans-serif');
   const FORMATI = { x: { W: 1600, H: 900, M: 70, ig: false }, ig: { W: 1080, H: 1350, M: 60, ig: true } };
   let formato = 'x', sporco = true, visibile = false;
@@ -2220,8 +2244,8 @@ window.CARD = (function () {
   function cornice(x, k, L) {
     const { W, H, M } = L;
     x.fillStyle = C.bg; x.fillRect(0, 0, W, H);
-    x.fillStyle = '#009c3b'; x.fillRect(0, 0, W * 0.46, 10); x.fillStyle = '#ffdf00'; x.fillRect(W * 0.46, 0, W * 0.26, 10); x.fillStyle = '#002776'; x.fillRect(W * 0.72, 0, W * 0.28, 10);
-    T(x, $('cAmbito').value || '', M, 78, { font: F(600, L.ig ? 24 : 22), color: C.t2 });
+    x.fillStyle = '#009c3b'; x.fillRect(0, 0, W, 8);
+    T(x, ($('cAmbito').value || '').toUpperCase(), M, 78, { font: F(600, L.ig ? 24 : 22), color: '#ffdf00' });
     const fnt = F(600, L.ig ? 56 : 50, 'serif'), lh = L.ig ? 66 : 60, righe = a_capo(x, titoli[k] || '', fnt, W - 2 * M).slice(0, L.ig ? 3 : 2);
     righe.forEach((r, i) => T(x, r, M, 144 + i * lh, { font: fnt }));
     x.fillStyle = C.line; x.fillRect(M, H - 78, W - 2 * M, 1);
@@ -2234,7 +2258,7 @@ window.CARD = (function () {
   function asse(x, P, x0, x1, y, h) {
     const span = Math.max(0.06, Math.abs(P.q025 - 0.5) + 0.02, Math.abs(P.q975 - 0.5) + 0.02), a = 0.5 - span, b = 0.5 + span;
     const X = v => x0 + (v - a) / (b - a) * (x1 - x0);
-    box(x, x0, y, X(0.5) - x0, h, 4, 'rgba(61,123,245,.16)'); box(x, X(0.5), y, x1 - X(0.5), h, 4, 'rgba(229,72,77,.16)');
+    box(x, x0, y, X(0.5) - x0, h, 4, '#233657'); box(x, X(0.5), y, x1 - X(0.5), h, 4, '#4d292d');
     box(x, X(P.q025), y + 6, Math.max(4, X(P.q975) - X(P.q025)), h - 12, 3, C.band + '.22)');
     box(x, X(P.q10), y + 6, Math.max(4, X(P.q90) - X(P.q10)), h - 12, 3, C.band + '.45)');
     x.fillStyle = '#fff'; x.fillRect(X(P.media) - 2.5, y - 6, 5, h + 12);
@@ -2324,9 +2348,9 @@ window.CARD = (function () {
     const { W, H, M } = L;
     const y0 = cornice(x, 'fork', L) + (L.ig ? 40 : 20), w = W - 2 * M, h = H - 110 - y0 - (L.ig ? 90 : 0);
     const vw = L.ig ? 640 : 960, vh = Math.round(h * vw / w);
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + vw + ' ' + vh + '" font-family="Inter, Segoe UI, Arial, sans-serif">' + disegnaFork(vw, vh, S.traccia, { fs: L.ig ? 14 : 13, id: 'c', colori: { t: '#9ba6ab', g: 'rgba(255,255,255,.08)' } }) + '</svg>';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + vw + ' ' + vh + '" font-family="Inter, Segoe UI, Arial, sans-serif">' + disegnaFork(vw, vh, S.traccia, { fs: L.ig ? 14 : 13, id: 'c', colori: { t: '#a2b8ac', g: 'rgba(255,255,255,.08)' } }) + '</svg>';
     if (L.ig) {
-      const leg = [['#f4f6f6', 'proiezione'], ['#f2c14e', 'voti contati'], ['#6c777d', 'primo turno']];
+      const leg = [['#f5f8f4', 'proiezione'], ['#f2c14e', 'voti contati'], ['#6f897b', 'primo turno']];
       let lx = M; leg.forEach(([c, t]) => { box(x, lx, H - 158, 26, 5, 1, c); T(x, t, lx + 36, H - 150, { font: F(500, 22), color: C.t2 }); lx += 60 + Wt(x, t, F(500, 22)) + 30; });
     }
     return new Promise(res => {
