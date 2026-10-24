@@ -1201,14 +1201,21 @@ function caricaNotte() {
 /* =====================================================================
    4 · RENDER DELLA DASHBOARD
    ===================================================================== */
-const PROJ_MIN_VOTI = 50000;     /* sotto questa soglia la proiezione non si mostra */
+/* La proiezione si mostra dal 5% delle sezioni scrutinate (e almeno 50.000 voti contati).
+   Prova del 25 ottobre su 240 notti simulate con i tempi di arrivo del primo turno: prima del 5%
+   l'errore medio è di circa un punto e la forchetta al 95% è larga 6-8 punti (la stima dice poco
+   più del sondaggio); dal 5% l'errore scende sotto 0,75 punti e la forchetta sotto 5. Al primo
+   turno il 5% delle sezioni è arrivato alle 17:40 di Brasília, 27 minuti dopo il primo file. */
+const PROJ_MIN_SEZ = 0.05;
+const PROJ_MIN_VOTI = 50000;
 function contato() {
   if (S.manuale) return { L: S.manuale.L, F: S.manuale.F, c: S.manuale.sez, manuale: true };
   if (!S.naz && !S.U) return null;
   const L = S.naz ? S.naz.L : S.U.L.reduce((a, b) => a + b, 0), F = S.naz ? S.naz.F : S.U.F.reduce((a, b) => a + b, 0);
   return { L, F, c: sezioniNaz() };
 }
-const projVisibile = () => !S.manuale && S.proj && (S.proj.contato.L + S.proj.contato.F) >= PROJ_MIN_VOTI;
+const projVisibile = () => !S.manuale && S.proj && (S.proj.contato.L + S.proj.contato.F) >= PROJ_MIN_VOTI && sezioniNaz() >= PROJ_MIN_SEZ;
+const SOGLIA_TXT = nf(PROJ_MIN_SEZ * 100) + '% delle sezioni scrutinate';
 /* «88,2 mln di voti validi», «117 mila voti validi», «540 voti validi» */
 function votiTxt(v) {
   if (v >= 1e6) return '<b>' + mln(v) + '</b> di voti validi';
@@ -1291,7 +1298,7 @@ function renderVerdetto() {
   }
   if (!P) {
     box.className = 'verdetto';
-    box.innerHTML = '<div class="vw">Chi vince</div><h2>Primi voti contati: ' + nomeC(leadC) + ' ' + pct(Math.max(cl, 1 - cl)) + '</h2><div class="vd">' + det + ' La proiezione parte da ' + nf(PROJ_MIN_VOTI) + ' voti contati. ' + sondTxt + '</div><span class="vcav">Pochi voti, e quelli che arrivano prima non rappresentano il paese</span>';
+    box.innerHTML = '<div class="vw">Chi vince</div><h2>Primi voti contati: ' + nomeC(leadC) + ' ' + pct(Math.max(cl, 1 - cl)) + '</h2><div class="vd">' + det + ' La proiezione parte dal ' + SOGLIA_TXT + ': prima direbbe poco più del sondaggio. ' + sondTxt + '</div><span class="vcav">Pochi voti, e quelli che arrivano prima non rappresentano il paese</span>';
     return;
   }
   if (C.c >= 0.9999 && P.resta < 1000) {
@@ -1331,7 +1338,7 @@ function renderDuello() {
   }
   const svg = $('projSvg');
   if (!P) {
-    $('projText').innerHTML = S.manuale ? 'Con i soli totali nazionali la proiezione è sospesa: servono i dati degli stati.' : 'Parte quando i voti contati superano ' + nf(PROJ_MIN_VOTI) + '.';
+    $('projText').innerHTML = S.manuale ? 'Con i soli totali nazionali la proiezione è sospesa: servono i dati degli stati.' : 'Parte dal ' + SOGLIA_TXT + '.';
     svg.innerHTML = assiProiezione(0.44, 0.56, null);
     $('probL').textContent = 'Lula —'; $('probF').textContent = '— F. Bolsonaro';
     $('probBL').style.width = $('probBF').style.width = '50%';
@@ -1379,8 +1386,11 @@ const larghProj = () => { const w = $('projSvg').clientWidth; const W = w && w <
 function disegnaFork(W, H, T, o) {
   const m = { l: 48, r: 16, t: 18, b: 34 };
   const pts = T.filter(p => p.x > 0);
+  /* la proiezione (linea e forchetta) parte dalla stessa soglia del riquadro; i voti contati da subito */
+  const pp = pts.filter(p => p.x >= PROJ_MIN_SEZ);
   let lo = 0.47, hi = 0.53;
-  pts.forEach(p => { lo = Math.min(lo, p.a95, p.q); hi = Math.max(hi, p.b95, p.q); });
+  pts.forEach(p => { lo = Math.min(lo, p.q); hi = Math.max(hi, p.q); });
+  pp.forEach(p => { lo = Math.min(lo, p.a95); hi = Math.max(hi, p.b95); });
   const pad = 0.006; lo = Math.max(0.3, Math.floor((lo - pad) * 100) / 100); hi = Math.min(0.7, Math.ceil((hi + pad) * 100) / 100);
   const X = x => m.l + x * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
   const col = o.colori || { t: '#7e9789', g: 'rgba(255,255,255,.07)' };
@@ -1405,19 +1415,22 @@ function disegnaFork(W, H, T, o) {
     if (r.length > 1) s += '<polyline clip-path="url(#' + cid + ')" fill="none" stroke="#6f897b" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round" points="' + r.map(([x, v]) => X(x).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
   }
   if (pts.length) {
-    const poly = (a, b) => pts.map(p => X(p.x).toFixed(1) + ',' + Y(p[a]).toFixed(1)).join(' ') + ' ' + pts.slice().reverse().map(p => X(p.x).toFixed(1) + ',' + Y(p[b]).toFixed(1)).join(' ');
-    if (pts.length > 1) {
+    const poly = (a, b) => pp.map(p => X(p.x).toFixed(1) + ',' + Y(p[a]).toFixed(1)).join(' ') + ' ' + pp.slice().reverse().map(p => X(p.x).toFixed(1) + ',' + Y(p[b]).toFixed(1)).join(' ');
+    if (pp.length > 1) {
       s += '<polygon points="' + poly('a95', 'b95') + '" fill="#f5f8f4" opacity=".13"/>';
       s += '<polygon points="' + poly('a80', 'b80') + '" fill="#f5f8f4" opacity=".2"/>';
-      s += '<polyline fill="none" stroke="#f2c14e" stroke-width="2" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.q).toFixed(1)).join(' ') + '"/>';
-      s += '<polyline fill="none" stroke="#f5f8f4" stroke-width="2.6" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
     }
-    const u = pts[pts.length - 1];
-    s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f5f8f4" stroke-width="5" opacity=".35"/>';
-    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/><circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f5f8f4" stroke="#04120d" stroke-width="1.5"/>';
-    const lab = 'proiezione ' + nf(u.m * 100, 1) + '%';
-    const lx = X(u.x) > W * 0.7 ? X(u.x) - 9 : X(u.x) + 9, an = X(u.x) > W * 0.7 ? 'end' : 'start';
-    s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f5f8f4" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
+    if (pts.length > 1) s += '<polyline fill="none" stroke="#f2c14e" stroke-width="2" points="' + pts.map(p => X(p.x).toFixed(1) + ',' + Y(p.q).toFixed(1)).join(' ') + '"/>';
+    if (pp.length > 1) s += '<polyline fill="none" stroke="#f5f8f4" stroke-width="2.6" points="' + pp.map(p => X(p.x).toFixed(1) + ',' + Y(p.m).toFixed(1)).join(' ') + '"/>';
+    const u = pts[pts.length - 1], up = pp.length && pp[pp.length - 1] === u;
+    if (up) s += '<line x1="' + X(u.x) + '" x2="' + X(u.x) + '" y1="' + Y(u.b95) + '" y2="' + Y(u.a95) + '" stroke="#f5f8f4" stroke-width="5" opacity=".35"/>';
+    s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/>';
+    if (up) {
+      s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f5f8f4" stroke="#04120d" stroke-width="1.5"/>';
+      const lab = 'proiezione ' + nf(u.m * 100, 1) + '%';
+      const lx = X(u.x) > W * 0.7 ? X(u.x) - 9 : X(u.x) + 9, an = X(u.x) > W * 0.7 ? 'end' : 'start';
+      s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f5f8f4" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
+    }
   } else if (!o.senzaVuoto) {
     s += '<text x="' + (W / 2) + '" y="' + (m.t + 40) + '" fill="' + col.t + '" font-size="13" text-anchor="middle">Il grafico si riempie a ogni nuovo file del TSE.</text>';
   }
@@ -1447,7 +1460,7 @@ function renderManca() {
   const C = contato();
   if (!P || !C) {
     $('mancaTop').innerHTML = iniziato
-      ? 'Con meno di ' + nf(PROJ_MIN_VOTI) + ' voti contati la stima dei voti che mancano non c’è ancora: le barre mostrano i voti validi del primo turno in ciascuna regione.'
+      ? 'Prima del ' + SOGLIA_TXT + ' la stima dei voti che mancano non c’è ancora: le barre mostrano i voti validi del primo turno in ciascuna regione.'
       : 'Lo spoglio non è cominciato: le barre mostrano i voti validi del primo turno in ciascuna regione, colorate secondo la quota di Lula fra i due candidati (il Nordest gli ha dato il ' + pct(reg[0].L1 / (reg[0].L1 + reg[0].F1), 0) + ', il Sud il ' + pct(reg[2].L1 / (reg[2].L1 + reg[2].F1), 0) + '). Durante la notte mostrano quanti voti mancano.';
     $('mancaPill').textContent = 'primo turno';
     return;
@@ -2490,7 +2503,7 @@ window.CARD = (function () {
     x.fillStyle = '#fff'; x.fillRect(W / 2 - 1.5, y - 8, 3, 42);
     T(x, tot ? 'Voti contati, ' + fmtSez(Cn.c) + ' delle sezioni' : 'In attesa dei primi voti', M, y + 62, { font: F(500, 23), color: C.t2 });
     y += Q.proj;
-    if (!P) { T(x, 'La proiezione parte con i primi ' + nf(PROJ_MIN_VOTI) + ' voti contati.', M, y, { font: F(500, 26), color: C.t2 }); return; }
+    if (!P) { T(x, 'La proiezione parte dal ' + SOGLIA_TXT + '.', M, y, { font: F(500, 26), color: C.t2 }); return; }
     x.fillStyle = C.line; x.fillRect(M, y - 48, W - 2 * M, 1);
     T(x, 'Proiezione del risultato finale', M, y, { font: F(600, 24), color: C.t2 });
     T(x, 'Lula ' + pctTxt(P.media) + ' · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + pctTxt(P.q975), M, y + Q.riga, { font: F(600, L.ig ? 40 : 36, 'serif') });
