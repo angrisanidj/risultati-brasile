@@ -584,7 +584,7 @@ footer a{color:var(--t2)}
       <div><h4>La correzione</h4>Il modello confronta ogni stato con se stesso al primo turno: misura di quanto si è spostata la quota di Lula fra i due candidati nei voti già contati, corregge l’effetto dell’ordine di arrivo dentro lo stato (stimato sul primo turno, e ricalcolato durante la notte dai lotti che arrivano) e lo applica alle sezioni che mancano. Gli stati senza dati prendono lo spostamento medio della loro regione e del paese.</div>
       <div><h4>La forchetta</h4>Ogni aggiornamento rifà 4.000 simulazioni dei voti mancanti, con l’incertezza sullo spostamento di ogni stato, sull’ordine di arrivo e sull’affluenza. La forchetta contiene il 95% (o l’80%) dei risultati simulati e si stringe man mano che resta meno da contare. Provato su 150 notti simulate con i tempi veri del primo turno: il risultato vero è rimasto nella forchetta al 95% in almeno 98 casi su 100, a ogni ora; l’errore medio scende da circa un punto con il 3% delle sezioni a due decimi con il 40%. La forchetta è volutamente prudente: la notte vera può essere più disordinata di una simulata.</div>
     </div>
-    <p class="methodnote" id="metodoNote">Prima dei voti la proiezione parte dall’ultimo sondaggio (oggi Datafolha del 6–7 ottobre: Lula 48% dei voti validi); i voti veri lo sostituiscono rapidamente. È una stima statistica, non un risultato: il risultato è quello del TSE.</p>
+    <p class="methodnote" id="metodoNote">Prima dei voti la proiezione parte dall’ultimo sondaggio (Datafolha, 20–22 ottobre, 2.520 interviste: Lula 50% dei voti validi); i voti veri lo sostituiscono rapidamente. È una stima statistica, non un risultato: il risultato è quello del TSE.</p>
   </section>
 
   <footer><span>Voti: Tribunale superiore elettorale (TSE), resultados.tse.jus.br · Primo turno: totalizzazione TSE del 5 ottobre 2026 · Curva dello spoglio del primo turno: ricostruzione dai boletins de urna di Gabriel-Alexandre/apuracao-eleicoes-2026 · Mappe: IBGE</span><span id="footProxy">—</span></footer>
@@ -1063,7 +1063,7 @@ const S = {
   traccia: [],          /* proiezione e voti contati a ogni aggiornamento, per il grafico */
   proj: null,
   manuale: null,        /* {L, F, sez} */
-  sond: { lula: 0.48, fonte: 'Datafolha, 6–7 ottobre' },
+  sond: { lula: 0.50, fonte: 'Datafolha, 20–22 ottobre (2.520 interviste)' },
   sondLocale: null,
   modoB: 'conto', modoT1: 'primo', livT1: 'uf', livB: 'uf',
   ord: { col: 'V', dir: -1 },
@@ -1220,10 +1220,18 @@ const colC = k => k === 'L' ? LULA.c : FLAV.c;
 
 function render() {
   renderHero(); renderKpi(); renderVerdetto(); renderDuello(); renderFork();
-  renderManca(); renderSwing(); renderTabella();
+  renderManca(); renderSwing(); renderTabella(); renderMetodo();
   if (PROVA && S.livB === 'mun' && GEO.mun) comuniProva();
   if (MAPPE.B) MAPPE.B.render();
   if (window.CARD) window.CARD.segnaSporco();
+}
+/* La nota sul metodo segue il sondaggio di stime.json: niente da ritoccare a mano */
+function renderMetodo() {
+  const el = $('metodoNote'); if (!el) return;
+  const so = sondaggio();
+  const f = String(so.fonte || '').replace(/\s*\(([^)]*)\)/g, ', $1').trim();
+  const v = so.lula * 100, cifra = nf(v, Math.abs(v - Math.round(v)) < 0.05 ? 0 : 1);
+  el.textContent = 'Prima dei voti la proiezione parte dall’ultimo sondaggio (' + (f ? f + ': ' : '') + 'Lula ' + cifra + '% dei voti validi); i voti veri lo sostituiscono rapidamente. È una stima statistica, non un risultato: il risultato è quello del TSE.';
 }
 function renderHero() {
   const lu = $('lastUpdate');

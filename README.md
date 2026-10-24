@@ -71,7 +71,7 @@ Crea il repository `angrisanidj/risultati-brasile` e carica tutto (la cartella `
 
 **Orari:** le urne chiudono alle 17 di Brasília. Il 25 ottobre in Italia finisce l'ora legale, quindi la differenza è di quattro ore: **le 21 in Italia**. Nel 2022 il ballottaggio era al 99% alle 20 di Brasília; al primo turno 2026 lo schermo del TSE si è fermato per un'ora (dalle 19:06 alle 20:08, dal 64,8% all'85%).
 
-**Il sondaggio di partenza** sta in `stime.json` (oggi Datafolha del 6–7 ottobre: Lula 48% dei validi). Conta solo prima dei voti veri: con l'1–2% delle sezioni il modello lo ha già quasi dimenticato. Per cambiarlo, modifica il file e fai il commit; le pagine aperte lo rileggono ogni due minuti.
+**Il sondaggio di partenza** sta in `stime.json` (oggi Datafolha del 20–22 ottobre: Lula 50% dei validi). La nota «Come funziona la proiezione» lo riprende da sola. Conta solo prima dei voti veri: con l'1–2% delle sezioni il modello lo ha già quasi dimenticato. Per cambiarlo, modifica il file e fai il commit; le pagine aperte lo rileggono ogni due minuti.
 
 **Modalità redazione:** la stessa chiave della dashboard di Israele, `?redazione=CHIAVE` una volta (il browser la ricorda, `?redazione=esci` la dimentica). Compaiono:
 - i pulsanti «Aggiorna ora» e «Metti in pausa» del feed, e l'avviso «In attesa del primo file» (i lettori vedono solo l'ora dell'ultimo file, quando c'è);
@@ -137,4 +137,4 @@ node strumenti/comuni_live.mjs
 - Curva dello spoglio del primo turno e tempi di arrivo per stato: ricostruzione dai boletins de urna di Gabriel-Alexandre/apuracao-eleicoes-2026. Curve del 2022: stessa fonte.
 - Blocco delle 19:06: Agência Brasil e Jornal de Brasília, 5 ottobre 2026.
 - Confini: IBGE, malha municipal nella versione di [tbrugz/geodata-br](https://github.com/tbrugz/geodata-br) (CC0), semplificata con mapshaper; i sette comuni nati dopo il 2010 da [analusz/br-geodata-2024](https://github.com/analusz/br-geodata-2024). Corrispondenza fra codici TSE e IBGE: [betafcc/Municipios-Brasileiros-TSE](https://github.com/betafcc/Municipios-Brasileiros-TSE).
-- Sondaggio: Datafolha, 6–7 ottobre 2026, 2.520 interviste.
+- Sondaggio: quello di `stime.json` (oggi Datafolha, 20–22 ottobre 2026, 2.520 interviste).
