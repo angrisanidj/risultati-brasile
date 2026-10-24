@@ -1216,6 +1216,9 @@ function contato() {
 }
 const projVisibile = () => !S.manuale && S.proj && (S.proj.contato.L + S.proj.contato.F) >= PROJ_MIN_VOTI && sezioniNaz() >= PROJ_MIN_SEZ;
 const SOGLIA_TXT = nf(PROJ_MIN_SEZ * 100) + '% delle sezioni scrutinate';
+/* margine d'errore stimato: metà della forchetta al 95%, in punti; si stringe man mano che si contano i voti */
+const margineN = P => (P.q975 - P.q025) / 2 * 100;
+const margine = P => margineN(P) < 0.05 ? 'meno di 0,1 punti' : '±' + nf(margineN(P), 1) + ' punti';
 /* «88,2 mln di voti validi», «117 mila voti validi», «540 voti validi» */
 function votiTxt(v) {
   if (v >= 1e6) return '<b>' + mln(v) + '</b> di voti validi';
@@ -1314,7 +1317,7 @@ function renderVerdetto() {
   else if (pw >= 0.9) tit = nomeC(k) + ' è favorito: la proiezione lo dà al ' + pct(m);
   else if (pw >= 0.65) tit = nomeC(k) + ' è avanti nella proiezione: ' + pct(m) + ', ma la forchetta comprende il 50%';
   else tit = 'Testa a testa: la proiezione dà ' + nomeC(k) + ' al ' + pct(m);
-  det += ' La forchetta al 95% va dal <b>' + pct(lo) + '</b> al <b>' + pct(hi) + '</b> per ' + nomeC(k) + '; probabilità di vittoria <b>' + pct(pw, pw > 0.99 ? 1 : 0) + '</b>. Restano da contare circa ' + votiTxt(P.resta) + '.';
+  det += ' La forchetta al 95% va dal <b>' + pct(lo) + '</b> al <b>' + pct(hi) + '</b> per ' + nomeC(k) + ': margine d’errore stimato <b>' + margine(P) + '</b>, che si riduce man mano che si contano i voti; probabilità di vittoria <b>' + pct(pw, pw > 0.99 ? 1 : 0) + '</b>. Restano da contare circa ' + votiTxt(P.resta) + '.';
   let cav = 'Stima statistica sui voti contati finora, non un risultato ufficiale';
   if (leadC !== k && C.c < 0.98) cav = 'Voti contati e proiezione indicano vincitori diversi: i voti che mancano vengono da stati più favorevoli a ' + nomeC(k);
   box.className = 'verdetto ' + k;
@@ -1345,7 +1348,7 @@ function renderDuello() {
     return;
   }
   const k = P.media >= 0.5 ? 'L' : 'F';
-  $('projText').innerHTML = 'Lula <b>' + pct(P.media) + '</b> · F. Bolsonaro <b>' + pct(1 - P.media) + '</b> · forchetta al 95% per Lula: <b>' + pct(P.q025) + '–' + pct(P.q975) + '</b>';
+  $('projText').innerHTML = 'Lula <b>' + pct(P.media) + '</b> · F. Bolsonaro <b>' + pct(1 - P.media) + '</b> · forchetta al 95% per Lula: <b>' + pct(P.q025) + '–' + pct(P.q975) + '</b> · margine d’errore <b>' + margine(P) + '</b>';
   const span = Math.max(0.06, Math.abs(P.q025 - 0.5) + 0.02, Math.abs(P.q975 - 0.5) + 0.02);
   const w = Math.ceil(span * 50) / 50;
   svg.innerHTML = assiProiezione(0.5 - w, 0.5 + w, P);
@@ -1427,7 +1430,8 @@ function disegnaFork(W, H, T, o) {
     s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.q) + '" r="4" fill="#f2c14e"/>';
     if (up) {
       s += '<circle cx="' + X(u.x) + '" cy="' + Y(u.m) + '" r="5" fill="#f5f8f4" stroke="#04120d" stroke-width="1.5"/>';
-      const lab = 'proiezione ' + nf(u.m * 100, 1) + '%';
+      const mm = (u.b95 - u.a95) / 2 * 100;
+      const lab = 'proiezione ' + nf(u.m * 100, 1) + '%' + (mm >= 0.05 ? ' ±' + nf(mm, 1) : '');
       const lx = X(u.x) > W * 0.7 ? X(u.x) - 9 : X(u.x) + 9, an = X(u.x) > W * 0.7 ? 'end' : 'start';
       s += '<text x="' + lx + '" y="' + (Y(u.m) + (u.m >= u.q ? -9 : 17)) + '" fill="#f5f8f4" font-size="' + (o.fs || 12) + '" font-weight="600" text-anchor="' + an + '">' + lab + '</text>';
     }
@@ -1581,6 +1585,19 @@ function caricaComuni() {
     return GEO;
   }).catch(e => { MUN_PROMESSA = null; throw e; });
   return MUN_PROMESSA;
+}
+/* Sul telefono il file dei comuni (434 kB) e la costruzione delle 5.571 forme costano più di un
+   secondo: si preparano, nei momenti liberi, quando una delle due mappe entra nello schermo, così
+   il tocco su «Comuni» deve solo disegnare. Con il risparmio dati attivo si aspetta il tocco. */
+function precaricaComuni() {
+  if (!window.IntersectionObserver || (navigator.connection && navigator.connection.saveData)) return;
+  const io = new IntersectionObserver(voci => {
+    if (!voci.some(v => v.isIntersecting)) return;
+    io.disconnect();
+    const via = () => caricaComuni().catch(() => { });
+    if (window.requestIdleCallback) requestIdleCallback(via, { timeout: 3000 }); else setTimeout(via, 300);
+  }, { rootMargin: '300px 0px' });
+  ['mappaB', 'mappaT1'].forEach(id => { const el = $(id); if (el) io.observe(el); });
 }
 const COL_VUOTO = '#3a403d', COL_ND = '#646d69';
 function coloreMargine(m, forte = 0.5) {
@@ -1751,7 +1768,8 @@ function Mappa(cfg) {
     gS.style.display = munOn || (M.vista && M.vista.w < GEO.W * 0.98) ? 'none' : '';
     if (munOn) {
       const paths = gM.children;
-      for (let i = 0; i < paths.length; i++) paths[i].setAttribute('fill', cfg.coloreMun(paths[i].dataset.mun));
+      /* solo i comuni che cambiano colore: ridipingerli tutti costa 150-350 ms su un telefono */
+      for (let i = 0; i < paths.length; i++) { const c = cfg.coloreMun(paths[i].dataset.mun); if (paths[i].getAttribute('fill') !== c) paths[i].setAttribute('fill', c); }
       hint.textContent = suggerimento('un comune');
     } else {
       gU.querySelectorAll('path').forEach(p => { const c = cfg.coloreUF(p.dataset.uf); p.setAttribute('fill', c.f); p.style.opacity = c.o == null ? '' : c.o; });
@@ -2415,6 +2433,7 @@ async function avvio() {
   document.body.classList.toggle('redazione', REDAZIONE);
   if (REDAZIONE) riempiRedazione();
   MAPPE.B = Mappa({ el: $('mappaB'), ...CFG_B });
+  precaricaComuni();
   eventi(); eventiSocial();
   renderPrimoTurno();
   $('footProxy').textContent = 'Proxy: ' + (() => { try { return new URL(PROXY).host; } catch (_) { return PROXY; } })();
@@ -2506,7 +2525,7 @@ window.CARD = (function () {
     if (!P) { T(x, 'La proiezione parte dal ' + SOGLIA_TXT + '.', M, y, { font: F(500, 26), color: C.t2 }); return; }
     x.fillStyle = C.line; x.fillRect(M, y - 48, W - 2 * M, 1);
     T(x, 'Proiezione del risultato finale', M, y, { font: F(600, 24), color: C.t2 });
-    T(x, 'Lula ' + pctTxt(P.media) + ' · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + pctTxt(P.q975), M, y + Q.riga, { font: F(600, L.ig ? 40 : 36, 'serif') });
+    T(x, 'Lula ' + pctTxt(P.media) + (margineN(P) >= 0.05 ? ' ±' + nf(margineN(P), 1) : '') + ' · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + pctTxt(P.q975), M, y + Q.riga, { font: F(600, L.ig ? 40 : 36, 'serif') });
     asse(x, P, M, W - M, y + Q.asse, 44);
     T(x, probTxt(P.pL), L.ig ? M : W / 2, y + Q.prob, { font: F(600, L.ig ? 30 : 28), color: C.t1, align: L.ig ? 'left' : 'center' });
     if (Q.nota) {
