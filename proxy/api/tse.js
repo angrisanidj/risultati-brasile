@@ -26,9 +26,27 @@ const ORIGINI = [
   'http://localhost', 'http://127.0.0.1', 'null'
 ];
 
+const originOk = o => ORIGINI.some(a => o === a || o.startsWith(a + ':'));
+
+/* Difesa dal blocco del TSE. Ogni risposta che non arriva dalla cache del CDN costa fino a 29
+   richieste al TSE dall'indirizzo di Vercel; il 10 ottobre una raffica (circa 800 al secondo)
+   l'ha fatto bloccare per 7 minuti e mezzo. Quindi:
+   - solo parametri e valori conosciuti: ogni variante dell'indirizzo è una voce di cache a sé
+     e scavalcherebbe la cache;
+   - nessuna origine sconosciuta: con Vary: Origin anche ogni Origin è una voce di cache a sé;
+   - anche gli errori restano in cache qualche secondo, e più a lungo se il TSE risponde 429 o
+     403, così un TSE che sta limitando non riceve un giro nuovo da ogni lettore. */
+const PARAMETRI = { ele: v => ELEZIONI.includes(v), uf: v => UF.includes(v.toLowerCase()), diag: v => v === '1' };
+const CACHE_RIFIUTO = 'public, max-age=0, s-maxage=3600';
+const limitato = s => s === 429 || s === 403;
+/* Freno dentro la funzione, che non dipende dalla cache del CDN: dopo un 429 o un 403, per un
+   minuto questa istanza non chiede niente al TSE (la diagnostica sì) e risponde 503. */
+const FRENO_MS = 60000;
+let frenoFino = 0;
+
 function cors(req, res) {
   const o = req.headers.origin || '';
-  const ok = ORIGINI.some(a => o === a || o.startsWith(a + ':'));
+  const ok = originOk(o);
   res.setHeader('Access-Control-Allow-Origin', ok ? o : ORIGINI[0]);
   res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -91,7 +109,17 @@ function compatta(d) {
 export default async function handler(req, res) {
   cors(req, res);
   if (req.method === 'OPTIONS') return res.status(204).end();
+  const o = req.headers.origin;
+  if (o && !originOk(o)) {
+    res.setHeader('Cache-Control', CACHE_RIFIUTO);
+    return res.status(403).json({ errore: 'origine non ammessa' });
+  }
   const q = req.query || {};
+  const sbagliato = Object.keys(q).find(k => !PARAMETRI[k] || typeof q[k] !== 'string' || !PARAMETRI[k](q[k]));
+  if (sbagliato) {
+    res.setHeader('Cache-Control', CACHE_RIFIUTO);
+    return res.status(400).json({ errore: 'parametro non ammesso: ' + sbagliato, ammessi: '?ele=6258 o 6257, &uf=<sigla>, ?diag=1' });
+  }
   const ele = ELEZIONI.includes(String(q.ele)) ? String(q.ele) : '6258';
 
   if (q.diag) {
@@ -112,8 +140,15 @@ export default async function handler(req, res) {
         out.prove.push({ url: u, errore: String(err && err.message || err), ms: Date.now() - t0 });
       }
     }
-    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=10');
     return res.status(200).json(out);
+  }
+
+  if (Date.now() < frenoFino) {
+    const s = Math.ceil((frenoFino - Date.now()) / 1000);
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=' + s);
+    res.setHeader('Retry-After', String(s));
+    return res.status(503).json({ ele, quando: new Date().toISOString(), errore: 'il TSE ha risposto 429/403: pausa di ' + s + ' secondi' });
   }
 
   if (q.uf) {
@@ -121,11 +156,12 @@ export default async function handler(req, res) {
     if (!UF.includes(uf)) return res.status(400).json({ errore: 'uf sconosciuta' });
     try {
       const r = await scarica(url(ele, uf));
-      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=15, stale-while-revalidate=30');
+      if (limitato(r.status)) frenoFino = Date.now() + FRENO_MS;
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=' + (limitato(r.status) ? 60 : 15) + ', stale-while-revalidate=30');
       res.setHeader('Content-Type', 'application/json; charset=utf-8');
       return res.status(r.ok ? 200 : 502).send(await r.text());
     } catch (err) {
-      res.setHeader('Cache-Control', 'no-store');
+      res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=20');
       return res.status(504).json({ errore: 'TSE non raggiungibile', dettaglio: String(err && err.message || err) });
     }
   }
@@ -133,7 +169,7 @@ export default async function handler(req, res) {
   const risultati = await Promise.all(UF.map(async uf => {
     try {
       const r = await scarica(url(ele, uf));
-      if (!r.ok) return [uf, { errore: 'HTTP ' + r.status }];
+      if (!r.ok) return [uf, { errore: 'HTTP ' + r.status, limitato: limitato(r.status) || undefined }];
       return [uf, compatta(await r.json())];
     } catch (err) {
       return [uf, { errore: err.name === 'AbortError' ? 'tempo scaduto' : String(err && err.message || err) }];
@@ -141,12 +177,15 @@ export default async function handler(req, res) {
   }));
   const out = { ele, quando: new Date().toISOString(), uf: Object.fromEntries(risultati) };
   const buoni = risultati.filter(([, v]) => !v.errore).length;
+  /* il TSE sta limitando: un minuto di cache prima del giro successivo */
+  const frena = risultati.some(([, v]) => v.limitato);
+  if (frena) frenoFino = Date.now() + FRENO_MS;
   res.setHeader('X-Tse-Fetched', out.quando);
   res.setHeader('X-Tse-Ele', ele);
   if (!buoni) {
-    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=' + (frena ? 60 : 20));
     return res.status(502).json({ ...out, errore: 'nessun file del TSE leggibile', esempio: risultati[0][1] });
   }
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=15, stale-while-revalidate=30');
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=' + (frena ? 60 : 15) + ', stale-while-revalidate=30');
   return res.status(200).json(out);
 }
