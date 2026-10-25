@@ -440,7 +440,7 @@ footer a{color:var(--t2)}
     <div class="hero-main">
       <div class="eyebrow" id="heroEyebrow">Ballottaggio presidenziale, domenica 25 ottobre 2026</div>
       <h1 id="heroTitle">Lula contro Flávio Bolsonaro</h1>
-      <p id="heroText">Lo spoglio in diretta dai file del Tribunale superiore elettorale, stato per stato, con la proiezione del risultato finale e la sua forchetta, che si stringe man mano che si contano i voti. Le urne chiudono alle 17 di Brasília, le 21 in Italia.</p>
+      <p id="heroText">Lo spoglio in diretta dai file del Tribunale superiore elettorale, stato per stato, con la proiezione del risultato finale e la sua forchetta, che si stringe man mano che si contano i voti. Le urne chiudono alle 19 di Brasília, le 23 in Italia.</p>
     </div>
     <div class="hero-side">
       <div class="metaline">
@@ -1289,7 +1289,7 @@ function renderVerdetto() {
   const sondTxt = 'Il sondaggio di partenza è ' + esc(so.fonte) + ': Lula <b>' + nf(so.lula * 100, 0) + '%</b>, F. Bolsonaro <b>' + nf(100 - so.lula * 100, 0) + '%</b> dei voti validi.';
   if (!C || (C.L + C.F) === 0) {
     box.className = 'verdetto';
-    box.innerHTML = '<div class="vw">Chi vince</div><h2>In attesa dei primi voti</h2><div class="vd">Le urne chiudono alle <b>17 di Brasília, le 21 in Italia</b> (quel giorno in Italia finisce l’ora legale). I primi file del TSE arrivano dopo pochi minuti e lo spoglio è quasi sempre concluso in serata. ' + sondTxt + '</div>';
+    box.innerHTML = '<div class="vw">Chi vince</div><h2>In attesa dei primi voti</h2><div class="vd">Le urne chiudono alle <b>19 di Brasília, le 23 in Italia</b> (quel giorno in Italia finisce l’ora legale). I primi file del TSE arrivano dopo pochi minuti e lo spoglio è quasi sempre concluso in serata. ' + sondTxt + '</div>';
     return;
   }
   const cl = C.L / (C.L + C.F), diff = Math.abs(C.L - C.F), leadC = C.L >= C.F ? 'L' : 'F';
@@ -2711,7 +2711,7 @@ window.CARD = (function () {
     const lead = q == null ? null : q >= 0.5 ? 'Lula' : 'F. Bolsonaro';
     if (!tot) {
       titoli.proj = 'Brasile al ballottaggio: Lula contro Flávio Bolsonaro'; titoli.mappa = 'Il primo turno stato per stato'; titoli.fork = 'Come si muove lo spoglio';
-      testi.proj = 'Brasile, ballottaggio presidenziale: le urne chiudono alle 21 italiane. Al primo turno Flávio Bolsonaro 47%, Lula 45,2%. Lo spoglio stato per stato e la proiezione del risultato finale.';
+      testi.proj = 'Brasile, ballottaggio presidenziale: le urne chiudono alle 23 italiane. Al primo turno Flávio Bolsonaro 47%, Lula 45,2%. Lo spoglio stato per stato e la proiezione del risultato finale.';
       testi.mappa = 'Al primo turno Flávio Bolsonaro ha vinto in 14 stati e nel Distretto federale, Lula in 12, quasi tutti al Nord e nel Nordest.';
       testi.fork = 'Attenzione ai primi dati del Brasile: al primo turno Flávio Bolsonaro era avanti di 10,8 punti con il 14% delle sezioni, alla fine di 1,9. I voti del Nordest, dove Lula è più forte, arrivano per ultimi.';
       titoloComuni(titoli, testi);
