@@ -1216,6 +1216,8 @@ function contato() {
 }
 const projVisibile = () => !S.manuale && S.proj && (S.proj.contato.L + S.proj.contato.F) >= PROJ_MIN_VOTI && sezioniNaz() >= PROJ_MIN_SEZ;
 const SOGLIA_TXT = nf(PROJ_MIN_SEZ * 100) + '% delle sezioni scrutinate';
+/* «con l’8,3%», «con l’11%», «con l’80%», ma «con il 5%», «con il 61%»: l’articolo segue la pronuncia */
+const conIl = s => (/^(1|8|11|8\d)(?:[,%]|$)/.test(String(s)) ? 'l’' : 'il ') + s;
 /* margine d'errore stimato: metà della forchetta al 95%, in punti; si stringe man mano che si contano i voti */
 const margineN = P => (P.q975 - P.q025) / 2 * 100;
 const margine = P => margineN(P) < 0.05 ? 'meno di 0,1 punti' : '±' + nf(margineN(P), 1) + ' punti';
@@ -1291,7 +1293,7 @@ function renderVerdetto() {
     return;
   }
   const cl = C.L / (C.L + C.F), diff = Math.abs(C.L - C.F), leadC = C.L >= C.F ? 'L' : 'F';
-  const chi = C.manuale ? 'Con i totali inseriti a mano (' + fmtSez(C.c) + ' delle sezioni)' : 'Con il ' + fmtSez(C.c) + ' delle sezioni';
+  const chi = C.manuale ? 'Con i totali inseriti a mano (' + fmtSez(C.c) + ' delle sezioni)' : 'Con ' + conIl(fmtSez(C.c)) + ' delle sezioni';
   let det = chi + ', nei voti contati ' + nomeC(leadC) + ' è avanti di <b>' + nf(Math.abs(cl - 0.5) * 200, 1) + ' punti</b> (' + nf(diff) + ' voti).';
   if (S.naz && S.naz.eletto) {
     const k = S.naz.eletto;
@@ -1394,6 +1396,8 @@ function disegnaFork(W, H, T, o) {
   let lo = 0.47, hi = 0.53;
   pts.forEach(p => { lo = Math.min(lo, p.q); hi = Math.max(hi, p.q); });
   pp.forEach(p => { lo = Math.min(lo, p.a95); hi = Math.max(hi, p.b95); });
+  /* anche la curva del primo turno resta tutta dentro il grafico */
+  if (!o.senzaRif) RIF_T1.forEach(([, v]) => { lo = Math.min(lo, v); hi = Math.max(hi, v); });
   const pad = 0.006; lo = Math.max(0.3, Math.floor((lo - pad) * 100) / 100); hi = Math.min(0.7, Math.ceil((hi + pad) * 100) / 100);
   const X = x => m.l + x * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
   const col = o.colori || { t: '#7e9789', g: 'rgba(255,255,255,.07)' };
@@ -1934,6 +1938,18 @@ const MUNB_MS = 120000, MUNB_FILE = 'dati/comuni-ballottaggio.json';
 const COL_ATTESA = '#24312a';   /* comune senza sezioni contate: quasi lo sfondo, così risaltano quelli con voti */
 
 const comuniAttivi = () => S.livB === 'mun' && !PROVA;
+/* rilegge il file dei comuni del ballottaggio; vero se è cambiato (anche per la card dei comuni) */
+async function leggiComuniB() {
+  const r = await conTimeout(MUNB_FILE + '?t=' + Date.now(), { cache: 'no-store' }, 20000);
+  if (!r.ok) return false;
+  const j = await r.json();
+  /* il file è del ballottaggio: con ?ele=6257 (prova del feed) non si mescola */
+  if (j && j.m && j.ele === ELE && j.aggiornato !== MUNB.firma) {
+    MUNB.firma = j.aggiornato; MUNB.dati = j.m; MUNB.quando = new Date(j.aggiornato); MUNB.conVoti = j.con_voti || 0;
+    return true;
+  }
+  return false;
+}
 async function cicloComuni() {
   clearTimeout(MUNB.timer); MUNB.timer = null;
   if (!comuniAttivi()) return;
@@ -1941,15 +1957,7 @@ async function cicloComuni() {
   if (MUNB.busy) return;
   MUNB.busy = true;
   try {
-    const r = await conTimeout(MUNB_FILE + '?t=' + Date.now(), { cache: 'no-store' }, 20000);
-    if (r.ok) {
-      const j = await r.json();
-      /* il file è del ballottaggio: con ?ele=6257 (prova del feed) non si mescola */
-      if (j && j.m && j.ele === ELE && j.aggiornato !== MUNB.firma) {
-        MUNB.firma = j.aggiornato; MUNB.dati = j.m; MUNB.quando = new Date(j.aggiornato); MUNB.conVoti = j.con_voti || 0;
-        if (MAPPE.B) MAPPE.B.render();
-      }
-    }
+    if (await leggiComuniB() && MAPPE.B) MAPPE.B.render();
   } catch (_) { }
   finally {
     MUNB.busy = false;
@@ -2283,9 +2291,9 @@ function testoCondivisione() {
   const C = contato(), P = projVisibile() ? S.proj : null;
   if (PROVA || !C || !(C.L + C.F)) return 'Brasile, ballottaggio del 25 ottobre: Lula contro Flávio Bolsonaro. Lo spoglio in diretta stato per stato, con la proiezione del risultato finale';
   const q = C.L / (C.L + C.F), voti = 'Lula ' + pct(q) + ', Flávio Bolsonaro ' + pct(1 - q);
-  if (S.naz && S.naz.eletto) return 'Brasile: ' + (S.naz.eletto === 'L' ? LULA.nl : FLAV.nl) + ' eletto presidente. ' + voti + ' con il ' + fmtSez(C.c) + ' delle sezioni. I risultati stato per stato';
+  if (S.naz && S.naz.eletto) return 'Brasile: ' + (S.naz.eletto === 'L' ? LULA.nl : FLAV.nl) + ' eletto presidente. ' + voti + ' con ' + conIl(fmtSez(C.c)) + ' delle sezioni. I risultati stato per stato';
   if (C.c >= 0.9999) return 'Brasile, spoglio concluso: ' + voti + '. I risultati stato per stato';
-  return 'Brasile, ballottaggio con il ' + fmtSez(C.c) + ' delle sezioni: ' + voti + '.' + (P ? ' La proiezione dà Lula al ' + pct(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ').' : '') + ' Lo spoglio in diretta';
+  return 'Brasile, ballottaggio con ' + conIl(fmtSez(C.c)) + ' delle sezioni: ' + voti + '.' + (P ? ' La proiezione dà Lula al ' + pct(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ').' : '') + ' Lo spoglio in diretta';
 }
 const TESTO_T1 = 'Brasile, il primo turno del 4 ottobre stato per stato e comune per comune: Flávio Bolsonaro 47,0%, Lula 45,2%. Verso il ballottaggio del 25 ottobre';
 const urlDi = sez => sez === 't1' ? URL_PAGINA + '#primo-turno' : URL_PAGINA;
@@ -2522,7 +2530,13 @@ window.CARD = (function () {
     x.fillStyle = '#fff'; x.fillRect(W / 2 - 1.5, y - 8, 3, 42);
     T(x, tot ? 'Voti contati, ' + fmtSez(Cn.c) + ' delle sezioni' : 'In attesa dei primi voti', M, y + 62, { font: F(500, 23), color: C.t2 });
     y += Q.proj;
-    if (!P) { T(x, 'La proiezione parte dal ' + SOGLIA_TXT + '.', M, y, { font: F(500, 26), color: C.t2 }); return; }
+    if (!P) {
+      /* prima della soglia: perché non c'è ancora la proiezione e perché i primi voti ingannano */
+      T(x, 'La proiezione parte dal ' + SOGLIA_TXT + '.', M, y, { font: F(600, L.ig ? 30 : 28), color: C.t1 });
+      const nota = 'I primi voti non rappresentano il paese. Al primo turno, con il 14% delle sezioni, Flávio Bolsonaro era avanti di 10,8 punti; alla fine di 1,9: il Nordest, dove Lula è più forte, arriva per ultimo.';
+      a_capo(x, nota, F(500, L.ig ? 27 : 25), W - 2 * M).slice(0, 4).forEach((r, i) => T(x, r, M, y + (L.ig ? 56 : 50) + i * (L.ig ? 38 : 36), { font: F(500, L.ig ? 27 : 25), color: C.t2 }));
+      return;
+    }
     x.fillStyle = C.line; x.fillRect(M, y - 48, W - 2 * M, 1);
     T(x, 'Proiezione del risultato finale', M, y, { font: F(600, 24), color: C.t2 });
     T(x, 'Lula ' + pctTxt(P.media) + (margineN(P) >= 0.05 ? ' ±' + nf(margineN(P), 1) : '') + ' · forchetta al 95%: ' + nf(P.q025 * 100, 1) + '–' + pctTxt(P.q975), M, y + Q.riga, { font: F(600, L.ig ? 40 : 36, 'serif') });
@@ -2552,7 +2566,7 @@ window.CARD = (function () {
     const [l, f] = contaStati(S.modoB);
     const righe = [];
     if (Cn && Cn.L + Cn.F) righe.push('Voti contati: Lula ' + pctTxt(Cn.L / (Cn.L + Cn.F)) + ', F. Bolsonaro ' + pctTxt(Cn.F / (Cn.L + Cn.F)), 'Sezioni scrutinate: ' + fmtSez(Cn.c));
-    if (P) righe.push('Proiezione: Lula ' + pctTxt(P.media) + ' (' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + ')');
+    if (P) righe.push('Proiezione: Lula ' + pctTxt(P.media) + (margineN(P) >= 0.05 ? ' ±' + nf(margineN(P), 1) + ' punti' : ''));
     /* righe che vanno a capo se non stanno nella colonna («F. Bolsonaro» è lungo) */
     const scriviRighe = (rr, lx, ly, w, fnt, lh, gap) => {
       let yy = ly;
@@ -2582,16 +2596,96 @@ window.CARD = (function () {
       if (S.modoB === 'conto') T(x, 'Più chiari gli stati con meno del 5% delle sezioni', lx, H - 112, { font: F(500, 19), color: C.t3 });
     }
   }
-  /* ---------- 3 · la forchetta ---------- */
+  /* ---------- 3 · i comuni ---------- */
+  /* i comuni del ballottaggio se lo script ne ha pubblicati con voti, altrimenti il primo turno */
+  function statoComuni() {
+    /* stesse regole delle legende della pagina: al primo turno i comuni in parità vanno a F. Bolsonaro */
+    const conta = modo => { let l = 0, f = 0, nd = 0; GEO.mun.forEach(g => { const v = valoreMunB(g.id, modo); if (!v) nd++; else if (modo === 'primo' ? v.v > 0 : v.v >= 0) l++; else f++; }); return { l, f, nd }; };
+    const b = conta('conto');
+    return b.l + b.f > 0 ? { ball: true, modo: 'conto', ...b } : { ball: false, modo: 'primo', ...conta('primo') };
+  }
+  function titoloComuni(tt, xx) {
+    const s = GEO.mun ? statoComuni() : null;
+    if (s && s.ball) {
+      tt.comuni = 'Comune per comune: Lula avanti in ' + nf(s.l) + ', F. Bolsonaro in ' + nf(s.f);
+      xx.comuni = 'Brasile, ballottaggio, comune per comune: nei voti contati Lula è avanti in ' + nf(s.l) + ' comuni, Flávio Bolsonaro in ' + nf(s.f) + '. Ancora da contare: ' + nf(s.nd) + ' comuni su ' + nf(GEO.mun.length) + '.';
+    } else {
+      tt.comuni = 'Il primo turno comune per comune';
+      xx.comuni = 'Brasile, il primo turno comune per comune: Flávio Bolsonaro ha vinto in 2.908 comuni, Lula in 2.663. Dati ufficiali del TSE, 5.571 comuni.';
+    }
+  }
+  function disegnaComuni(x, ox, oy, sc, modo) {
+    x.save(); x.translate(ox, oy); x.scale(sc, sc);
+    GEO.mun.forEach(g => { if (!g._p) g._p = new Path2D(g.d); const v = valoreMunB(g.id, modo); x.fillStyle = v ? coloreMargine(v.v, 0.6) : (modo === 'primo' ? COL_ND : COL_ATTESA); x.fill(g._p); });
+    x.strokeStyle = C.bg; x.lineWidth = 1.5 / sc;
+    GEO.uf.forEach(g => { if (!g._p) g._p = new Path2D(g.d); x.stroke(g._p); });
+    x.restore();
+  }
+  async function cardComuni(x, L) {
+    const { W, H, M } = L;
+    let pronto = true;
+    try { await caricaComuni(); } catch (_) { pronto = false; }
+    if (pronto) {
+      if (PROVA) comuniProva(); else { try { await leggiComuniB(); } catch (_) { } }
+      const tt = {}, xx = {}; titoloComuni(tt, xx);
+      if (!modificati.has('tcomuni')) { titoli.comuni = tt.comuni; const inp = $('ct-comuni'); if (inp && document.activeElement !== inp) inp.value = tt.comuni; }
+      if (!modificati.has('xcomuni')) testi.comuni = xx.comuni;
+    }
+    const y0 = cornice(x, 'comuni', L) + (L.ig ? 40 : 30);
+    if (!pronto) { T(x, 'Comuni non disponibili: la card si genera dalla pagina pubblicata.', M, y0 + 60, { font: F(500, 26), color: C.t2 }); return; }
+    const s = statoComuni();
+    const tit = s.ball ? 'Voti contati, comune per comune' : 'Primo turno, 4 ottobre';
+    const lab = s.ball ? ['Lula avanti', 'F. Bolsonaro avanti'] : ['comuni a Lula', 'comuni a F. Bolsonaro'];
+    const righe = s.ball
+      ? ['Comuni con voti contati: ' + nf(s.l + s.f) + ' su ' + nf(GEO.mun.length) + (s.nd ? ' (gli altri in grigio)' : '')].concat(!PROVA && MUNB.quando && !isNaN(MUNB.quando) && MUNB.quando.getTime() > 0 ? ['Dati dei comuni delle ' + oraBR(MUNB.quando) + ' di Brasília'] : [])
+      : ['Distacco sui voti validi, tutti i candidati'].concat(PROVA ? [] : ['I comuni del ballottaggio arrivano con lo spoglio']);
+    const numeri = (lx, ly) => {
+      T(x, tit, lx, ly, { font: F(600, 24), color: C.t2 });
+      [[LULA, s.l], [FLAV, s.f]].forEach(([c, n], i) => {
+        const yy = ly + 34 + i * 84, num = nf(n);
+        box(x, lx, yy, 12, 58, 2, c.c);
+        T(x, num, lx + 30, yy + 52, { font: F(600, 60), color: c.c });
+        T(x, lab[i], lx + 30 + Wt(x, num, F(600, 60)) + 14, yy + 46, { font: F(500, 25), color: C.t2 });
+      });
+    };
+    /* scala dei colori: F. Bolsonaro +60 … pari … Lula +60 */
+    const scala = (lx, ly, w) => {
+      const gr = x.createLinearGradient(lx, 0, lx + w, 0);
+      [[0, -0.6], [0.25, -0.3], [0.5, 0], [0.75, 0.3], [1, 0.6]].forEach(([o, v]) => gr.addColorStop(o, v === 0 ? COL_VUOTO : coloreMargine(v, 0.6)));
+      x.fillStyle = gr; rr(x, lx, ly, w, 14, 4); x.fill();
+      T(x, 'F. Bolsonaro +60', lx, ly + 40, { font: F(500, 20), color: C.t3 });
+      T(x, 'pari', lx + w / 2, ly + 40, { font: F(500, 20), color: C.t3, align: 'center' });
+      T(x, 'Lula +60', lx + w, ly + 40, { font: F(500, 20), color: C.t3, align: 'right' });
+    };
+    const scrivi = (lx, ly, w, fnt, lh) => { let yy = ly; righe.forEach(r => a_capo(x, r, fnt, w).forEach(t => { T(x, t, lx, yy, { font: fnt, color: C.t1 }); yy += lh; })); return yy; };
+    if (L.ig) {
+      const hMap = 720, sc = hMap / GEO.H, wMap = GEO.W * sc;
+      disegnaComuni(x, (W - wMap) / 2, y0, sc, s.modo);
+      const ly = y0 + hMap + 40;
+      numeri(M, ly);
+      const rx = W / 2 + 10, rw = W - M - rx;
+      scrivi(rx, ly + 46, rw, F(500, 25), 34);
+      scala(rx, ly + 150, rw);
+    } else {
+      const hMap = H - 104 - y0, sc = hMap / GEO.H;
+      disegnaComuni(x, M, y0, sc, s.modo);
+      const lx = M + GEO.W * sc + 60, lw = W - M - lx;
+      numeri(lx, y0 + 30);
+      const yy = scrivi(lx, y0 + 270, lw, F(500, 27), 36);
+      scala(lx, yy + 34, Math.min(lw, 560));
+    }
+  }
+  /* ---------- 4 · lo spoglio, contato e previsto ---------- */
   function cardForchetta(x, L) {
     const { W, H, M } = L;
-    const y0 = cornice(x, 'fork', L) + (L.ig ? 40 : 20), w = W - 2 * M, h = H - 110 - y0 - (L.ig ? 90 : 0);
+    const legY = H - (L.ig ? 158 : 118);
+    const y0 = cornice(x, 'fork', L) + (L.ig ? 40 : 20), w = W - 2 * M, h = legY - (L.ig ? 50 : 34) - y0;
     const vw = L.ig ? 640 : 960, vh = Math.round(h * vw / w);
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + vw + ' ' + vh + '" font-family="Inter, Segoe UI, Arial, sans-serif">' + disegnaFork(vw, vh, S.traccia, { fs: L.ig ? 14 : 13, id: 'c', colori: { t: '#a2b8ac', g: 'rgba(255,255,255,.08)' } }) + '</svg>';
-    if (L.ig) {
-      const leg = [['#f5f8f4', 'proiezione'], ['#f2c14e', 'voti contati'], ['#6f897b', 'primo turno']];
-      let lx = M; leg.forEach(([c, t]) => { box(x, lx, H - 158, 26, 5, 1, c); T(x, t, lx + 36, H - 150, { font: F(500, 22), color: C.t2 }); lx += 60 + Wt(x, t, F(500, 22)) + 30; });
-    }
+    /* legenda in entrambi i formati: bianco la proiezione, giallo i voti contati, punteggiato il primo turno */
+    const leg = L.ig ? [['#f5f8f4', 'proiezione'], ['#f2c14e', 'voti contati'], ['#6f897b', 'primo turno']]
+                     : [['#f5f8f4', 'proiezione con la forchetta al 95%'], ['#f2c14e', 'voti contati'], ['#6f897b', 'primo turno, come si mosse il conteggio']];
+    let lx = M; leg.forEach(([c, t]) => { box(x, lx, legY, 26, 5, 1, c); T(x, t, lx + 36, legY + 8, { font: F(500, 22), color: C.t2 }); lx += 60 + Wt(x, t, F(500, 22)) + 30; });
     return new Promise(res => {
       const img = new Image();
       img.onload = () => { x.drawImage(img, M, y0, w, h); res(); };
@@ -2600,9 +2694,10 @@ window.CARD = (function () {
     });
   }
   const CARDS = [
-    { k: 'proj', n: 'Proiezione', draw: cardProiezione },
-    { k: 'mappa', n: 'Mappa degli stati', draw: cardMappa },
-    { k: 'fork', n: 'La forchetta', draw: cardForchetta }
+    { k: 'proj', n: 'Spoglio e proiezione', draw: cardProiezione },
+    { k: 'mappa', n: 'Gli stati', draw: cardMappa },
+    { k: 'comuni', n: 'I comuni', draw: cardComuni },
+    { k: 'fork', n: 'Contato e previsto', draw: cardForchetta }
   ];
   function autoTitoli() {
     const tt = {}, xx = {};
@@ -2619,17 +2714,19 @@ window.CARD = (function () {
       testi.proj = 'Brasile, ballottaggio presidenziale: le urne chiudono alle 21 italiane. Al primo turno Flávio Bolsonaro 47%, Lula 45,2%. Lo spoglio stato per stato e la proiezione del risultato finale.';
       testi.mappa = 'Al primo turno Flávio Bolsonaro ha vinto in 14 stati e nel Distretto federale, Lula in 12, quasi tutti al Nord e nel Nordest.';
       testi.fork = 'Attenzione ai primi dati del Brasile: al primo turno Flávio Bolsonaro era avanti di 10,8 punti con il 14% delle sezioni, alla fine di 1,9. I voti del Nordest, dove Lula è più forte, arrivano per ultimi.';
+      titoloComuni(titoli, testi);
       return;
     }
+    titoloComuni(titoli, testi);
     const kP = P ? (P.media >= 0.5 ? 'Lula' : 'F. Bolsonaro') : null;
-    titoli.proj = P ? 'Con il ' + sez + ' delle sezioni, la proiezione dà ' + kP + ' al ' + pctTxt(kP === 'Lula' ? P.media : 1 - P.media) : 'Con il ' + sez + ' delle sezioni, ' + lead + ' avanti nei voti contati';
-    titoli.mappa = 'Il Brasile stato per stato con il ' + sez + ' delle sezioni';
-    titoli.fork = P ? 'La forchetta si stringe: ' + kP + ' fra il ' + nf((kP === 'Lula' ? P.q025 : 1 - P.q975) * 100, 1) + ' e il ' + pctTxt(kP === 'Lula' ? P.q975 : 1 - P.q025) : 'Come si muove lo spoglio';
-    const base = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni scrutinate Lula ' + pctTxt(q) + ', Flávio Bolsonaro ' + pctTxt(1 - q) + '.';
+    titoli.proj = P ? 'Con ' + conIl(sez) + ' delle sezioni, la proiezione dà ' + kP + ' al ' + pctTxt(kP === 'Lula' ? P.media : 1 - P.media) : 'Con ' + conIl(sez) + ' delle sezioni, ' + lead + ' avanti nei voti contati';
+    titoli.mappa = 'Il Brasile stato per stato con ' + conIl(sez) + ' delle sezioni';
+    titoli.fork = P ? 'Con ' + conIl(sez) + ' delle sezioni Lula è al ' + pctTxt(q) + ' nei voti contati e al ' + pctTxt(P.media) + ' nella proiezione' : 'Come si muove lo spoglio';
+    const base = 'Brasile, ballottaggio: con ' + conIl(sez) + ' delle sezioni scrutinate Lula ' + pctTxt(q) + ', Flávio Bolsonaro ' + pctTxt(1 - q) + '.';
     testi.proj = base + (P ? ' La proiezione dà Lula al ' + pctTxt(P.media) + ' (forchetta ' + nf(P.q025 * 100, 1) + '–' + nf(P.q975 * 100, 1) + '), probabilità di vittoria ' + nf(P.pL * 100, 0) + '%.' : '');
     const [l, f] = contaStati('conto');
-    testi.mappa = 'Brasile, ballottaggio: con il ' + sez + ' delle sezioni Lula è avanti in ' + l + ' stati, Flávio Bolsonaro in ' + f + '. Nei voti contati: Lula ' + pctTxt(q) + ', Flávio Bolsonaro ' + pctTxt(1 - q) + '.';
-    testi.fork = P ? 'La proiezione sul Brasile con il ' + sez + ' delle sezioni: Lula fra il ' + nf(P.q025 * 100, 1) + ' e il ' + pctTxt(P.q975) + '. I primi voti contati sottostimano Lula: il Nordest arriva per ultimo.' : base;
+    testi.mappa = 'Brasile, ballottaggio: con ' + conIl(sez) + ' delle sezioni Lula è avanti in ' + l + ' stati, Flávio Bolsonaro in ' + f + '. Nei voti contati: Lula ' + pctTxt(q) + ', Flávio Bolsonaro ' + pctTxt(1 - q) + '.';
+    testi.fork = P ? 'Brasile, ballottaggio con ' + conIl(sez) + ' delle sezioni: Lula al ' + pctTxt(q) + ' nei voti contati, al ' + pctTxt(P.media) + ' nella proiezione (margine ' + margine(P) + '). I primi voti sottostimano Lula: il Nordest arriva per ultimo.' : base;
   }
   function campiTitoli() {
     $('cTitoli').innerHTML = CARDS.map(c => '<div class="fld"><label for="ct-' + c.k + '">' + esc(c.n) + '</label><input id="ct-' + c.k + '" value="' + esc(titoli[c.k] || '') + '"></div>').join('');
