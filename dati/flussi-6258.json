@@ -1,0 +1,88 @@
+{
+ "ele": "6258",
+ "titolo": "Da dove vengono i 10 milioni di voti in più di Lula",
+ "testo": "Brasile, stima dei flussi di voto dal primo turno al ballottaggio: degli elettori degli altri candidati (9,3 milioni) circa il 47% ha votato Lula e il 40% Flávio Bolsonaro; due terzi di chi aveva votato scheda bianca o nulla è passato a Lula; dagli astenuti del primo turno a Lula circa 2,3 milioni. I passaggi diretti da Flávio Bolsonaro a Lula sono pochi: meno di mezzo milione. Stima statistica sui 5.571 comuni, non un dato ufficiale.",
+ "nota": "Stima statistica (regressione ecologica sui 5.571 comuni, per macroregione), non un dato ufficiale: il voto è segreto. Elettori in milioni, estero escluso. Passaggi diretti da F. Bolsonaro a Lula: fra 0 e 0,4 milioni.",
+ "src": [
+  {
+   "k": "L",
+   "n": "Lula",
+   "v": 53722151
+  },
+  {
+   "k": "F",
+   "n": "F. Bolsonaro",
+   "v": 55960603
+  },
+  {
+   "k": "A",
+   "n": "Altri candidati",
+   "v": 9287152
+  },
+  {
+   "k": "B",
+   "n": "Bianche e nulle",
+   "v": 5964163
+  },
+  {
+   "k": "S",
+   "n": "Astenuti",
+   "v": 32894899
+  }
+ ],
+ "dst": [
+  {
+   "k": "L",
+   "n": "Lula",
+   "v": 64056138
+  },
+  {
+   "k": "F",
+   "n": "F. Bolsonaro",
+   "v": 59654600
+  },
+  {
+   "k": "B",
+   "n": "Bianche e nulle",
+   "v": 4144013
+  },
+  {
+   "k": "S",
+   "n": "Astenuti",
+   "v": 29974216
+  }
+ ],
+ "f": [
+  [
+   53339541,
+   0,
+   167375,
+   215234
+  ],
+  [
+   0,
+   55712726,
+   109293,
+   138584
+  ],
+  [
+   4405059,
+   3707491,
+   1112777,
+   61825
+  ],
+  [
+   4006264,
+   0,
+   1950008,
+   7890
+  ],
+  [
+   2305274,
+   234384,
+   804559,
+   29550683
+  ]
+ ],
+ "metodo": "Regressione ecologica di Goodman con vincoli (quote fra 0 e 1 che sommano a 1), stimata separatamente nelle 5 macroregioni sui 5.571 comuni, pesata per elettori, poi riportata ai totali veri con adattamento proporzionale iterativo. Dati TSE dei due turni."
+}

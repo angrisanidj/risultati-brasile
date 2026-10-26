@@ -152,6 +152,10 @@ select{background:var(--s2);color:var(--t1);border:1px solid var(--line-2);borde
 .cand .cn{font-size:13px;font-weight:600;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cand .cn i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:0}
 .cand.dx .cn i{margin:0 0 0 7px}
+/* spunta del vincitore, quando il TSE lo indica come eletto */
+.cand .spunta{display:none;width:18px;height:18px;border-radius:50%;background:var(--c);color:#fff;font:700 12px/18px var(--sans);text-align:center;margin:0 0 0 8px;vertical-align:-3px}
+.cand.dx .spunta{margin:0 8px 0 0}
+.cand.eletto .spunta{display:inline-block}
 .cand .cp{font:600 clamp(34px,5vw,46px)/1 var(--sans);letter-spacing:-.03em;margin:8px 0 4px;color:var(--c);font-variant-numeric:tabular-nums}
 .cand .cv{font-size:12.5px;color:var(--t3);font-variant-numeric:tabular-nums}
 .split{position:relative;height:16px;margin:12px 18px 2px;border-radius:2px;overflow:visible;background:rgba(255,255,255,.05);display:flex}
@@ -491,8 +495,8 @@ footer a{color:var(--t2)}
     <article class="card">
       <div class="cardhead"><h2>Il testa a testa</h2><span class="cmeta" id="duelloKicker">In attesa</span></div>
       <div class="duello">
-        <div class="cand" id="cL" style="--c:var(--lula)"><div class="cn"><i></i>Lula · PT</div><div class="cp" id="pL">—</div><div class="cv" id="vL">—</div></div>
-        <div class="cand dx" id="cF" style="--c:var(--flavio)"><div class="cn">Flávio Bolsonaro · PL<i></i></div><div class="cp" id="pF">—</div><div class="cv" id="vF">—</div></div>
+        <div class="cand" id="cL" style="--c:var(--lula)"><div class="cn"><i></i>Lula · PT<b class="spunta" title="Eletto presidente" aria-label="eletto">✓</b></div><div class="cp" id="pL">—</div><div class="cv" id="vL">—</div></div>
+        <div class="cand dx" id="cF" style="--c:var(--flavio)"><div class="cn"><b class="spunta" title="Eletto presidente" aria-label="eletto">✓</b>Flávio Bolsonaro · PL<i></i></div><div class="cp" id="pF">—</div><div class="cv" id="vF">—</div></div>
       </div>
       <div class="split" id="split"><b id="splitL" style="width:50%;background:var(--lula)"></b><b id="splitF" style="width:50%;background:var(--flavio)"></b><i class="mid"></i></div>
       <div class="splitl"><span>voti contati</span><span>50%</span><span id="splitInfo">—</span></div>
@@ -1341,6 +1345,8 @@ function renderDuello() {
     $('pL').textContent = pct(ql); $('pF').textContent = pct(1 - ql);
     $('vL').textContent = nf(C.L) + ' voti'; $('vF').textContent = nf(C.F) + ' voti';
     $('cL').classList.toggle('lead', ql > 0.5); $('cF').classList.toggle('lead', ql < 0.5);
+    const el = !C.manuale && S.naz ? S.naz.eletto : null;
+    $('cL').classList.toggle('eletto', el === 'L'); $('cF').classList.toggle('eletto', el === 'F');
     $('splitL').style.width = (ql * 100) + '%'; $('splitF').style.width = ((1 - ql) * 100) + '%';
     $('splitInfo').textContent = fmtSez(C.c) + ' delle sezioni';
     $('duelloKicker').textContent = C.manuale ? 'Totali inseriti a mano' : PROVA ? 'Prova generale' : 'Voti contati';
@@ -2550,6 +2556,13 @@ window.CARD = (function () {
     const tot = Cn ? Cn.L + Cn.F : 0, q = tot ? Cn.L / tot : 0.5;
     [[LULA, q, Cn ? Cn.L : 0, M, 'left'], [FLAV, 1 - q, Cn ? Cn.F : 0, W - M, 'right']].forEach(([c, v, voti, px, al]) => {
       T(x, c.nl + ' · ' + c.p, px, y, { font: F(600, 24), color: C.t2, align: al });
+      /* spunta del vincitore indicato dal TSE */
+      if (!PROVA && S.naz && S.naz.eletto === c.k) {
+        const w = Wt(x, c.nl + ' · ' + c.p, F(600, 24)), cx = al === 'left' ? px + w + 24 : px - w - 24, cy = y - 8, r = 15;
+        x.beginPath(); x.arc(cx, cy, r, 0, 2 * Math.PI); x.fillStyle = c.c; x.fill();
+        x.save(); x.strokeStyle = '#fff'; x.lineWidth = 3.2; x.lineCap = 'round'; x.lineJoin = 'round';
+        x.beginPath(); x.moveTo(cx - 6.5, cy + 0.5); x.lineTo(cx - 1.8, cy + 5.2); x.lineTo(cx + 7, cy - 5); x.stroke(); x.restore();
+      }
       T(x, tot ? pctTxt(v) : '—', px, y + Q.big + 4, { font: F(600, Q.big), color: c.c, align: al });
       T(x, tot ? nf(voti) + ' voti' : '', px, y + Q.big + 46, { font: F(500, 24), color: C.t3, align: al });
     });
@@ -2658,9 +2671,10 @@ window.CARD = (function () {
       xx.comuni = 'Brasile, il primo turno comune per comune: Flávio Bolsonaro ha vinto in 2.908 comuni, Lula in 2.663. Dati ufficiali del TSE, 5.571 comuni.';
     }
   }
-  function disegnaComuni(x, ox, oy, sc, modo) {
+  function disegnaComuni(x, ox, oy, sc, modo, col) {
     x.save(); x.translate(ox, oy); x.scale(sc, sc);
-    GEO.mun.forEach(g => { if (!g._p) g._p = new Path2D(g.d); const v = valoreMunB(g.id, modo); x.fillStyle = v ? (modo === 'swing' ? coloreSw(v.v) : coloreMargine(v.v, 0.6)) : (modo === 'primo' ? COL_ND : COL_ATTESA); x.fill(g._p); });
+    if (col) GEO.mun.forEach(g => { if (!g._p) g._p = new Path2D(g.d); x.fillStyle = col(g.id); x.fill(g._p); });
+    else GEO.mun.forEach(g => { if (!g._p) g._p = new Path2D(g.d); const v = valoreMunB(g.id, modo); x.fillStyle = v ? (modo === 'swing' ? coloreSw(v.v) : coloreMargine(v.v, 0.6)) : (modo === 'primo' ? COL_ND : COL_ATTESA); x.fill(g._p); });
     x.strokeStyle = C.bg; x.lineWidth = 1.5 / sc;
     GEO.uf.forEach(g => { if (!g._p) g._p = new Path2D(g.d); x.stroke(g._p); });
     x.restore();
@@ -2806,12 +2820,131 @@ window.CARD = (function () {
     ly += 6;
     a_capo(x, nota, F(500, 20), lw).forEach(t => { T(x, t, lx, ly, { font: F(500, 20), color: C.t3 }); ly += 28; });
   }
+  /* ---------- 7 · dove F. Bolsonaro perde voti rispetto al primo turno ---------- */
+  /* voti assoluti, non quote: con due soli candidati e più votanti, un calo è un segnale forte */
+  const COL_CALO = '#f2c14e';
+  const milioni = v => nf(v / 1e6, 1) + ' milioni';
+  const coloreVar = r => r == null || !isFinite(r) ? COL_ND : r < 0 ? mix(COL_VUOTO, COL_CALO, 0.6 + 0.4 * clamp(-r / 0.15, 0, 1)) : mix(COL_VUOTO, FLAV.c, 0.1 + 0.6 * clamp(r / 0.25, 0, 1));
+  function statoCalo() {
+    const st = UFS.filter(u => u !== 'ZZ').map(u => { const i = IDX[u], b = B1[i]; return { u, n: b.n, F1: b.F, F2: S.U ? S.U.F[i] : 0 }; });
+    const mun = {}; let mg = 0, ms = 0, persi = 0, n = 0;
+    if (GEO.mun && GEO.munDati) GEO.mun.forEach(g => { const a = GEO.munDati[g.id], d = MUNB.dati[g.id]; if (!a || !d || d.length < 5 || !a[0]) return; n++; const r = d[4] / a[0] - 1; mun[g.id] = r; if (d[4] < a[0]) { mg++; persi += a[0] - d[4]; } else if (d[4] > a[0]) ms++; });
+    const Cn = contato();
+    return { st, sg: st.filter(s => s.F2 < s.F1), mun, mg, ms, persi, n, Fn: Cn ? Cn.F - B1_NAZ.F : null, Ln: Cn ? Cn.L - B1_NAZ.L : null };
+  }
+  function titoloCalo(tt, xx) {
+    const d = statoCalo();
+    if (!fine() || !d.n) { tt.calo = 'Dove F. Bolsonaro perde voti rispetto al primo turno'; xx.calo = ''; return; }
+    tt.calo = 'F. Bolsonaro prende meno voti che al primo turno in ' + nf(d.mg) + ' comuni' + (d.sg.length ? ' e in ' + d.sg.length + ' stati' : '');
+    xx.calo = 'Brasile, ballottaggio: Flávio Bolsonaro prende meno voti che al primo turno in ' + nf(d.mg) + ' comuni su ' + nf(d.n) + (d.sg.length ? ' e in ' + d.sg.length + ' stati (' + d.sg.map(s => s.n).join(', ') + ')' : '') + ', anche se al ballottaggio i candidati erano due e i votanti di più. Nel complesso guadagna ' + milioni(d.Fn) + ' di voti, Lula ' + milioni(d.Ln) + '.';
+  }
+  async function cardCalo(x, L) {
+    const { W, H, M } = L;
+    let pronto = true;
+    try { await caricaComuni(); } catch (_) { pronto = false; }
+    if (pronto && !PROVA) { try { await leggiComuniB(); } catch (_) { } }
+    const tt = {}, xx = {}; titoloCalo(tt, xx);
+    if (!modificati.has('tcalo')) { titoli.calo = tt.calo; const inp = $('ct-calo'); if (inp && document.activeElement !== inp) inp.value = tt.calo; }
+    if (!modificati.has('xcalo')) testi.calo = xx.calo;
+    const y0 = cornice(x, 'calo', L) + (L.ig ? 40 : 30);
+    const d = statoCalo();
+    if (!fine() || !d.n) { T(x, 'Il confronto dei voti assoluti si fa a spoglio concluso.', M, y0 + 60, { font: F(500, 26), color: C.t2 }); return; }
+    const lato = L.ig ? (W - 2 * M - 30) / 2 : Math.min(470, H - 104 - y0 - 48 - 70);
+    const sc = lato / GEO.H, wMap = GEO.W * sc, gap = L.ig ? 30 : 34;
+    const mx = L.ig ? M + (W - 2 * M - 2 * wMap - gap) / 2 : M, my = y0 + 44, mx2 = mx + wMap + gap;
+    T(x, 'Stati', mx, y0 + 26, { font: F(600, 24), color: C.t2 });
+    disegnaStati(x, mx, my, sc, u => { const s = d.st.find(z => z.u === u); return s && s.F1 ? coloreVar(s.F2 / s.F1 - 1) : COL_ND; });
+    T(x, 'Comuni', mx2, y0 + 26, { font: F(600, 24), color: C.t2 });
+    disegnaComuni(x, mx2, my, sc, null, id => coloreVar(d.mun[id]));
+    /* legenda: giallo = perde voti, blu = ne guadagna */
+    const sy = my + lato + 26;
+    [[COL_CALO, 'F. Bolsonaro perde voti'], [mix(COL_VUOTO, FLAV.c, 0.6), 'F. Bolsonaro guadagna voti']].forEach(([c, t], i) => {
+      const lx0 = mx + i * (L.ig ? 330 : 300);
+      box(x, lx0, sy, 22, 22, 4, c); T(x, t, lx0 + 32, sy + 18, { font: F(500, 21), color: C.t2 });
+    });
+    const lx = L.ig ? M : mx2 + wMap + 56, lw = W - M - lx;
+    let ly = L.ig ? sy + 92 : y0 + 60;
+    T(x, 'Comuni dove F. Bolsonaro perde voti', lx, ly, { font: F(600, 23), color: C.t2 });
+    T(x, nf(d.mg), lx, ly + 66, { font: F(600, 64), color: COL_CALO });
+    T(x, 'su ' + nf(d.n), lx + Wt(x, nf(d.mg), F(600, 64)) + 14, ly + 60, { font: F(500, 26), color: C.t2 });
+    ly += 66 + (L.ig ? 52 : 48);
+    const righe = [];
+    if (d.sg.length) righe.push('In ' + d.sg.length + ' stati: ' + d.sg.map(s => s.n + ' ' + pti(s.F2 / s.F1 - 1, 1).replace(/^([+−])/, '$1') + '%').join(', '));
+    righe.push('In tutto il Brasile: F. Bolsonaro ' + (d.Fn >= 0 ? '+' : '−') + milioni(Math.abs(d.Fn)) + ' di voti, Lula ' + (d.Ln >= 0 ? '+' : '−') + milioni(Math.abs(d.Ln)));
+    const fnt = F(500, L.ig ? 26 : 24), lh = L.ig ? 35 : 32;
+    righe.forEach(r => { a_capo(x, r, fnt, lw).forEach(t => { T(x, t, lx, ly, { font: fnt, color: C.t1 }); ly += lh; }); ly += 10; });
+    const nota = 'Voti assoluti: al ballottaggio c’erano due candidati invece di dodici e i votanti sono aumentati.';
+    ly += 4;
+    a_capo(x, nota, F(500, 20), lw).forEach(t => { T(x, t, lx, ly, { font: F(500, 20), color: C.t3 }); ly += 28; });
+  }
+  /* ---------- 6 · i flussi dal primo al secondo turno ---------- */
+  /* stima statistica calcolata a parte sui comuni (dati/flussi-6258.json): qui si disegna e basta */
+  let FLUSSI = null;
+  const caricaFlussi = () => FLUSSI || (FLUSSI = fetch('dati/flussi-' + ELE + '.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).catch(e => { FLUSSI = null; throw e; }));
+  const COL_FLUSSO = { L: LULA.c, F: FLAV.c, A: '#e9b949', B: '#9aa5a0', S: '#56635c' };
+  function titoloFlussi(tt, xx, j) {
+    if (!j) { tt.flussi = 'Come si sono spostati i voti dal primo al secondo turno'; xx.flussi = ''; return; }
+    tt.flussi = j.titolo || 'Come si sono spostati i voti dal primo al secondo turno';
+    xx.flussi = j.testo || '';
+  }
+  async function cardFlussi(x, L) {
+    const { W, H, M } = L;
+    let j = null;
+    try { j = await caricaFlussi(); } catch (_) { }
+    const tt = {}, xx = {}; titoloFlussi(tt, xx, j);
+    if (!modificati.has('tflussi')) { titoli.flussi = tt.flussi; const inp = $('ct-flussi'); if (inp && document.activeElement !== inp) inp.value = tt.flussi; }
+    if (!modificati.has('xflussi')) testi.flussi = xx.flussi;
+    const y0 = cornice(x, 'flussi', L) + (L.ig ? 50 : 34);
+    if (!j) { T(x, 'Stima dei flussi non disponibile.', M, y0 + 60, { font: F(500, 26), color: C.t2 }); return; }
+    const nota = j.nota || '';
+    const fntN = F(500, L.ig ? 21 : 19), righeNota = a_capo(x, nota, fntN, W - 2 * M);
+    const yN = H - 104 - righeNota.length * (L.ig ? 29 : 26);
+    const top = y0 + 34, bot = yN - (L.ig ? 26 : 58), alto = bot - top;
+    const lab = L.ig ? 230 : 300, nw = 16;
+    const xl = M + lab, xr = W - M - lab - nw;
+    T(x, 'Primo turno, 4 ottobre', M, y0 + 6, { font: F(600, 22), color: C.t2 });
+    T(x, 'Ballottaggio, 25 ottobre', W - M, y0 + 6, { font: F(600, 22), color: C.t2, align: 'right' });
+    /* colonne: altezze proporzionali agli elettori, con spazi fissi fra i nodi */
+    const gap = 12, colonna = (nodi, tot) => { const sc = (alto - gap * (nodi.length - 1)) / tot; let y = top; return nodi.map(n => { const h = n.v * sc; const o = { ...n, y, h }; y += h + gap; return o; }); };
+    const totS = j.src.reduce((a, n) => a + n.v, 0), totD = j.dst.reduce((a, n) => a + n.v, 0), tot = Math.max(totS, totD);
+    const S_ = colonna(j.src, tot), D_ = colonna(j.dst, tot), sc = (alto - gap * (Math.max(j.src.length, j.dst.length) - 1)) / tot;
+    /* nastri: dall'alto in basso dentro ogni nodo, nell'ordine delle destinazioni e delle provenienze */
+    const usoS = S_.map(n => n.y), usoD = D_.map(n => n.y);
+    j.f.forEach((riga, a) => riga.forEach((v, b) => {
+      const h = v * sc; if (h < 0.4) return;
+      const ys = usoS[a], yd = usoD[b]; usoS[a] += h; usoD[b] += h;
+      const x0 = xl + nw, x1 = xr, mx = (x0 + x1) / 2;
+      x.beginPath(); x.moveTo(x0, ys); x.bezierCurveTo(mx, ys, mx, yd, x1, yd); x.lineTo(x1, yd + h); x.bezierCurveTo(mx, yd + h, mx, ys + h, x0, ys + h); x.closePath();
+      x.globalAlpha = a === b || (S_[a].k === D_[b].k) ? 0.55 : 0.38; x.fillStyle = COL_FLUSSO[S_[a].k] || '#888'; x.fill(); x.globalAlpha = 1;
+    }));
+    /* nodi ed etichette (spostate per non accavallarsi) */
+    /* per Lula e F. Bolsonaro al ballottaggio, da dove arrivano i voti (flussi da 200 mila in su) */
+    const DA = { L: 'da Lula', F: 'da F. Bolsonaro', A: 'dagli altri candidati', B: 'da bianche e nulle', S: 'dagli astenuti' };
+    const lhD = L.ig ? 27 : 25, fntD = F(500, L.ig ? 20 : 19);
+    const dettaglio = (n, b) => (n.k === 'L' || n.k === 'F') && b != null ? j.f.map((riga, a) => [riga[b], a]).filter(([v]) => v >= 2e5).sort((p, q) => q[0] - p[0]).map(([v, a]) => nf(v / 1e6, 1) + ' ' + DA[j.src[a].k]) : [];
+    const etichette = (nodi, lx, destra) => {
+      let ultimo = -Infinity;
+      nodi.forEach((n, i) => {
+        box(x, destra ? xr : xl, n.y, nw, Math.max(2, n.h), 2, COL_FLUSSO[n.k] || '#888');
+        const det = destra ? dettaglio(n, i) : [], hBlocco = 50 + det.length * lhD;
+        const cy = Math.max(n.y + n.h / 2 - hBlocco / 2, ultimo + 14); ultimo = cy + hBlocco;
+        T(x, n.n, lx, cy + 20, { font: F(600, L.ig ? 24 : 23), color: C.t1 });
+        T(x, mln(n.v), lx, cy + 46, { font: F(500, L.ig ? 21 : 20), color: C.t2 });
+        det.forEach((t, r) => T(x, t, lx, cy + 46 + (r + 1) * lhD, { font: fntD, color: C.t3 }));
+      });
+    };
+    etichette(S_, M, false);
+    etichette(D_, xr + nw + 16, true);
+    righeNota.forEach((t, i) => T(x, t, M, yN + i * (L.ig ? 29 : 26), { font: fntN, color: C.t3 }));
+  }
   const CARDS = [
     { k: 'proj', n: 'Spoglio e proiezione', draw: cardProiezione },
     { k: 'mappa', n: 'Gli stati', draw: cardMappa },
     { k: 'comuni', n: 'I comuni', draw: cardComuni },
     { k: 'fork', n: 'Contato e previsto', draw: cardForchetta },
-    { k: 'diff', n: 'Rispetto al primo turno', draw: cardDiff }
+    { k: 'diff', n: 'Rispetto al primo turno', draw: cardDiff },
+    { k: 'calo', n: 'Dove F. Bolsonaro perde voti', draw: cardCalo },
+    { k: 'flussi', n: 'I flussi di voto', draw: cardFlussi }
   ];
   function autoTitoli() {
     const tt = {}, xx = {};
