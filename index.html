@@ -2881,6 +2881,57 @@ window.CARD = (function () {
     ly += 4;
     a_capo(x, nota, F(500, 20), lw).forEach(t => { T(x, t, lx, ly, { font: F(500, 20), color: C.t3 }); ly += 28; });
   }
+  /* ---------- 8 · la proroga del voto: i comuni dei due ricorsi e i loro vicini ---------- */
+  /* dati calcolati a parte sui comuni dei due turni (dati/proroga-6258.json) */
+  let PROROGA = null;
+  const caricaProroga = () => PROROGA || (PROROGA = fetch('dati/proroga-' + ELE + '.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).catch(e => { PROROGA = null; throw e; }));
+  async function cardProroga(x, L) {
+    const { W, H, M } = L;
+    let j = null;
+    try { j = await caricaProroga(); } catch (_) { }
+    if (j) {
+      if (!modificati.has('tproroga')) { titoli.proroga = j.titolo; const inp = $('ct-proroga'); if (inp && document.activeElement !== inp) inp.value = j.titolo; }
+      if (!modificati.has('xproroga')) testi.proroga = j.testo;
+    }
+    const y0 = cornice(x, 'proroga', L) + (L.ig ? 50 : 34);
+    if (!j) { T(x, 'Dati sulla proroga non disponibili.', M, y0 + 60, { font: F(500, 26), color: C.t2 }); return; }
+    const fntN = F(500, L.ig ? 21 : 19), righeNota = a_capo(x, j.nota, fntN, W - 2 * M), lhN = L.ig ? 29 : 26;
+    const yN = H - 104 - (righeNota.length - 1) * lhN;   /* prima riga della nota */
+    /* colonne: etichette, poi due pannelli con la stessa scala (0–5 punti) */
+    const lab = L.ig ? 330 : 430, gapP = L.ig ? 34 : 60, x0 = M + lab + (L.ig ? 20 : 30), wP = (W - M - x0 - gapP) / 2;
+    const pannelli = [{ x: x0, t: 'Spostamento verso Lula', v: r => r.sw }, { x: x0 + wP + gapP, t: 'Aumento dell’affluenza', v: r => r.aff }];
+    const MAX = 5, X = (p, v) => p.x + v / MAX * (wP - 56);   /* spazio a destra per il valore */
+    const fntL = F(600, L.ig ? 22 : 22), fntS = F(500, L.ig ? 19 : 18), lhL = L.ig ? 27 : 27;
+    /* altezza delle righe dallo spazio disponibile */
+    const yTop = y0 + 70, yBot = yN - 74, gruppi = 2, gapG = L.ig ? 26 : 18;
+    const hR = (yBot - yTop - gruppi * gapG) / j.righe.length;
+    pannelli.forEach(p => {
+      T(x, p.t, p.x, y0 + 10, { font: F(600, L.ig ? 23 : 24), color: C.t1 });
+      T(x, 'punti percentuali', p.x, y0 + 40, { font: F(500, L.ig ? 19 : 19), color: C.t3 });
+      for (let v = 0; v <= MAX; v++) {
+        x.fillStyle = v ? 'rgba(255,255,255,.07)' : 'rgba(255,255,255,.28)'; x.fillRect(X(p, v) - 0.5, yTop - 6, 1, yBot - yTop + 6);
+        T(x, String(v), X(p, v), yBot + 26, { font: F(500, 18), color: C.t3, align: 'center' });
+      }
+    });
+    let y = yTop;
+    j.righe.forEach((r, i) => {
+      if (i === 2 || i === 4) y += gapG;
+      const col = r.k === 'L' ? LULA.c : r.k === 'F' ? FLAV.c : r.k === 'BR' ? '#9aa5a0' : '#5d6e65';
+      const nome = a_capo(x, r.n, fntL, lab).slice(0, L.ig ? 3 : 2);
+      const sotto = (r.netto >= 0 ? '+' : '−') + (Math.abs(r.netto) >= 1e6 ? nf(Math.abs(r.netto) / 1e6, 2) + ' milioni' : nf(Math.round(Math.abs(r.netto) / 1000)) + ' mila') + ' voti netti a Lula';
+      const hT = nome.length * lhL + 24, ty = y + Math.max(0, (hR - hT) / 2) + 20;
+      nome.forEach((t, k) => T(x, t, M, ty + k * lhL, { font: fntL, color: r.k ? C.t1 : C.t2 }));
+      T(x, sotto, M, ty + nome.length * lhL, { font: fntS, color: C.t3 });
+      const hb = Math.min(28, hR * 0.42), by = y + (hR - hb) / 2;
+      pannelli.forEach(p => {
+        const v = p.v(r);
+        box(x, p.x, by, Math.max(3, X(p, v) - p.x), hb, 4, col);
+        T(x, '+' + nf(v, 1), X(p, v) + 10, by + hb / 2 + 8, { font: F(600, L.ig ? 22 : 22), color: C.t1 });
+      });
+      y += hR;
+    });
+    righeNota.forEach((t, i) => T(x, t, M, yN + i * lhN, { font: fntN, color: C.t3 }));
+  }
   /* ---------- 6 · i flussi dal primo al secondo turno ---------- */
   /* stima statistica calcolata a parte sui comuni (dati/flussi-6258.json): qui si disegna e basta */
   let FLUSSI = null;
@@ -2948,7 +2999,8 @@ window.CARD = (function () {
     { k: 'fork', n: 'Contato e previsto', draw: cardForchetta },
     { k: 'diff', n: 'Rispetto al primo turno', draw: cardDiff },
     { k: 'calo', n: 'Dove F. Bolsonaro perde voti', draw: cardCalo },
-    { k: 'flussi', n: 'I flussi di voto', draw: cardFlussi }
+    { k: 'flussi', n: 'I flussi di voto', draw: cardFlussi },
+    { k: 'proroga', n: 'La proroga del voto', draw: cardProroga }
   ];
   function autoTitoli() {
     const tt = {}, xx = {};

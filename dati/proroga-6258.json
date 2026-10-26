@@ -1,0 +1,48 @@
+{
+ "ele": "6258",
+ "titolo": "Proroga del voto: i comuni dei ricorsi e i loro vicini",
+ "testo": "Brasile, la proroga del voto fino alle 19 valeva in tutto il Paese. Nei 17 comuni per cui F. Bolsonaro aveva chiesto più tempo Lula guadagna 3,2 punti, meno che nel resto di São Paulo, Paraná e Santa Catarina (+3,7). Nei 3 comuni del ricorso di Lula (Salvador, Feira de Santana, Lauro de Freitas) +2,6, contro +1,1 nel resto della Bahia, con l’affluenza salita di 4,4 punti.",
+ "nota": "La proroga fino alle 19 valeva per tutte le sezioni del Brasile: qui si confrontano i comuni citati nei ricorsi delle due campagne con quelli vicini. Spostamento: variazione della quota di Lula sui voti dei due candidati. Affluenza: votanti sugli elettori. Comuni, estero escluso.",
+ "righe": [
+  {
+   "k": "F",
+   "n": "17 comuni del ricorso di F. Bolsonaro",
+   "comuni": 17,
+   "sw": 3.2,
+   "netto": 529918,
+   "aff": 2.86
+  },
+  {
+   "k": "",
+   "n": "Resto di São Paulo, Paraná e Santa Catarina",
+   "comuni": 1322,
+   "sw": 3.74,
+   "netto": 1103691,
+   "aff": 2.53
+  },
+  {
+   "k": "L",
+   "n": "3 comuni del ricorso di Lula",
+   "comuni": 3,
+   "sw": 2.61,
+   "netto": 223882,
+   "aff": 4.43
+  },
+  {
+   "k": "",
+   "n": "Resto della Bahia",
+   "comuni": 414,
+   "sw": 1.12,
+   "netto": 430429,
+   "aff": 2.91
+  },
+  {
+   "k": "BR",
+   "n": "Brasile",
+   "comuni": 5571,
+   "sw": 2.8,
+   "netto": 6639986,
+   "aff": 1.85
+  }
+ ]
+}
