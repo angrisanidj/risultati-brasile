@@ -2163,7 +2163,8 @@ async function poll(manuale) {
         render();
       }
       const mancanti = UFS.filter(u => !j.uf[u.toLowerCase()] || j.uf[u.toLowerCase()].errore).length;
-      setFeed((FINALE ? 'Risultati finali' : 'Feed live') + ' · TSE ' + (S.aggiornato ? oraBR(S.aggiornato) + ' a Brasília' : '') + (mancanti ? ' · ' + mancanti + ' file mancanti' : ''), 'ok');
+      /* a spoglio concluso il pallino è grigio: il feed è fermo */
+      setFeed((FINALE ? 'Risultati finali' : 'Feed live') + ' · TSE ' + (S.aggiornato ? oraBR(S.aggiornato) + ' a Brasília' : '') + (mancanti ? ' · ' + mancanti + ' file mancanti' : ''), FINALE ? '' : 'ok');
       if (S.tsCorretti.size) console.warn('TSE: totale delle sezioni incompleto in', [...S.tsCorretti].join(', '), '— uso le sezioni del primo turno');
       avviso('');
     }
@@ -2371,6 +2372,8 @@ function eventi() {
     $('pauseBtn').textContent = FEED.pausa ? 'Riprendi il feed' : 'Metti in pausa';
     if (FEED.pausa) { clearTimeout(FEED.timer); setFeed('Feed in pausa', 'paused'); } else poll(true);
   };
+  /* spoglio concluso: non c'è più niente da aggiornare né da mettere in pausa */
+  if (FINALE) ['refreshBtn', 'pauseBtn'].forEach(id => { $(id).disabled = true; $(id).title = 'Spoglio concluso: la pagina mostra i risultati finali'; });
   document.querySelectorAll('#mapModoB button').forEach(b => b.onclick = () => { if (b.disabled) return; S.modoB = b.dataset.m; salvaPref(); aggiornaLivB(); });
   document.querySelectorAll('#mapLivB button').forEach(b => b.onclick = () => { S.livB = b.dataset.l; salvaPref(); aggiornaLivB(); });
   document.querySelectorAll('#mapModoT1 button').forEach(b => b.onclick = () => { S.modoT1 = b.dataset.m; salvaPref(); renderT1Mappa(); });
@@ -2442,6 +2445,20 @@ function eventi() {
     };
   }
 }
+/* Spoglio concluso: il grafico della forchetta di tutta la notte, salvato dal browser della
+   redazione, per chi apre la pagina dopo (chi l'ha seguita in diretta ha già il suo) */
+async function caricaTracciaFinale() {
+  try {
+    const r = await fetch('dati/traccia-' + ELE + '.json', { cache: 'no-cache' });
+    if (!r.ok) return;
+    const j = await r.json();
+    const t = Array.isArray(j.traccia) ? j.traccia.filter(p => p && isFinite(p.x) && isFinite(p.q) && isFinite(p.m)) : [];
+    if (t.length <= S.traccia.length) return;
+    S.traccia = t;
+    renderFork();
+    if (window.CARD) window.CARD.segnaSporco();
+  } catch (_) { }
+}
 async function avvio() {
   REDAZIONE = await verificaRedazione();
   document.body.classList.toggle('redazione', REDAZIONE);
@@ -2452,6 +2469,7 @@ async function avvio() {
   renderPrimoTurno();
   $('footProxy').textContent = 'Proxy: ' + (() => { try { return new URL(PROXY).host; } catch (_) { return PROXY; } })();
   if (!PROVA) caricaNotte();
+  if (FINALE) caricaTracciaFinale();
   render();
   leggiStime();
   if (PROVA) avviaProva();
